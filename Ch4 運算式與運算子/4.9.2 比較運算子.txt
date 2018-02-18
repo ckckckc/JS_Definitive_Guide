@@ -1,0 +1,79 @@
+4.9.2 比較運算子
+      Comparison Operators
+
+比較運算子測試兩個運算元的相對 order (次序？！) 數值順序/字母順序
+The comparison operators test the relative order (numerical or alphabetics) of their two operands
+
+< > <= >=
+
+這些比較運算子的運算元可以是任何型態
+然而比較只能在數字與字串間進行
+不是數字或字串的運算元會先進行轉換
+The operands of these comparison operators may be of any type. 
+Comparison can be performed only on numbers and strings, however, 
+so operands that are not numbers or strings are converted
+
+  (Object)
+  用 3.8.3 的物件轉為基型值：
+    如果 valueOf() 回傳基型值，就用這個值
+    否則用 toString() 方法回傳值
+
+  (String vs String)
+    如果物件轉換後的運算元（都）是字串，這兩個字串就用字母順序比較，
+    字母順序（alphabetical order）：是根據構成字串的16位元 Unicode 值的數值順序（numerical order）所定義
+
+  (轉換為基本型態後，只要有一個不是字串)
+    （只要）物件轉換後的運算元有一個不是字串，兩個運算元都會被轉成數字並用數字的方式比較
+    0 與 -0 相等
+    Infinity 比除了他自己之外的數都還要大
+    -Infinity 比除了他自己之外的數都還要小
+
+    如果有任一個運算元是（或被轉為是）NaN，那麼比較院算子必定回傳 false
+
+
+JavaScript 字串是由 16 位元整數值所構成的序列，
+他的字串比較其實只是兩個字串中的這些值得數值比較
+
+這裡的字串比對會區分大小寫，
+所有大寫的 ASCII 字母都小於小寫的 ASCII 字母
+ex:
+  "Animal" 比 "cat" 小
+
+For example, according to the < operator, 
+the string “Zoo” comes before the string “aardvark”.
+
+註：ASCII 表中
+十進位   圖形
+48      0
+65      A
+97      a
+
+可以使用 String.toLowerCase() 或 String.toUpperCase() 來確保大小寫一致
+再比較
+
++ 運算子跟比較運算子的行位在遇到 數字和字串的行為都不同
+  + 運算子偏好字串：如果字串和數字同時出現，他會執行字串連接
+
+  比較運算子偏好數字：（只要）物件轉換後的運算元有一個不是字串，兩個運算元都會被轉成數字並用數字的方式比較
+
+
+Both the + operator and the comparison operators behave differently for numeric and string operands. 
++ favors strings: it performs concatenation if either operand is a string. 
+The comparison operators favor numbers and only perform string comparison if both operands are strings
+
+1 + 2       // Addition. Result is 3.
+"1" + "2"   // Concatenation. Result is "12"
+"1" + 2     // Concatenation. 2 is converted to "2". Result is "12"
+11 < 3      // Numeric comparison. Result is false.
+"11" < "3"  // String comparison. Result is true.
+"11" < 3    // Numeric comparison. "11" converted to 11. Result is false.
+"one" < 3   // Numeric comparison. "one" converted to NaN. Result is false
+
+<=
+the less-than-or-equal operator is simply defined as “not greater than,” 
+>=
+greater-than-or-equal operator is defined as “not less than.” 
+
+NaN
+The one exception occurs when either operand is (or converts to) NaN, 
+in which case all four comparison operators return false.

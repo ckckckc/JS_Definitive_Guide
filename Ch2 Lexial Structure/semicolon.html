@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Unnecessary Semicolon</title>
+</head>
+<body>
+<script>
+var
+a
+=
+1;
+console.log(a);
+
+var b = 6
+console.log(b);
+
+
+// Exception : return continue break
+var func1 = function (){
+  // like return;
+  return
+};
+
+console.log(func1());
+
+var func2 = function () {
+  return;
+  true;
+};
+console.log(func2());
+
+
+var func3 = function () {
+  // like return; true;
+  return
+  true;
+};
+console.log(func3());
+
+var func4 = function () {
+  return true;
+};
+console.log(func4());
+
+a
+++
+b
+
+// like a;++b
+console.log(a);
+console.log(b);
+
+</script>
+</body>
+</html>

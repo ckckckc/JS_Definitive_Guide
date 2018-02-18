@@ -1,0 +1,138 @@
+6.7 Property Attributes
+
+We can say that a property has a name and four attributes. 
+
+The four attributes of a data property are value, writable, enumerable, and configurable.
+
+The four attributes of an accessor property are get, set, enumerable, and configurable.
+Accessor properties don’t have a value attribute or a writable attribute: their writability is determined by the presence or absence of a setter. 
+
+Query Property Attributes:
+
+  property descriptor: 用來描述上面所列的四種屬性的物件，可以使用 Object.getOwnPropertyDescriptor() 得到該物件，此外，如同方法名稱所示，只能用在自有特性之上（非繼承），若沒有該 property 則回傳 undefined，若要往上查 prototype 的 property ，則要使用 6.8.1 介紹的 Object.getPropertyOf()。
+
+  例如：
+  var obj = {
+    x: 1,
+    get xSqre() { return Math.sqre(this.x); },
+  };
+
+
+  console.log(Object.getOwnPropertyDescriptor(obj, "x"));
+  // 會回傳
+  {
+    configurable: true, // (Boolean)
+    enumerable: true,   // (Boolean)
+    value: 1,           // x property 的 value
+    writable: true      // (Boolean)
+  }
+
+  console.log(Object.getOwnPropertyDescriptor(obj, "xSqre"));
+  // 會回傳
+  {
+    configurable: true, // (Boolean)
+    enumerable: true,   // (Boolean)
+    get: ƒ xSqre(),     // /* func */
+    set: undefined      // /* func */
+  }
+
+Set Property Attributes:
+
+  要設定或新創 property 指定 attribute 的方式，可以藉由 Object.defineProperty() 一次新創/修改一個特性，若要一次 新創/修改 多個特性，則用 Object.defineProperties()。
+
+  在新創 property 的時候，若 attribure 沒給值的話，預設會是 false 或是 undefined，如果是修改 property 的時候，省略的 attribute 則不會改變。
+
+  Object.defineProperty() 只會改變 own property ，不會改到 inherit 而來的 property。
+
+  使用 Object.create 也可以在第二個參數傳入 property descriptor 物件。
+
+  一些什麼時候允許 defineProperty 的時機，與什麼時候會產生 TypeError 的細節，用到的時候再參照文件吧。
+
+
+進階：在 Object.prototype 上加入 extend 方法，讓所有物件都能 extend 傳入的物件 properties，若同名則不覆蓋：
+
+Object.defineProperty(Object.prototype, "extend", {
+  writable: true,
+  enumerable: false,              // Make it nonenumerable
+  configurable: true,
+  value: function(inputObject) {
+    // Get all own props, even nonenumerable ones
+    var inputProperties = Object.getOwnPropertyNames(inputObject);
+
+    for (var i = 0, len = inputProperties.length; i < len ; i++){
+      // Skip props already in this object
+      var property = inputProperties[i], descriptor;
+      // Get property description from inputObject
+      if (property in this) continue;
+      descriptor = Object.getOwnPropertyDescriptor(inputObject, property);
+      // Use it to create property on this
+      Object.defineProperty(this, property, descriptor);
+    }
+  }
+});
+
+var obj1 = {
+  x: null,
+  get xSqrt() {
+    return Math.sqrt(this.x);
+  }
+};
+
+var obj2 = {};
+
+obj2.extend(obj1);
+obj2.x = 4;
+console.log(obj2.xSqrt);
+
+更多 defineProperty 的例子：
+var o = {};
+
+Object.defineProperty(o, "x", {
+  value: 1,
+  writable: true,
+  enumerable: false,
+  configurable: true
+});
+
+console.log(Object.keys(o)) // []
+console.log(o.x)            // 1
+
+Object.defineProperty(o, "x", {
+  writable: false
+});
+
+o.x = 2;                    // Fails silently or throws TypeError in strict mode
+console.log(o.x)            // still 1
+
+// The property is still configurable, so we can change its value like this
+Object.defineProperty(o, "x", {
+  value: 2
+});
+
+console.log(o.x)            // 2
+
+// Now change x from a data property to an accessor property
+Object.defineProperty(o, "x", {
+  get: function() { return 0; }
+});
+
+console.log(o.x)            // 0
+
+Object.defineProperty(Object.prototype, "extends", {
+  writable: true,
+  enumerable: false,
+  configurable: true,
+  value: function(inputObject) {
+    var inputProperties = Object.getOwnPropertyNames(inputObject),
+        property, propertyDescriptor;
+
+    for (var i = 0, len = inputProperties.length ; i < len ; i++ ) {
+      property = inputProperties[i];
+      if (property in this) continue;
+
+      propertyDescriptor = Object.getOwnPropertyDescriptor(inputObject, property);
+
+      Object.defineProperty(this, property, propertyDescriptor);
+    }
+  }
+});

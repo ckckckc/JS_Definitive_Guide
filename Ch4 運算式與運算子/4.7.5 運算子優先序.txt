@@ -1,0 +1,13 @@
+4.7.5 運算子優先序
+      Operator Precedence
+
+Note that property access and invocation expressions have higher precedence than any of the operators listed in Table 4-1.
+特性存取語調用運算式的優先序比表中的任何運算子都還要高
+  
+  typeof my.functions[x](y)
+
+雖然 typeof 是具有最高優先續的運算子之一， typeof 作用的對象會是兩個特性存取與那個函式調用的結果
+
+multiplication and division are performed before ad- dition and subtraction, and assignment has very low precedence and is almost always performed last.
+先乘除後加減
+指定 （assignment）有非常低的優先序，所以幾乎都是最後執行

@@ -1,0 +1,9 @@
+22.4.3  Web Worker Examples
+
+範例兩個～
+
+一：如何在 worker 執行緒中執行長時間的計算
+
+
+
+二：如何使用較簡單的同步 APIs

@@ -1,0 +1,20 @@
+5.3.1 var
+
+var 宣告變數的語法：
+
+  var name_1 [ = value_1] [ ,..., name_n [= value_n]]
+
+var 出現在 function body 中，他定義的是區域變數
+    出現在 top-level 程式碼中，他定義的是全域變數
+
+3.10.2
+全域變數是全域物件的特性，用 var 宣告的特性不能刪除(nonconfigurable)
+
+如果使用 var 沒給初始值，則該初始值為 undefined
+
+3.10.1 hoisted 複習
+  ....
+
+var 也可能出現在 for 與 for/in 迴圈作為他們的一部分（這些變數也會 hoisted，就像在在宣告在迴圈之外的變數）
+
+重複宣告同一個變數是無害的

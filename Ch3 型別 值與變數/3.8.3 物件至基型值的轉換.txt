@@ -1,0 +1,73 @@
+3.8.8 物件至基型值的轉換
+      Object to Primitive Conversions
+(個人感覺：複雜，規則多)
+
+Object => boolean : Boolean
+都是 true
+Object-to-boolean conversions are trivial: all objects (including arrays and functions) convert to true.
+
+所有物件都繼承了這兩個轉換方法
+轉換核心 method:
+1. toString()
+    Its job is to return a string representation of the object.
+    回傳物件的字串表示方式，預設的 toStirng() 沒太大用處
+2. valueOf()
+    The job of this method is less well-defined: it is supposed to convert an object to a primitive value that represents the object, if any such primitive value exists. 
+    Wrapper 類別定義的 valueOf() 方法會回傳 wrapper 物件所包覆的基型值，
+
+
+Object to String
+1.  toString()
+    If the object has a toString() method, JavaScript calls it. If it returns a primitive value, JavaScript converts that value to a string (if it is not already a string) and returns the result of that conversion.
+
+2.  valueOf()
+    If the object has no toString() method, or if that method does not return a primitive value, then JavaScript looks for a valueOf() method. If the method exists, Java- Script calls it. If the return value is a primitive, JavaScript converts that value to a string (if it is not already) and returns the converted value.
+
+3.  throw Exception
+    Otherwise, JavaScript cannot obtain a primitive value from either toString() or valueOf(), so it throws a TypeError.
+
+Object to Number
+1.  valueOf()
+    If the object has a valueOf() method that returns a primitive value, JavaScript con- verts (if necessary) that primitive value to a number and returns the result.
+
+2.  toString()
+    Otherwise, if the object has a toString() method that returns a primitive value, JavaScript converts and returns the value.
+
+3.  throw Exception
+    Otherwise, JavaScript throws a TypeError.
+
+ex:
+array to number
+[]  => valuOf() 會回傳 Object (X)
+    => toString() 會轉成空字串 "" => "" 轉成數字 0
+
+ex:如果陣列的唯一元素是數字，那個數字就會被轉為字串，隨後又轉回數字
+[1] => [1] 是 Object (X)
+    => toString() 回傳 "1" => 1
+
+
+特殊的 Object-to-primitive：只有 + == != 與關係運算子會進行這種特殊的 string-to-primitive 轉換
+
++ ==:
+基本上就是對所有非 Date 物件進行 object-to-number 轉換，先用 valueOf()，而對於 Date 使用 object-to-String
+回傳的 primitive value 會直使用
+The object-to-primitive conversion is basically an object-to-number conversion (valueof() first) for all objects that are not dates
+the primitive value returned by valueOf() or toString() is used directly without being forced to a number or string.
+
+<
+同上，但是 Date 物件就沒有特例
+所有物件先用 valueOf() 轉換，再使用 toString()，
+只要得到 primitive value 會直接使用，
+不會進一步轉為數字或字串
+
++ - == > 處理 Date 物件的方式
+
+var now = new Date();
+typeof (now + 1)          // "string : + 將日期轉為字串"
+typeof (now - 1)          // "number : - 使用 object-to-number 轉換"
+now == now.toString()     // => true: implicit and explicit string conversions
+now > (now -1)            // => true: > converts a Date to a number
+
+自己嘗試的 Date :
+(new Date()).valueOf()    // => 1467608440915
+(new Date()).toString()   // => "Mon Jul 04 2016 13:01:15 GMT+0800 (CST)"

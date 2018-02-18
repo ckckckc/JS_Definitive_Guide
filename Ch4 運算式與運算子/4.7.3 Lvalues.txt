@@ -1,0 +1,13 @@
+4.7.3 Lvalues
+
+lvalue（左值）是歷史遺留下來的術語：
+  可以合法出指定運算式左邊的運算式
+
+JavaScript 中，變數，物件的特性，以及陣列的元素都是 lvalues。
+
+ECMAScript 規格允許內建函式回傳 lvalues，但並沒有定義任何具有這種行為的函式
+
+
+lvalue is a historical term that means “an expression that can legally appear on the left side of an assignment expression.” 
+In JavaScript, variables, properties of objects, and elements of arrays are lvalues. 
+The ECMAScript specification allows built-in functions to return lvalues but does not define any functions that behave that way.

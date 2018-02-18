@@ -1,0 +1,28 @@
+5.6.1 具有標籤的述句
+      Labeled Statements
+
+任何 statement 都可以被 labeled，
+只要在前面加上 identifier 還有 :
+
+  identifier: statement
+
+By labeling a statement, you give it a name that you can use to refer to it elsewhere in your program. You can label any statement, although it is only useful to label statements that have bodies, such as loops and conditionals.
+
+只有 break 還有 continue 在 JavaScript 中使用 statement labels。
+break and continue are the only JavaScript statements that use statement labels
+
+mainloop: while(token != null) {
+  // Code omitted...
+  continue mainloop; // Jump to the next iteration of the named loop // More code omitted...
+}
+
+identifier 可以是任何合法的 JavaScript 識別字，
+但是不能是保留字。
+label 的 namespace 與變數及函式不同，
+所以可以將labeled statement 中的識別字同時用於或變數或函式。
+
+Statement labels are defined only within the statement to which they apply (and within its substatements, of course). 
+A statement may not have the same label as a statement that contains it, 
+but two statements may have the same label as long as neither one is nested within the other.  statement 不互相為巢狀，即可有相同的 label
+Labeled statements may themselves be labeled. 
+Effectively, this means that any statement may have multiple labels.

@@ -1,0 +1,39 @@
+5.3.2 function
+
+funcname is an identifier that names the function being declared. The function name is followed by a comma-separated list of parameter names in parentheses. These identifiers can be used within the body of the function to refer to the argument values passed when the function is invoked.
+當函式被 invoked 時，我們可以用這些 identifier 來 refer to 這些傳入的參數值
+
+The body of the function is composed of any number of JavaScript statements, contained within curly braces. These statements are not executed when the function is defined.
+函式的主體由任意數量的 statements 組成
+這些 statements 在宣告之時並不會執行。
+
+Function declaration statements may appear in top-level JavaScript code, or they may be nested within other functions. When nested, however, function declarations may only appear at the top level of the function they are nested within. That is, function definitions may not appear within if statements, while loops, or any other statements. Because of this restriction on where function declarations may appear, the ECMAScript specification does not categorize function declarations as true statements. 
+
+function 可以出現在 top-level 或是嵌入在其他函式之中
+如果是嵌入在其他函式，function 宣告只能出現在外層函數的頂端，並不能出現在 if statement,  while loop 或其他 statement 之中，因為這個限制， ECMAScript 規格並不把 function  declaration 當作真正的 statements。但是某些 JavaScript 實作允許函式宣告出現在任何述句中，但是細節跟不同的實作方式而有不同，因此把 function 寫在其中並不利於移植到任何平台之上執行nonportable
+
+
+var f = function(x) { return x+1; } // Expression assigned to a variable 
+function f(x) { return x+1; }       // Statement includes variable name
+
+兩者不同之處：
+  function declaration statement ：
+    語法中包含參數名
+
+    同時宣告了 function name 當作一個變數名接者 assign 給新創的 function object
+
+    function name 和 function body 都 hoisted，所有的 functions 在 script 中或內嵌在 function 之中都已經在其他程式 run 之前 declared，因此能 invoke function 在 declare 之前
+
+  function definition expression ：
+    只有 變數 hoisted，初始值內容還是在原本的位置
+
+
+兩者相同之處：
+  兩個都創造了一個新的 function object
+
+  兩個都會 hoisted 至 top of the containing script or function ，
+  所以他們都可以在 script 或 function 看得見(visible)
+
+  他們都創造了一個不能 deleted 的 function，就像 var statement
+
+  這些變數並不是唯讀的，這些變數值可以被覆寫

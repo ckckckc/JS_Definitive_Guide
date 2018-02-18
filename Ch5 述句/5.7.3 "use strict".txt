@@ -1,0 +1,54 @@
+5.7.3 "use strict"
+
+"use strict" is a directive introduced in ECMAScript 5
+
+directive 和 statement 很接近到可以把他列在這章裡面介紹。
+
+There are two important differences between the "use strict" directive and regular statements:
+  It does not include any language keywords：
+    the directive is just an expression statement that consists of a special string literal (in single or double quotes).
+    JavaScript interpreters that do not implement ECMAScript 5 will simply see an ex- pression statement with no side effects and will do nothing.
+
+  Itcanappearonlyatthestartofascriptoratthestartofafunctionbody,before any real statements have appeared. It need not be the very first thing in the script or function, however:
+    ... 
+
+"use strict" 的目的是將接下來的 code 轉為 strict mode.
+
+在 script 的最上方或是 function body 最上方使用 "use strict"，
+那麼接下來就會變成 strict mode
+
+strict 和 non-strict 最重要的三個差異：
+  strict mode 中不能使用 with
+
+  strict mode 中，所有變數都必須要宣告，如果在 non-strict mode 中這麼做，
+  就像是宣告一個全域變數，也就是加入一個新的特性到全域物件中。
+
+  在 strict mode 中，call function（不是物件的 method），this === undefined。
+  若在 non-strict mode 中， this 往往是 global object.
+  In strict mode, functions invoked as functions (rather than as methods) have a this value of undefined. (In non-strict mode, functions invoked as functions are always passed the global object as their this value.) This difference can be used to determine whether an implementation supports strict mode:
+    var hasStrictMode = (function(){
+      "use strict";
+      return this === undefined;
+    })();
+
+  其他：
+    不能在 strict mode 中，在 物件中不能重複宣告同樣名稱的變數。
+
+
+  我認為很重要的一點：
+    在 strict mode 中，傳入 function 得值會有一份靜態複件 (static copy)存於函式中
+    的 argument。
+    在 non-strict mode 中：
+    elements of the array and named function parameters both refer to the same value.
+
+
+
+
+Form MDN:
+  1. strict mode eliminates some JavaScript silent errors by changing them to throw errors
+
+  2. strict mode fixes mistakes that make it difficult for JavaScript engines to perform optimizations:
+    strict mode code can sometimes be made to run faster than identical code that's not strict mode
+
+
+  3. strict mode prohibits some syntax likely to be defined in future versions of ECMAScript

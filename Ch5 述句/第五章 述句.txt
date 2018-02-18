@@ -1,0 +1,32 @@
+第五章 述句
+      Statements
+
+Chapter 4 described expressions as JavaScript phrases. By that analogy, statements are JavaScript sentences or commands. Just as English sentences are terminated and separated from each other with periods, JavaScript statements are terminated with semicolons (§2.5). Expressions are evaluated to produce a value, but statements are executed to make something happen.
+
+Expressions 被 evaluated 進而產生一個值，而 statements 是被 executed，進而使的某些事情發生
+
+expression statements:
+  具有副作用的運算式，如指定或函式調用（such as assignments and function invocations），可以自成一個述句
+
+declaration statements:
+  用來宣告新變數或定義新函式
+
+
+By default, the JavaScript interpreter executes these statements one after another in the order they are written. 
+Another way to “make something happen” is to alter this default order of execution, 
+and JavaScript has a number of statements or control structures that do just this:
+
+預設 JavaScript 執行 statements 的方式一個接一個依序執行。
+其他讓 something happen 的方式就是交換順序執行
+JavaScript 有幾個述句或控制結構就是用來這麼做的
+  Condidtionals: if switch
+
+  Loops: while for
+
+  Jumps: break return throw
+
+
+A JavaScript program is simply a sequence of statements, 
+separated from one another with semicolons, 
+so once you are familiar with the statements of JavaScript, 
+you can begin writing JavaScript programs.

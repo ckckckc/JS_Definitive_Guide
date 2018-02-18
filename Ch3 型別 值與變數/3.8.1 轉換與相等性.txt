@@ -1,0 +1,13 @@
+3.8.1 轉換與相等性
+      Conversions and Equality
+
+null == undefined // These two values are treated as equal.
+
+"0" == 0          // String converts to a number before comparing.
+
+0 == false        // Boolean converts to number before comparing.
+
+"0" == false      // Both operands convert to numbers before comparing.
+
+
+JavaScript operators and statements expect values of various types, and perform conversions to those types. 

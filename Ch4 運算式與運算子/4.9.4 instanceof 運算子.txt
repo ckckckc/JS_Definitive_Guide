@@ -1,0 +1,46 @@
+4.9.4 instanceof 運算子
+      The instanceof Operator
+
+語法：
+  物件 instanceof 函式
+  object instanceof function
+
+  如果左側不是物件，則 instanceof 回傳 false
+  如果右側不是 function 型別，則會產生 TypeError
+
+The instanceof operator expects a left-side operand that is an object and a right-side operand that identifies a class of objects.
+
+The operator evaluates to true if the left-side object is an instance of the right-side class and evaluates to false otherwise.
+
+in JavaScript, classes of objects are defined by the constructor
+function that initializes them.
+
+範例：
+  var d = new Date();   // Create a new object with the Date() constructor
+  d instanceof Date;    // Evaluates to true; d was created with Date()
+  d instanceof Object;  // Evaluates to true; all objects are instances of Object 
+  d instanceof Number;  // Evaluates to false; d is not a Number object
+
+  var a = [1, 2, 3];    // Create an array with array literal syntax
+  a instanceof Array;   // Evaluates to true; a is an array
+  a instanceof Object;  // Evaluates to true; all arrays are objects
+  a instanceof RegExp;  // Evaluates to false; arrays are not regular expressions
+
+所有物件都是 Object 的 instance
+但是我發現 null 並不是 Object 的 instance
+  typeof null // object
+
+要了解 instanceof 必須先了解 JavaScript 繼承的機制：prototype chain
+這在 6.2.2 節會描述
+
+To evaluate the expression:
+  o instanceof f
+
+JavaScript evaluates f.prototype, 
+and then looks for that value in the prototype chain of o. 
+If it finds it, then o is an instance of f (or of a superclass of f) and the operator returns true. 
+If f.prototype is not one of the values in the prototype chain of o, 
+then o is not an instance of f and instanceof returns false.
+
+
+

@@ -1,0 +1,13 @@
+4.7.2 運算元與結果型別
+      Operand and Result Type
+
+JavaScript 運算子會在需要的時候轉換他們運算元的型別
+* 運算子會預期數字為運算元，但是 "3" * "5" 仍合法，
+因為 JavaScript 能夠把這些運算元轉為數字，
+當然此運算式的值為 15，並非字串 "15"。
+
+每個 JavaScript 要不是 truthy 就是 falsy，
+所以預期 boolean 運算元的運算子可以作用在任何型別的運算元之上
+Remember also that every JavaScript value is either “truthy” or “falsy,” 
+so operators that expect boolean operands will work with an operand of any type.
+

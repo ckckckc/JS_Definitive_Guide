@@ -1,0 +1,3 @@
+6.8 Object Attributes
+
+每個物件都有關聯的 prototype class extensible attributes，這節說明這三種 Object attributes 用處。

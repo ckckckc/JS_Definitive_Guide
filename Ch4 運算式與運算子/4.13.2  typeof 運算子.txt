@@ -1,0 +1,38 @@
+4.13.2  typeof 運算子
+        The typeof Operator
+
+typeof 是個放在單一運算元之前的一元運算子
+他產生的值是個用來指明運算型別的字串
+
+作用是拿來區分 物件 及 基本型別
+
+注意 typeof null // "object"
+
+x                   typeof
+undefnied           "undefined"
+null                "object"
+true or false       "boolean"
+NaN or any number   "number"
+任何字串             "string"
+任何函式             "function"
+任何非函式的原生物件   "object"
+任何 host 物件       一個實作所定義的字串，但不是 "undefined" "boolean" "number" 
+                    或 "string"
+
+會看到的情況
+  (typeof value == "string") ? "'" + value + "'" : value
+
+  typeof 與 switch 並用時也很實用
+
+可以用括號圍住 typeof 的運算元，讓 typeof 看起來像是個函式名稱，而不相運算子關鍵字：
+  typeof(i)
+
+為了區分物件的類別，必須使用別的技巧：
+  4.9.4       instanceof
+  6.8.2       class
+  6.8.1 9.2.2 constructor
+
+
+雖然 JavaScript 中的函式也是一種物件，typeof 運算子認為函式有足夠的差異，
+應該有自己的回傳值。
+對 JavaScript 來說，函式與 可呼叫物件 之間有微妙的差異(8.7.7)

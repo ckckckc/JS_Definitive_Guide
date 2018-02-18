@@ -1,0 +1,63 @@
+5.4.3 switch
+
+if statement 可以產生流程上的分支，而 else if 可以產生更多的分支。
+若所有的分支都是依據同一個 expression （運算式），這樣會造成重複估算的浪費，
+因此 if statement 並非最佳解，
+
+switch 就是這種情形的最佳解，
+語法：
+一對 () 裡面放入一個 expression，後面接者大括號包住的 code block:
+
+  switch(expression) {
+    statements
+  }
+
+
+事實上完整的 switch 更複雜，許多地方都有 case 關鍵字，後面接者一個 expression 還有一個分號
+
+  case expression :
+
+
+case 提供後面的 expression 至 switch 的關連性
+
+當 switch 執行時，他會估算 expression 而且尋找 case 後面相對應的 case，
+相對應的條件是根據 === 運算子作判斷，如果有找到就執行 case 對應的 code block，
+如果沒有找到同值的 case ，他就會改找 statement labeled default:，
+如果沒有 default:
+這個 switch statement 就會跳過整塊 code block
+
+switch 中的 break statement：
+  會使直譯器跳至 switch 的尾端，並接者執行 switch 之後的 statement
+
+switch 中的 case clauses 只有表示 starting point ，並沒有表示任何 ending point，
+如果沒有 break statement， switch 就會從 match expression 的 case 標籤開始執行，
+接者執行後續的 statement 直到 switch statement 的尾端為止。
+
+在 function 中使用 switch 可以使用 return 而不是 break 來結束 switch statement，
+這時候 break 跟 return 都可以防止繼續執行下一個 case。
+
+ECMA 標準允許每個 case 後面接者任何 expression。
+
+詳細 switch 執行方式：
+The switch statement first evaluates the expression that follows the switch keyword and then evaluates the case expressions, in the order in which they appear, until it finds a value that matches. The matching case is determined using the === identity operator, not the == equality operator, so the expressions must match without any type conversion.
+
+The fact that the case expressions are evaluated at run-time makes the JavaScript switch statement much different from (and less efficient than) the switch statement of C, C++, and Java. In those languages, the case expressions must be compile-time constants of the same type, and switch statements can often compile down to highly efficient jump tables.
+
+並不是所有的 case expression 每一次都會被 evaluated，
+因此你必須避免使用有副作用的 expression 像是 function calls or assignments，
+最安全的的方式就是限制 case expression 為 constant expression。
+
+default: 出現的位置在 the end of the switch body，following all case labels ，
+這是一個符合邏輯且常見的放置位置，但是，
+他其實可以出現在 switch 中的任何位置。
+
+
+
+
+
+
+
+
+
+
+

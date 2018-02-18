@@ -1,0 +1,19 @@
+3.9.1 重複與省略的宣告
+      Repeated and Omitted Declarations
+
+重複宣告
+使用 var 重複宣告一個變數兩次是 ok 的
+如果重複宣告的敘述句中有設訂出使值
+他就單純被視為指定(assignment statement)敘述句
+
+省略宣告
+如果讀取一個沒有使用 var 宣告的變數值，會產生錯誤
+
+在 ECMAScript 5 strict 模式中
+it is also an error to assign a value to an unde- clared variable. 
+
+在 non-strict mode 中，如果給一的值給未宣告的變數的話，
+他會做出類似在 global object 下產生一個 property 的值得行為
+Historically, however, and in non-strict mode, if you assign a value to an undeclared variable, JavaScript actually creates that variable as a property of the global object, and it works much like (but not exactly the same as, see §3.10.2) a property declared global variable.
+
+這代表不宣告全域變數一樣可以產生全域變數的 property，但是這是一個會導致 bug 來源產生的壞習慣

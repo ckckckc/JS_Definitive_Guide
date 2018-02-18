@@ -1,0 +1,33 @@
+4.4 特性存取運算式
+    Property Access Expressions
+
+JavaScript defines two syntaxes for property access:
+  expression.identifier
+  expression[ expression ]
+
+
+var o = {x:1,y:{z:3}};  // An example object
+var a = [o,4,[5,6]];    // An example array that contains the object 
+o.x                     // => 1: property x of expression o
+o.y.z                   // => 3: property z of expression o.y
+o["x"]                  // => 1: property x of object o 
+a[1]                    // => 4: element at index 1 of expression a
+a[2]["1"]               // => 6: element at index 1 of expression a[2]
+a[0].x                  // => 1: property x of expression a[0]
+
+用 . 來存取 property
+  先 evaluated . 之前的表示式，如果是 null 或 undefined ，就會 throw TypeError，因為這兩個值沒有 property，如果之前的表示式不是物件，他會把他轉成物件
+  如果 . 後面的的 value 可以在 . 之前的物件中找到，就能存取到對應的值
+
+With either type of property access expression, the expression before the . or [ is first evaluated. If the value is null or undefined, the expression throws a TypeError, since these are the two JavaScript values that cannot have properties. If the value is not an object (or array), it is converted to one (see §3.6). If the object expression is followed by a dot and an identifier, the value of the property named by that identifier is looked up and becomes the overall value of the expression.
+
+用 [] 來存取 property
+  先 evaluated [] 之前的表示式，如果是 null 或 undefined ，就會 throw TypeError，因為這兩個值沒有 property，如果之前的表示式不是物件，他會把他轉成物件
+  接著 evaluate [] 之中的 expression
+  將該 expression 轉為字串
+  如果 [] 後面的的 字串 可以在 [] 之前的物件中找到，就能存取到對應的值
+ If the object expression is followed by another expression in square brackets, that second expression is evaluated and converted to a string. The overall value of the expression is then the value of the property named by that string. 
+
+在兩個存取方式中，如果 property name 不存在，就會得到 undefined 
+ In either case, if the named property does not exist, then the value of the property access expression is undefined.
+

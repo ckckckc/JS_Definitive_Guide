@@ -1,0 +1,76 @@
+6.6 Property Getters and Setters
+
+之前物件中的的 key value 所組成的 property ，在 ECMAScript 5 中，可以用一個或兩個方法來替代那個 value 也就是 getter 跟 setter，由 getter 與 setter 定義的 property 有時稱為 accessor properties （to distinguish them from data properties that have a simple value）。
+
+使用時機：Sometimes it is desirable to allow access to a property that returns a dynamically computed value, or you may want to reflect the status of an internal variable without requiring the use of explicit method calls. 
+
+（這節只有示範使用 object literal 的方式定義 accessor property。）
+
+關於 accessor property:
+  Accessor properties do not have a writable attribute as data properties do.
+
+  If a property has both a getter and a setter method, it is a read/write property. 
+
+  If it has only a getter method, it is a read-only property.
+
+  If it has only a setter method, it is a write-only property (something that is not possible with data properties) and attempts to read it always evaluate to undefined.
+
+  Accessor properties are inherited, just as data properties are.
+
+
+下面例子中的 radius 和 theta 即是 accessor property:
+
+var Point = {
+  x: 1,
+  y: 1,
+  // radius is a read-write accessor property with getter and setter.
+  get radius() {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+  },
+  set radius(radius) {
+    console.log(this);
+    var oldRadius = Math.sqrt(this.x * this.x + this.y * this.y);
+    var ratio = radius / oldRadius;
+    // console.log(ratio);
+    this.x *= ratio;
+    this.y *= ratio;
+    console.log(this);
+  },
+  // theta is a read-only accessor property with getter only.
+  get theta() {
+    return Math.atan2(this.y, this.x);
+  },
+};
+
+其他使用情境：檢查寫入是否正常，當取得值得時候同時重新調整值。
+
+例如：
+// This object generates strictly increasing serial numbers
+var serialnum = {
+  // This data property holds the next serial number.
+  // The $ in the property name hints that it is a private property.
+  $n: 0,
+  get next() {
+    return this.$n ++;
+  },
+  // Set a new value of n, but only if it is larger than current set next(n)
+  set next(n) {
+    if (n >= this.$n) this.$n = n;
+    else throw 'serial number can only be set to a larger value';
+  }
+};
+
+console.log(obj.$n)
+console.log(obj.next)
+console.log(obj.$n)
+
+其他例子，神奇的 random 物件：
+
+var random = {
+  // 0 ~ 16^2 不帶正負號的 8 位元整數 ( 2^8 = 2^4^2 = 16^2 )
+  get octet() { return Math.floor(Math.random() * 256); },
+  // 0 ~ 256^2 不帶正負號的 16 位元整數 ( 2^16 = 2^4^2^2 = 16^2^2 = 256^2 )
+  get unit16() { return Math.floor(Math.random() * 65536); },
+  // 16 位元帶正負號的整數
+  get int16() { return Math.floor(Math.random() * 65536) - 32768; },
+};

@@ -1,0 +1,18 @@
+Promise:
+處理非同步計算的物件
+The Promise object is used for asynchronous computations. A Promise represents an operation that hasn't completed yet, but is expected in the future.
+
+Promise 狀態：
+A Promise is in one of these states:
+
+pending: initial state, not fulfilled or rejected.
+fulfilled: meaning that the operation completed successfully.
+rejected: meaning that the operation failed.
+
+
+As the Promise.prototype.then() and Promise.prototype.catch() methods return promises, they can be chained—an operation called composition.
+
+Not to be confused with: Several other languages have mechanisms for lazy evaluation and deferring a computation, which they also call “promises” — e.g. Scheme. Promises in JavaScript represent processes which are already happening, which can be chained with callback functions. If you are looking to lazily evaluate an expression, consider the arrow function with no arguments: f = () => expression to create the lazily-evaluated expression, and f() to evaluate.
+
+
+Note: A promise is said to be settled if it is either fulfilled or rejected, but not pending. You will also hear the term resolved used with promises — this means that the promise is settled, or it is locked into a promise chain. Domenic Denicola's States and fates contains more details about promise terminology.

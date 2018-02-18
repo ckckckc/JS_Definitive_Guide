@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>3.4 null undefined</title>
+</head>
+<body>
+<ul>
+  <li>null 代表 沒有值存在 (the absence of a value)</li>
+  <li>typeof null === "object" // => true</li>
+  <li>null 自成一型別，而他自己是這個型別的唯一成員，他可被用來代表數字 字串或物件中的 沒有值 (no value)</li>
+  <li>JavaScript 還有一個代表 值不存在 的值：undefined</li>
+  <li>undefined 代表更深刻的不存 (absence)</li>
+  <li>
+    undefined case: 
+    <ul>
+      <li>尚未初始化的變數 </li>
+      <li>query 不存在的的物件特性或陣列</li>
+      <li>沒有回傳值的函式也會回傳 undefined</li>
+      <li>沒有給 argument 的函式 parameter 值</li>
+    </ul>
+  </li>
+  <li>typeof undefined === "undefined" // => true</li>
+  <li>null == undefined // => true</li>
+  <li>null === undefined // => false</li>
+  <li>undefined 視為代表系統層級的 非預期的 類似錯誤的 '沒有值'</li>
+  <li>null 代表程式層級的 正常的 預期中的 '沒有值'</li>
+  <li>如果要 assign 給變數或特性 property 貨船值給函式， null 幾乎總是正確的選擇</li>
+</ul>
+</body>
+</html>

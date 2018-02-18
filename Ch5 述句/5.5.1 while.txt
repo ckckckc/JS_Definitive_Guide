@@ -1,0 +1,19 @@
+5.5.1 while
+
+while(expression)
+  statement
+
+
+先估算 expression
+
+  若 expression 為 truthy 值，直譯器會跳回迴圈頂端，重複執行 statement
+
+  若 expression 為 falsy 值，直譯器就會跳過 statement
+
+
+ex:
+  var count = 0;
+  while (count < 10) {
+    console.log(count);
+    count++;
+  }

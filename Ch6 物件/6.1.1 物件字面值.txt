@@ -1,0 +1,31 @@
+6.1.1 物件字面值
+      Object Literals
+
+
+創建物件最簡單的方式，就是使用 obejct literal ，是一串逗點分隔的，並使用大括號圍住
+  var empty = {};
+
+  var point = { x:0, y:0 };
+  var point2 = { x:point.x, y:point.y+1 }; 
+  var book = {
+    "main title": "JavaScript",           // Property names include spaces,
+    'sub-title': "The Definitive Guide",  // and hyphens, so use string literals
+    "for": "all audiences",               // for is a reserved word, so quote
+    author: {                             // The value of this property is
+      firstname: "David",                 // itself an object. Note that
+      surname: "Flanagan"                 // these property names are unquoted.
+    } 
+  };
+
+在 ECMAScript5 中，不加引號的保留自也可以用為 property names，但在 ECMAScript3 中，作為 property 
+names 的保留字一定要加上引號。
+
+在 ECMAScript5 和大多數 ECMAScript3 中，物件字面值最後一個特性後面接的逗號會被忽略，
+但 IE 將之視為錯誤。
+
+物件字面值在每次被估算時都會創建、初始化一個新的物件，
+每個特性的值在每次估算字面值的時候都會被估算。
+這表示如果出現在迴圈主體，
+單一物件字面值也會創建許多心物件，
+其中每個物件的特性質可能彼此不同。
+

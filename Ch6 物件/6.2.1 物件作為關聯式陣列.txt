@@ -1,0 +1,10 @@
+6.2.1 物件作為關聯式陣列
+      Objects As Associative Arrays
+
+使用 . 與 idenifier: 靜態資料欄 static field
+使用 [ expression ]: 看起來就像是陣列存取，但是陣列的 index 是字串而非數字，這種陣列稱為關聯式陣列。
+
+var addr = "";
+for ( i = 0; i < 4 ; i++)
+  addr += customer["addrdress" + i] + '\n';
+

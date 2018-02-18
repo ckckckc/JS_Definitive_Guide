@@ -1,0 +1,42 @@
+4.8.1 + 運算子
+      The + Operator
+
++ 的轉換規則讓字串串街有較高的優先權：
+只要有任一個運算元是字串，
+或者是可以轉成字串的物件，
+那麼另外一個運算元就被轉為字串，
+然後進行串接。
+
+加法只在想個運算元都不相字串時進行。
+
+The conversions rules for + give priority to string concatenation: 
+  if either of the operands is a string or an object that converts to a string, the other operand is converted to a string and concatenation is performed.
+  Addition is performed only if neither operand is string-like.
+
+Technically, the + operator behaves like this:
+1.  如果有任一個運算元值為物件，使用 3.8.3 節中描述的 object-to-primitive
+    演算法將之轉為 primitive:
+      Date 使用 toString() 方法轉換，
+      所有其他的物件藉由  valueOf() 轉換，如果該方法回傳的是 primitive。
+      然而大多數物件沒有實用的 valueOf() 方法，所以他們也是藉由 toString() 來轉換
+2.  在 object-to-primitive 轉換後，如果有認一個運算元是字串，
+    另一個也會被轉為字串，然後串接在一起
+3.  否則，兩個運算元都被轉成數字(或 NaN)，然後相加
+
+ex:
+1 + "2"       // => "12": concatenation after number-to-string
+1 + {}        // => "1[object Object]": concatenation after object-to-string({}.toString = [object Object])
+true + true   // => 2: addition after boolean-to-numbe
+2 + null      // => 2: addition after null converts to 0
+2 + undefined // => NaN: addition after undefined converts to NaN
+
+如果 + 同時運用在字串與數字上，他可能不具加法的結合性(associative)，
+也就是說，結果值取決於運算執行的順序
+ex:
+  1 + 2 + " blind mice"   // => "3 blind mice"
+  1 + (2 + " blind mice") // => "12 blind mice"
+
+The first line has no parentheses, and the + operator has left-to-right associativity, so the two numbers are added first, and their sum is concatenated with the string. 
+In the second line, parentheses alter this order of operations: 
+  the number 2 is concatenated with the string to produce a new string. 
+  Then the number 1 is concatenated with the new string to produce the final result.

@@ -1,0 +1,50 @@
+4.10.1  邏輯 AND (&&)
+        Logical AND (&&)
+
+At the simplest level, when used with boolean operands, && performs the Boolean AND operation on the two val- ues: it returns true if and only if both its first operand and its second operand are true. If one or both of these operands is false, it returns false.
+
+At the simplest level, when used with boolean operands, && performs the Boolean AND operation on the two val- ues: it returns true if and only if both its first operand and its second operand are true. If one or both of these operands is false, it returns false.
+
+The second level at which && can be understood is as a Boolean AND operator for truthy and falsy values. If both operands are truthy, the operator returns a truthy value. Otherwise, one or both operands must be falsy, and the operator returns a falsy value. In JavaScript, any expression or statement that expects a boolean value will work with a truthy or falsy value, so the fact that && does not always return true or false does not cause practical problems.
+
+&& for Truthy and falsy:
+
+如果兩個都是 Truthy
+則回傳 truthy value
+
+如果其中一個或兩個是 Falsy
+則回傳 falsy value
+
+在 JavaScript 中，
+任何期待 boolean 值的運算式都可以用 truthy 跟 falsy 值運作
+
+
+Notice that the description above says that the operator returns “a truthy value” or “a falsy value,” but does not specify what that value is. For that, we need to describe && at the third and final level.
+
+關於 && 回傳值：
+
+  falsy && (truthy or falsy)
+
+    先估算左側而得知 falsy 後，
+    && 回傳 左側的 falsy 值，
+    而且此時右側的表示式不會被執行
+
+  truthy && (truthy or falsy)
+
+    先估算左側而得知 truthy 後，
+    接者估算右側的 (truthy or falsy)
+    && 回傳 右側的 (truthy or falsy) 值
+
+
+var o = { x : 1 };
+var p = null;
+o && o.x            // => 1: o is truthy, so return value of o.x
+p && p.x            // => null: p is falsy, so return it and don't evaluate p.x
+
+
+&& 這種行為有時被稱為 短路(short circuiting)
+下面兩個有相同的效果
+
+if (a == b) stop(); // Invoke stop() only if a == b 
+(a == b) && stop(); // This does the same thing
+

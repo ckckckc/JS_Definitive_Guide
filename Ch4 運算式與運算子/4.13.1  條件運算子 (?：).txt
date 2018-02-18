@@ -1,0 +1,7 @@
+4.13.1  條件運算子 (?:)
+        The Conditional Operator
+
+x > 0 ? x : -x    // x 的絕對值 (absolute value)
+
+永遠只有第二個或第三個運算元其中一個會被估算，
+不會兩個都被估算

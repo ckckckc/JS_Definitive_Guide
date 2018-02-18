@@ -1,0 +1,11 @@
+5.5.2 do/while
+
+do
+  statement
+while (expression);
+
+類似 while 迴圈，但是迴圈運算是在迴圈底部才被 tested，而非在頂部。
+意即，迴轉體至少執行一次
+
+和 while 語法上的差異：
+There are a couple of syntactic differences between the do/while loop and the ordinary while loop. First, the do loop requires both the do keyword (to mark the beginning of the loop) and the while keyword (to mark the end and introduce the loop condition). Also, the do loop must always be terminated with a semicolon. The while loop doesn’t need a semicolon if the loop body is enclosed in curly braces.

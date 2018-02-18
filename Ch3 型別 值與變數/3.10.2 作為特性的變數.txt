@@ -1,0 +1,28 @@
+3.10.2  作為特性的變數
+        Variables As Properties
+
+
+宣告一個全域變數，實際上就是定義 global object 的一個 property
+
+如果用 var 宣告 global propety 則創建的 property 會是 nonconfigurable
+代表他是不可以用 delete 運算子刪除的
+
+如果沒有在 strict 模式下將值指定給一個位宣告的變數
+JavaScript 會自動創建一個全域變數。
+這種創建的變數是該全域物件的 regular configurable property
+他可以被刪除
+
+var a = 1;
+b = 2;
+this.c = 3;
+
+delete a;   // false 變數沒有被刪除
+delete b;   // true 變數被刪除
+delete c;   // true 變數被刪除
+
+全域變數是全域物件的 property，這是 ECMAScript 規格要求的
+
+區域變數沒有這個要求，但是可以想像每次函式調用時，會有一個相關的物件，而區域變數就是這個物件的 property
+ECMAScript 3 規格把這個物件稱為 call object
+ECMAScript 5 specification call 這個物件為 “declarative environment record.”
+

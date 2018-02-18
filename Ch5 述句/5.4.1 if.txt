@@ -1,0 +1,82 @@
+5.4.1 if
+
+if => execute statements conditionally
+
+The if statement is the fundamental control statement that allows JavaScript to make decisions, or, more precisely, to execute statements conditionally.
+
+if 有兩種形式：
+一：
+  if (expression)
+    statement
+
+  圓括號包圍 expression 是 if statement 中必須的
+
+  In this form, expression is evaluated. If the resulting value is truthy, statement is exe- cuted. If expression is falsy, statement is not executed. (See §3.3 for a definition of truthy and falsy values.) For example:
+
+    if (username == null)     // If username is null or undefined, 
+      username = "John Doe";  // define it
+
+  Or similarly:
+
+    if (!username) username = "John Doe";
+    // If username is null, undefined, false, 0, "", or NaN, give it a new value 
+
+  JavaScript 語法要求 if 與被括號包住的運算式後是一個單一述句，
+  但你可以用述句區塊將多個述句組成一個：
+  if (!address) { 
+    address = "";
+    message = "Please specify a mailing address."; 
+  }
+
+二：
+  The second form of the if statement introduces an else clause that is executed when expression is false. Its syntax is:
+
+  if (expression) 
+    statement1
+  else
+    statement2
+
+  ex:
+    if (n == 1)
+      console.log("You have 1 new message.");
+    else
+      console.log("You have " + n + " new messages.");
+
+  常見錯誤使用 else 方式：
+
+  i = j = 1; 
+  k = 2;
+  if (i == j)
+    if (j == k)
+      console.log("i equals k"); 
+  else
+    console.log("i doesn't equal j"); // WRONG!!
+
+  因為事實上 JavaScript 直譯器是這樣看，上面縮排方式反而是錯誤的：
+  i = j = 1; 
+  k = 2;
+  if (i == j) {
+    if (j == k)
+      console.log("i equals k"); 
+    else
+      console.log("i doesn't equal j"); // Oops!!
+  }
+
+  JavaScript 和多數常見的語言一樣， else 預設是最接近的 if statement 的一部分
+  The rule in JavaScript (as in most programming languages) is that by default an else clause is part of the nearest if statement. 
+
+  要避免這種錯誤，你應該使用大括號 {}
+
+  if (i == j) {
+    if (j == k)
+      console.log("i equals k"); 
+  }
+  else {
+    console.log("i doesn't equal j");
+  }
+
+  許多程式設計師會習慣把 if 與 else 述句連同其他複合述句如 while 的主體用大括號包起來，
+  就算主體僅由單一述句也是如此，養成這個習慣可以避免以上的錯誤。
+
+
+

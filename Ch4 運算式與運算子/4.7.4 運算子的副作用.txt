@@ -1,0 +1,11 @@
+4.7.4 運算子的副作用
+      Operator Side Effects
+
+=
+
+++ --
+
+delete
+=> assign the undefined to the property
+
+function invocation and object creation expressions will have side effects if any of the operators used in the function or constructor body have side effects.

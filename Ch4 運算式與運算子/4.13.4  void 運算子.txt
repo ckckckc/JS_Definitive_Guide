@@ -1,0 +1,16 @@
+4.13.4  void 運算子
+        The void Operator
+
+This operator is unusual and infrequently used: it evaluates its operand, then discards the value and returns undefined. Since the operand value is discarded, using the void operator makes sense only if the operand has side effects.
+
+他估算其運算元，然後丟棄結果值，回傳 undefined。
+既然運算元的值被丟棄，只有在運算元有副作用的情況下使用 void 才有意義
+
+最常用在客戶端 javascript:URL，他讓你僅位副作用而估算運算元，不會讓瀏覽器顯示估算出來的值。
+例如你可能在一個 HTML a tag 中使用 void 運算子
+
+<a href="javascript:void window.open();">Open New Window</a>
+
+當然，這個 HTML 可以用 onclick 事件處理氣來改寫，
+不用 javascript:URL，如此會更加清楚明白，
+而且不需要 void 運算子

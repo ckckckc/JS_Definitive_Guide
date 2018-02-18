@@ -1,0 +1,19 @@
+6.1.2 使用 new 創建物件
+      Creating Objects with new
+
+new 運算子創建並初始化新物件。
+
+new 關鍵字必須接者 function invocation。
+
+用這種方式的 function 稱為建構子 constructor，
+並用來初始化一個新的物件
+
+
+Core JavaScript includes built-in constructors for native types. For example:
+var o = new Object();
+var a = new Array();
+var d = new Date();
+var r = new RegExp("js"); // Create a RegExp object for pattern matching.
+
+除了使用內建的 constructor 創建新物件之外，
+定義自己的 constructor 來初始化新的物件也是很常見。

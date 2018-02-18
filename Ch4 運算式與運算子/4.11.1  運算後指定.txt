@@ -1,0 +1,24 @@
+4.11.1  運算後指定
+        Assignment with Operation
+
+total += sales_tax
+
+等於
+
+total = total + sales_tax
+
++= 可用於數字或字串。對數值運算元，他執行相加與指定，對於字串運算元，他進行字串與指定。
+
+a op= b
+
+通常和
+
+a = a op b
+
+相等，但是在第一行中， a 被估算了一次，第二行中他被估算了兩次
+
+ex:
+  data[i++] *= 2;
+  data[i++] = data[i++] * 2;
+
+這兩個指定就不相同。

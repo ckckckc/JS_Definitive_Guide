@@ -1,0 +1,9 @@
+4.3 函式定義運算式
+    Function Definition Expressions
+
+ A function definition expression typically consists of the keyword function followed by a comma-separated list of zero or more identifiers (the parameter names) in parentheses and a block of JavaScript code (the function body) in curly braces. 
+
+In a sense, a function definition expression is a “function literal” in the same way that an object initializer is an “object literal.”
+
+// This function returns the square of the value passed to it. 
+var square = function(x) { return x * x; }

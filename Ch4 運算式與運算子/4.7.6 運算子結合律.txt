@@ -1,0 +1,20 @@
+4.7.6 運算子結合律
+      Operator Associativity
+
+結合律 associativity
+
+
+左到右
+  w = x - y - z;
+
+  =>  w = ((x - y) - z);
+
+右到左
+    x = ~y;
+=>  x = ~(-y);
+
+    w = x = y = z
+=>  w = (x = (y = z));
+
+    q = a ? b : c ? d : e ? f : g;
+=>  q = a ? b : (c ? d : (e ? f : g));

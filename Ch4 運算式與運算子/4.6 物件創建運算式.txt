@@ -1,0 +1,41 @@
+4.6 物件創建運算式
+    Object Creation Expressions
+
+重點： object creatin exprsssion 創造物件的程序
+
+
+An object creation expression （物件創建運算式） 創造一個新的物件，而且調用一個 function （該 function 稱為 constructor 建構式）來初始化這個物件的 properties。
+Object creation expression 就像 invocation expressions 除了他多了 new 這個 prefix.
+An object creation expression creates a new object and invokes a function (called a constructor) to initialize the properties of that object. Object creation expressions are like invocation expressions except that they are prefixed with the keyword new
+
+ex:
+new Object() 
+new Point(2,3)
+
+如果在 object creation expression 沒有 arguments 要 passed to the constructor function ，
+這對空的 () 可以省略
+
+ex:
+new Object
+new Date
+
+1.  當 object creation expression 被估算的時候，JavaScript 先創造一個新的空物件
+    就像是一個被 object initializer created 的 {}
+
+2.  家接下來他 invokes 指定的 function 和給定的 arguments，傳入新的這個物件當作 this 的值
+    這個 function 可以用這個 this 來初始化這個新創的物件的 properties
+
+3.  用來當作 constructors 的 function do not return a value，接者這個
+    object creation expression 就是這個新創且經過初始化的 object 值
+
+    如果 constructor return 一個 object 值的話，那個 value 將變成 object creation expression 的值，而且新創的 object {} 會被捨棄
+
+1.  When an object creation expression is evaluated, JavaScript first creates a new empty object, just like the one created by the object initializer {}. 
+
+2.  Next, it invokes the specified function with the specified arguments, passing the new object as the value of the this keyword. The function can then use this to initialize the properties of the newly created object.
+
+3.  Functions written for use as constructors do not return a value, and the value of the object creation expression is the newly created and initialized object.
+    If a constructor does return an object value, that value becomes the value of the object creation expression and the newly created object is discarded.
+
+
+

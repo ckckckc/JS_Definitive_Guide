@@ -1,0 +1,40 @@
+22.4.2  Worker Scope
+
+JavaScript 會在一個新的，純淨的 JavaScript 執行環境中運行，
+完全隔離於創建該 worker 的 script，
+這個新環境的全域物件會是一個 WorkerGlobalScope 物件。
+
+WorkerGlobalScope 內含的功能比核心 JavaScript 的全域物件多點，
+但比功能完備的客戶端 Window 物件還要少一點。
+
+WorkerGlobalScope 具有一個 postMessage() 方法，
+及一個 onmessage 事件處理器特性，
+就像 Worker 物件所擁有的那些，
+不過他們的運作方向相反。
+
+close() 函式允許一個 woker 終止他自己，
+效用類似 Worker 物件的 terminate() 方法。
+然而 Worker 沒有 API 可以測試一個 worker 是否已經 close。
+
+如果在一個已經關閉的 worker 上呼叫 postMessage()，
+訊息無聲無息的忽略，
+也不會有錯誤。
+
+importScript():
+  workers 用這個函式載入任何他們需要的程式庫。
+
+  importScript("collecions/Set.js", "collections/Map.js", "utils/base64.js");
+
+  相對 URL 的解讀方式是相對於傳入 Worker 建構式的  URL。
+
+  他依序載入並執行這些檔案。
+  若載入 script 發生錯誤，
+  或執行時產生錯誤，
+  後續的 script 就不會載入或執行，
+  是個同步函式。
+
+
+WorkerGlobalScope 中的 location 是唯讀的，也可以使用 XMLHttpRequest()。
+
+
+

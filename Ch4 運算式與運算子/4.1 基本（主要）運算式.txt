@@ -1,0 +1,34 @@
+4.1 基本（主要）運算式
+    Primary Expressions  
+
+3.4 提到：
+undefined is a predefined global variable (not a language keyword like null) that is initialized to the undefined value.
+
+Primary expressions:
+The simplest expressions, known as primary expressions, are those that stand alone— they do not include any simpler expressions.
+
+常數或字面值
+constant or literal values:
+  Literals are constant values that are embedded directly in your program.
+
+  1.23        // A number literal
+  "hello"     // A string literal
+  /pattern/   // A regular expression literal
+
+某些 JavaScript 的保留字
+certain language keywords:
+  Some of JavaScript’s reserved words are primary expressions:
+
+  true    // Evalutes to the boolean true value 
+  false   // Evaluates to the boolean false value 
+  null    // Evaluates to the null value
+  this    // Evaluates to the "current" object
+
+運算式類型是變數參考型別
+variable references
+
+  i         // Evaluates to the value of the variable i.
+  sum       // Evaluates to the value of the variable sum.
+  undefined // undefined is a global variable, not a keyword like null.
+
+In the strict mode of ECMAScript 5, however, an attempt to eval- uate a nonexistent variable throws a ReferenceError instead.

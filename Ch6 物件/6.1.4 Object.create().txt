@@ -1,0 +1,81 @@
+6.1.4 Object.create()
+
+Object.create() 是靜態 (static) 函式，
+不是在個別物件上 invoked的 方法，
+要使用他，
+只需要把想要作為 prototype 的物件轉給他就行了：
+
+var o1 = Object.create({x:1, y:2}); // o1 繼承了特性 x 與 y
+
+可以傳 null 給 Object.create()，創建一個沒有 prototype 的新物件，
+但是這麼做的話，這個新創的物件什麼都不會繼承，
+甚至連 toString() 這種基本的方法都沒有，
+這代表這個新創的物件不能當作 + 運算子的運算元：
+You can pass null to create a new object that does not have a prototype, 
+but if you do this, the newly created object will not inherit anything, 
+not even basic methods like toString() 
+(which means it won’t work with the + operator either)：
+
+var o2  = Object.create(null);  // o2 inherits no props or methods.
+
+
+如果要創建一個普通的空物件就像 {} 或 new Object()回傳的一樣，
+傳入 Object.prototype
+If you want to create an ordinary empty object 
+(like the object returned by {} or new Object()), pass Object.prototype:
+
+var o3 = Object.create(Object.prototpye); // o3 is like {} or new Object().
+
+
+
+範例 6-1 Creating a new object that inherits from a prototype
+
+function inherit(p) {
+  // inherit() returns a newly created object that inherits properties from the 
+  // prototype object p. It uses the ECMAScript 5 function Object.create() if 
+  // it is defined, and otherwise falls back to an older technique.
+
+  if (p == null) throw TypeError(); // p must be a non-null object
+
+  if (Object.create)                // If Object.create() is defined...
+    return Object.create(p);        // then just use it.
+
+  var t = typeof p;                 // Otherwise do some more type checking
+
+  if (t !== 'object' && t !== 'function') throw TypeError();
+
+  function f() {}                   // Define a dummy constructor function.
+
+  f.prototype = p;                  // Set its prototype property to p.
+
+  return new f();                   // Use f() to create an "heir" of p.
+}
+
+
+inherit() 不能完全取代 Object.create() 
+  他不允許創建原型是 null 的物件
+
+  他也不像 Object.create() 能接受額外的第二個引數
+
+當你想要防止你不能控制的程式庫不經意的(但並非惡意)修改某個物件之時，
+inherit() function 就能派上用場：
+  不用直接把物件傳給函式庫，
+  可以傳給該物件的繼承者，
+  如果函式讀取繼承物件的特性，
+  他就能讀到繼承而來的值，
+  如果該函式庫設定某個特性，
+  只會影響到繼承者，
+  而非原本物件：
+
+  var o = {x: "don't change this value"};
+
+  library_function(inherit(o));   // Guard against accidental modifications of o
+
+使用 Object.create 也可以在第二個參數傳入 property descriptor 物件。
+
+1. Douglas Crockford is generally credited as the first to propose a function that creates objects in this way. 
+See http://javascript.crockford.com/prototypal.html.
+
+
+
+

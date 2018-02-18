@@ -1,0 +1,61 @@
+3.10.3  範疇鏈
+        The Scope Chain
+很玄很抽象
+
+JavaScript 是一個 lexically scoped 語言
+the scope of a variable can be thought of as the set of source code lines for which the variable is defined.
+
+全域變數 throughout the program 都有定義
+區域變數 throughout the function in which they are declared 還有巢狀內的函式都有定義
+Local variables are defined throughout the function in which they are declared, and also within any functions nested within that function.
+
+
+Every chunk of Java- Script code (global code or functions) has a scope chain associated with it. 
+This scope chain is a list or chain of objects that defines the variables that are “in scope” for that code.
+When JavaScript needs to look up the value of a variable x (a process called variable resolution), it starts by looking at the first object in the chain.
+If x is not a property of any of the objects in the scope chain, then x is not in scope for that code, and a ReferenceError occurs.
+
+如果第一個 object 沒找到 x property，他就會再找第二個 object。。。
+直到找到有 x property 的 object
+如果這個 scope chain 中， x 不是任何一個  object 的 property ，
+那麼 x 不在這段 code 的 scope 中，即產生 RefereceError
+
+In top-level JavaScript code (i.e., code not contained within any function definitions), 
+the scope chain consists of a single object, the global object.
+
+在最頂層的 JavaScript code （及沒有被包含在任何 function 定義內的程式碼）中，
+這個 scope chain 由一個 object 組成，那個 object 就是 global object.
+
+在沒有內存巢狀 function 的 function 中，
+這個 scope chain 由兩個 object 組成，
+第一個 object 就是定義這個 function 參數和區域變數的 object，
+第二個就是 global object.
+
+而 nested function 的 scope chain 就有三個以上的 object 組成。
+
+重點：了解 chain of objects 是如何組成的
+
+當 function 定義時，他會保存當時有效的 scope chain
+When a function is defined, it stores the scope chain then in effect.
+
+當 call function 時， 
+JavaScript 做了這些事
+  1. 產生一個新的 object 
+  2. 新的 object 儲存這個 function 的 local 變數
+  3. 將新的 object 加入保存的 scope chain
+
+這個 chain 是來表示 call function 的 scope
+
+When that function is invoked, it creates a new object to store its local variables, and adds that new object to the stored scope chain to create a new, longer, chain that represents the scope for that function invocation.
+
+當 nested function 時：
+每當 outer function 被 called ，
+inner function 將會重新被定義一次
+由於 scope chain 會因為 outer function 每次在不同的 called 而不同，
+inner function 的定義每一次將會微微的不同
+（雖然每次 inner function 的 code 長一樣，但是參照到 inner function 的 scope chain 將會每次都不同）
+
+This becomes more interesting for nested functions because each time the outer function is called, the inner function is defined again. 
+Since the scope chain differs on each invocation of the outer function, the inner function will be subtly different each time it is defined—the code of the inner function will be identical on each invocation of the outer function, but the scope chain associated with that code will be different.
+
+

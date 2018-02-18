@@ -1,0 +1,33 @@
+22.4.1  Worker Objects
+
+用 Worker() 建構式創造新的 worker
+
+傳入 URL 指定要給 worker 執行的程式碼：
+  ex:
+    var loader = new Worker("utils/loader.js");
+
+  如果 URL 是相對路徑，他的解讀方式是包含呼叫 Worker() 建構式的 script。
+  如果 URL 是絕對路徑，他必須是 same origin (same protocol, host, and port)
+
+
+  可以透過 postMessage() 傳送資料給它，傳送的值會被 deep clone
+
+  可以 listening for message event on the Worker object
+
+  worker.onmessage = function(e) {
+    var message = e.data;                     // Get message from event
+    console.log("URL contents: " + message);  // Do something with it
+  }
+
+  如果 worker throws an exception，而且沒有自己處理他，你可以監聽這個 exceptioin
+
+  worker.onerror = function(e) {
+    // Log the error message, including worker filename and line number
+    console.log("Error at " + e.filename + ":" + e.lineno + ": " + 
+                e.message);
+  }
+
+  如果想要處理多個事件處理器可以用 addEventListener/removeEventListener 
+  取代 onmessage 與 onerror
+
+  terminate() 可以強迫一個 worker thread 停止執行。

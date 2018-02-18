@@ -1,0 +1,11 @@
+4.7.1 運算元數目
+      Number of Operands
+
+一元（unary operators）運算子
+  -對 x 進行變號
+
+二元（binary operators）運算子
+  * 將兩個運算式結合為一個更為複雜的運算式
+
+三元（ternary operator）運算子
+  ? : 將三個運算式結合為一個

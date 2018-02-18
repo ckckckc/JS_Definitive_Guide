@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>3.7 Immutable Primitive Values and Mutable Object References</title>
+</head>
+<body>
+<ul>
+  <li>基本型別(primitive types): number string boolean 其中包含特殊值(special JavaScript value): null undefined</li>
+  <li>不為基本型別的皆為物件 object</li>
+  <li>基本行別是不能被更變的. </li>
+  <li>Primitives are immutable: there is no way to change (or “mutate”) a primitive value.</li>
+  <li>字串在被更動後回傳的是新字串，原本的還是沒有更改. </li>
+  <li>Since strings are like arrays of characters, you might expect to be able to alter the character at any specified index. In fact, JavaScript does not allow this, and all string methods that appear to return a modified string are, in fact, returning a new string value.</li>
+  <li>
+    <pre>
+      <code>
+        var s = "hello"; // Start with some lowercase text
+        s.toUpperCase(); // Returns "HELLO", but doesn't alter s
+        s                // => "hello": the original string has not changed
+      </code>
+    </pre>
+  </li>
+  <li>基本型別之間用值(value)相比：只有在具有相同的值時，兩個值才相等</li>
+  <li>Primitives are also compared by value: two values are the same only if they have the same value.</li>
+  <li>如果兩個字串相比，只有在他們的長度相等，而且書方同一引索位置上的字元都相同時 JavaScript 才將他們視為相等</li>
+  <hr>
+  <li>物件 object 是可以改變的 (mutable)</li>
+  <li>
+    <pre>
+      <code>
+        var o = { x:1 };  // Start with an object
+        o.x = 2;          // Mutate it by changing the value of a property
+        o.y = 3;          // Mutate it again by adding a new property
+
+        var a = [1,2,3]   // Arrays are also mutable
+        a[0] = 0;         // Change the value of an array element 
+        a[3] = 4;         // Add a new array element
+      </code>
+    </pre>
+  </li>
+  <li>物件並不用值相比，就算兩個物件有相同的特性與值，他們也不相等</li>
+  <li>Objects are not compared by value: two objects are not equal even if they have the same properties and values.</li> 
+  <li>兩個陣列就算有同樣的元素，並且同樣的順序排列，也不相等</li>
+  <li>two arrays are not equal even if they have the same elements in the same order</li>
+  <li>物件被稱為參考型別(reference types)</li>
+  <li>物件是用 參考(by reference) 相比：兩個物件值只有在他們都 涉至(refer to) 同一個底層物件時，才相等</li>
+  <li>object values are references, and we say that objects are compared by reference: two object values are the same if and only if they refer to the same underlying objec</li>
+  <li>
+    <pre>
+      <code>
+        var a = []; // The variable a refers to an empty array.
+        var b = a;  // Now b refers to the same array.
+        b[0] = 1;   // Mutate the array referred to by variable b.
+        a[0]        // => 1: the change is also visible through variable a.
+        a === b     // => true: a and b refer to the same object, so they are equal.
+      </code>
+    </pre>
+  </li> 
+  <li>將一個物件或陣列指定給一個變數，只是把那個物件的參考指定給變數：這並沒有創建一份該物件的複製品</li>
+  <li>assigning an object (or array) to a variable simply assigns the reference: it does not create a new copy of the object.</li>
+  <hr>
+  <li>如果想要製作一個物件或陣列的複製品，比需明確的複製 (copy)，該物件的特性，或是該陣列的元素。</li>
+  <li>If you want to make a new copy of an object or array, you must explicitly copy the properties of the object or the elements of the array.</li>
+  <hr>
+  <li>如果要比較兩個個別的物件或陣列，我們必須比較他們的特性或元素</li>
+  <li>Similarly, if we want to compare two distinct objects or arrays, we must compare their properties or elements.</li>
+</ul>
+</body>
+</html>

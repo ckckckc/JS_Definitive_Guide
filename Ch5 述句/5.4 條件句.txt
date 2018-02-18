@@ -1,0 +1,6 @@
+5.4 條件句
+    Conditionals
+
+Conditional statements execute or skip other statements depending on the value of a specified expression.
+
+These statements are the decision points of your code, and they are also sometimes known as “branches.”

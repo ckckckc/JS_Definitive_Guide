@@ -1,0 +1,37 @@
+4.13.5  逗號運算子(,)
+        The Comma Operator (,)
+
+逗號運算子是二元運算子，他的運算元可以是任何型別。
+他估算其左運算元，
+估算右運算元，
+然後回傳右運算元的估算值。
+
+ex:
+
+i = 0, j = 1, k = 2;
+
+的估算結果為 2，而且基本上等同於
+
+i = 0; j = 1; k = 2;
+
+左手邊的運算式一定會被估算，
+但他的結果直會被丟棄，
+這代表只有在左手邊的運算是有副作用時，
+使用逗號運算子才有意義。
+
+The left-hand expression is always evaluated, 
+but its value is discarded, 
+which means that it only makes sense to use the comma operator when the left-hand expression has side effects.
+
+The only situation in which the comma operator is commonly used is with a for loop (§5.5.3) that has multiple loop variables:
+
+// 第一個逗號是 var 敘句語法的一部分
+// The first comma below is part of the syntax of the var statement
+
+// 第二個逗號是逗號運算子：他讓我們可以機兩個運算式 i++ 與 j-- 
+// 擠進預期單一運算式的敘句 for 迴圈中
+// The second comma is the comma operator: it lets us squeeze 2
+// expressions (i++ and j--) into a statement (the for loop) that expects 1. 
+
+for(var i=0,j=10; i < j; i++,j--)
+  console.log(i+j);

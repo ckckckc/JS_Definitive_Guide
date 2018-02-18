@@ -1,0 +1,14 @@
+6.1 創建物件
+    Creating Objects
+
+可以用三種方式創建物件：
+  object literals
+  物件字面值 (object literal)
+    var empty = {};
+
+  new keyword
+    var obj = new Object();
+
+  Object.create() function(ECMAScript 5)
+    var o1 = Object.create({x:1, y:2});
+

@@ -1,0 +1,7 @@
+5.3 宣告述句
+    Declaration Statements
+
+var 和 function 是 declaration statements
+  可用來定義程式的 identifiers (variable and function names)，
+  可以使其有值並用在程式其他地方
+  他創造了 variables 和 functions，更重要的是，他賦予了其他 述句(statements) 意義（meaning）

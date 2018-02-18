@@ -1,0 +1,37 @@
+5.2 複合述句與空述句
+    Compound and Empty Statements
+
+a statement block combines multiple statements into a single compound statement. 
+
+A statement block is simply a sequence of statements enclosed within curly braces.
+
+Thus, the following lines act as a single statement and can be used anywhere that JavaScript expects a single statement:
+{
+  x = Math.PI;
+  cx = Math.cos(x);
+  console.log("cos(π) = " + cx); 
+}
+
+注意：
+  {} 不用用分號結尾
+  縮排只是為了好讀，非必要
+  JavaScript 不具有 block scope
+  （JavaScript does not have block scope and variables declared within a statement block are not private to the block）
+
+用途
+  while loop syntax includes a single statement that serves as the body of the loop. Using a statement block, you can place any number of statements within this single allowed substatement.
+  複合述句容許你使用許多述句放在 JavaScript 語法預測為單一述句的地方
+  A compound statement allows you to use multiple statements where JavaScript syntax expects a single statement. 
+
+
+和 複合述句 相反的 空述句
+The empty statement is the opposite: it allows you to include no statements where one is expected. The empty statement looks like this:
+  ;
+
+The JavaScript interpreter takes no action when it executes an empty statement. The empty statement is occasionally useful when you want to create a loop that has an empty body. Consider the following for loop (for loops will be covered in §5.5.3):
+// Initialize an array a
+for(i = 0; i < a.length; a[i++] = 0) ;
+
+使用 空述句 的好習慣
+for(i = 0; i < a.length; a[i++] = 0) /* empty */ ;
+

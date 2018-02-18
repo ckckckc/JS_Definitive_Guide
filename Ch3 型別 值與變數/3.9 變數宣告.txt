@@ -1,0 +1,14 @@
+3.9 變數宣告
+    Variable Declaration
+
+使用變數前必須先宣告它
+Before you use a variable in a JavaScript program, you should declare it.
+
+可以用一個 var 關鍵字宣告多個變數:
+var i, sum;
+
+經宣告卻沒有初始化的變數值為 undefined
+If you don’t specify an initial value for a variable with the var statement, the variable is declared, but its value is undefined until your code stores a value into it.
+
+JavaScript 變數可以儲存任何型態的值，再更改儲存另一種型態的值到同一個變數是完全合法的
+A JavaScript variable can hold a value of any type. For example, it is perfectly legal in JavaScript to assign a number to a variable and then later assign a string to that variable

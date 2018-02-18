@@ -1,0 +1,17 @@
+6.2.3 Property Access Errors
+
+The null and undefined values have no properties, and it is an error to query properties of these values.
+null 與 undefined 沒有 property，查用這些值的特性會發生錯誤。
+
+// 簡潔的取得 subtitle length 或 undefined
+var len = book && book.subititle && book.subititle.length;
+
+嘗試在 null 和 undefined 上設定性會導致 TypeError，在其他設定特性也不一定都會成功：
+某些特性是唯讀的，不能設定，而某些物件不允許新增新的特性，有趣的是，這些註定失敗的嘗試通常都會無聲無息的失敗。
+
+An attempt to set a property p of an object o fails in these circumstances:
+  o has an own property p that is read-only: it is not possible to set read-only prop- erties. (See the defineProperty() method, however, for an exception that allows configurable read-only properties to be set.)
+  
+  o has an inherited property p that is read-only:it is not possible to hide an inherited read-only property with an own property of the same name.
+  
+  o does not have an own property p; o does not inherit a property p with a setter method, and o’s extensible attribute (see §6.8.3) is false. If p does not already exist on o, and if there is no setter method to call, then p must be added to o. But if o is not extensible, then no new properties can be defined on it.

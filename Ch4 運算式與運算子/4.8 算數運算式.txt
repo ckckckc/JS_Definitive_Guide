@@ -1,0 +1,24 @@
+4.8 算數運算式
+    Arithmetic Expressions
+
+介紹 + - * / %
+
+如果有任一個運算元是（或是被轉成） NaN，則該運算的結也會是 NaN
+
+在 JavaScript 中，
+所有數字都是浮點數，所有除法運算都產生浮點數值：
+5/2 = 2.5 不是 2
+ In JavaScript, however, all numbers are floating-point, so all division operations have floating-point results: 5/2 evaluates to 2.5, not 2.
+
+ 除以 0 產生正或負無限，
+ 但是 0/0為 NaN
+ 這兩種情況都不會有錯誤產生！
+
+%結果的正負號跟第一個運算元(operand)相同
+console.log(5%2);     => 1
+console.log(-5%2);    => -1
+console.log(5%-2);    => 1
+
+雖然 modulo % 運算子都用在整數運算元上，他也可以用在浮點數值上
+ex:
+  6.5%2.1   => 0.2(0.19999999999999973)

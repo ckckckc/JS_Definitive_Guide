@@ -1,0 +1,23 @@
+5.7.2 debugger
+
+debugger 在正常情況下什麼都不做，
+
+
+這個 statement 就像中斷點：
+In practice, this statement acts like a breakpoint: 
+  execution of JavaScript code stops and you can use the debugger to print variables’ values, examine the call stack, and so on.
+
+ex: 
+  function f(o) {
+    if(o === undefined) debugger; // Temporary line for debugging purposes
+                                  // The rest of the function goes here.
+  }
+
+Now, when f() is called with no argument, 
+execution will stop, 
+and you can use the debugger to inspect the call stack and find out where this incorrect call is coming from.
+
+ECMAScript 5 把 debugger 加到語言之中，但是主要的瀏覽器早就實作這個功能。
+Note that it is not enough to have a debugger available: the debugger statement won’t start the debugger for you. If a debugger is already running, however, this statement will cause a breakpoint. If you use the Firebug debugging extension for Firefox, for example, you must have Firebug enabled for the web page you want to debug in order for the debugger statement to work.
+
+（貌似要打開 console.log 才會引發這個 debugger）

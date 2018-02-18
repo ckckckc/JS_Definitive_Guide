@@ -1,0 +1,46 @@
+5.7.1 with
+
+The with statement is used to temporarily extend the scope chain. 
+It has the following syntax:
+  with (object) 
+    statement
+
+with statement 不能在 strict mode 中使用。
+在非 strict mode 中也該避免使用他。
+
+使用 with 的 JavaScript 程式碼：
+  難優化
+
+  速度很可能比不用 with statement 撰寫的等效程式碼還慢
+
+會想用他的地方
+
+document.forms[0].address.value
+
+如果要一直用到 document.forms[0] 可以這樣寫
+
+with(document.forms[0]) {
+  // Access form elements directly here. For example:
+  name.value = "";
+  address.value = "";
+  email.value = "";
+}
+
+要避免使用 with 也很簡單：
+var f = document.forms[0];
+f.name.value = "";
+f.address.value = "";
+f.email.value = "";
+
+Keep in mind that the scope chain is used only when looking up identifiers, not when creating new ones.
+
+Consider this code:
+  with(o) x = 1;
+
+如果 o 有 x property，那這段程式碼會把 1 給 x ，
+如果 o 沒 x，這段程式碼跟:
+x = 1;
+相同。
+意即，把 1 指定給 x 的區域或全域變數，或是創建一個全域物件的新 property。
+
+If the object o has a property x, then this code assigns the value 1 to that property. But if x is not defined in o, this code is the same as x = 1 without the with statement. It assigns to a local or global variable named x, or creates a new property of the global object. A with statement provides a shortcut for reading properties of o, but not for creating new properties of o.

@@ -1,0 +1,129 @@
+4.9.1 相等性與不等性運算子
+      Equality and Inequality Operators
+
+=     gets or assigned
+
+==    is equal to
+
+===   is strictly equal to
+
+!=    not equal to
+
+!==   not strictly equal to
+
+JavaScript objects are compared by reference, not by value. An object is equal to itself, but not to any other object.
+
+重點來啦！
+The strict equality operator === evaluates its operands, and then compares the two values as follows, performing no type conversion:
+
+=== 會估算兩側的運算元們，然後用下列方式比較兩個值，並不執行轉換：
+
+    (type)
+    型別不同，他們就不相等
+
+    (null undefined)
+    兩個值都是 null 或兩個值都是 undefined，則兩個值相等
+
+    (boolean)
+    兩個 boolean 都是 true 或兩個 boolean 都是 fasle 則兩個值相等
+
+    (NaN)
+    有一個 NaN 或兩個都是 NaN，則結果時就是不相等！
+    NaN 不等於任何值，包括他自己。
+    如果要檢查的值是否為 NaN 可以使用
+    function checkNaN(x) {
+      return x !== x;
+    }
+
+    (Number)
+    如果兩個數字相同，則兩個值相等
+    ps: 0 === -0 // true
+
+    (String)
+    如果兩個直都是字串，並在同樣的位置上有完全相同的 16 位元值，他們就相等。
+    兩個字串可能有相同的意義與相同的視覺外觀，但是卻用兩串不一樣的 16 位元序列來編碼，
+    JavaScript 不執行 Unicode 正規化 (normalization)，相這樣的一對字串，
+    === 與 == 都央歧視為不相等。
+
+    (Object)
+    如果兩個值都參考至同一個物件 陣列 或 函式，他們就被視為相等
+    If both values refer to the same object, array, or function, they are equal.
+
+
+==  較不嚴格，如果兩個運算元的值具有不同型別，他會嘗試轉換型別，並再次進行比較
+
+    (type)
+    如果兩個值有同樣的型別：
+      test them for strict equality as described above.
+      如果測試結果發現他們嚴格相等，他們就相等。
+      如果他們不是嚴格相等，就不相等
+
+    (different type)
+    如果兩個值得型別不同，則使用下列的規則與型別轉換來檢查相等性：
+
+      (null vs undefined)
+      如果有 null 而另一個是 undefined 則他們就相等
+
+      (Number vs String)
+      如果有一個值是數字，而另一個是字串，則將字串轉為數字，
+      將轉為數字後的值再比一次
+
+      (Boolean)
+      如果其中一個值是 true，則將 true 轉為 1，然後再比較一次
+      如果其中一個是 fasle，則將他轉為 0，然後再比一次
+
+      (Object vs String/Number)
+      如果有一個值是物件，而另外一個是數字或字串，則使用 3.8.3描述的演算法將物件轉為基型值，然後在比一次。
+
+      物件可以用他的 toString() 方法或 valueOf() 方法來轉成基型質。
+
+      核心 JavaScript 內建類別會先試 valueOf() 轉換，再試 toString()轉換，
+
+      Data 類別，會先試 toString() 轉換
+
+      不屬於 JavaScript 核心的物件 may 實作他們定義的方式轉成基型值
+
+    (其他)
+    Any other combinations of values are not equal
+    任何其他的運算組合都被視為不相等
+
+例子：
+  "1" == true
+
+  This expression evaluates to true, 
+  indicating that these very different-looking values are in fact equal.
+
+  Boolean 值 true 先被轉為數字 1
+  The boolean value true is first converted to the number 1, 
+
+  然後會再比較一次
+  and the comparison is done again. 
+
+  接者字串 1 會轉換為數字 1
+  Next, the string "1" is converted to the number 1. 
+
+  Since both values are now the same, the comparison returns true.
+  然後兩個值都為數字 1
+  因此比較結果 return true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,14 @@
+6.2.2 繼承
+      Inheritance
+
+The fact that inheritance occurs when querying properties but not when setting them is a key feature of JavaScript because it allows us to selectively override inherited properties:
+
+var unitcircle = { r:1 };     // An object to inherit from
+var c = inherit(unitcircle);  // c inherits the property r
+c.x = 1; c.y = 1;             // c defines two properties of its own
+c.r = 2;                      // c overrides its inherited property
+unitcircle.r;                 // => 1: the prototype object is not affected
+
+
+
+

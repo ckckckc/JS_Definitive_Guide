@@ -1,0 +1,42 @@
+4.13.3  delete 運算子
+        The delete Operator
+
+delete is a unary operator that attempts to delete the object property or array element specified as its operand.
+
+var o = { x: 1, y: 2};  // Start with an object
+delete o.x;             // Delete one of its properties
+"x" in o                // => false: the property does not exist anymore
+
+var a = [1,2,3];        // Start with an array
+delete a[2];            // Delete the last element of the array
+a.length                // => 2: array only has two elements now
+
+被刪除的特性或陣列元素不是被設為 undefined 值。
+當一個特性被刪除，該特性就等於不存在。
+嘗試讀取不存在的特性會回傳 undefined，
+但你能用 in 運算子測試一個特性到底存不存在。
+
+刪除一個陣列元素會在陣列上留下一個洞，而且不會改變陣列的長度，產生的陣列是稀疏的。
+
+Deleting an array element leaves a "hole" in the array and does not change the array's length. 
+The resulting array is sparse
+
+不是所有的特性都能刪除：
+  某些內建的核心與客戶端特性是不能刪除的
+  用 var 述句宣告的使用者(user-defined)變數也不能刪除
+  用 function 述句定義的函式，以及宣告的函式參數也都不能刪除
+
+var o = {x:1, y:2}; // Define a variable; initialize it to an object
+delete o.x;         // Delete one of the object properties; returns true
+typeof o.x;         // Property does not exist; returns "undefined"
+delete o.x;         // Delete a nonexistent property; returns true
+delete o;           // Can't delete a declared variable; returns false.
+                    // Would raise an exception in strict mode.
+
+
+delete 1;           // Argument is not an lvalue: returns true
+this.x = 1;         // Define a property of the a global object without var
+delete x;           // Try to delete it: returns true in non-strict mode
+                    // Exception in strict mode. Use 'delete this.x' instead
+
+x;                  // Runtime error: x is not defined

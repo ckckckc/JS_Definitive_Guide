@@ -1,0 +1,76 @@
+5.5.3 for
+
+在迴圈中，初始化(initialization)、測試（test）、更新(update)是對迴圈變數的三個重要操作。
+
+for 將這三個操作編碼為運算式，並讓這些運算式成為迴圈語法的一部分
+
+The for statement encodes each of these three manipulations as an expression and makes those expressions an explicit part of the loop syntax
+
+syntax:
+
+for (initialize ; test ; increment)
+  statement
+
+順序：
+for (1 initialize ; 2 (5) test ; 4 (7) increment)
+  3 (6) statement
+
+initialize ; test ; increment，這三個用 ; 區隔
+是負責初始化 測試 及遞增迴圈變數的運算式（expression）
+
+等效的 while 迴圈
+
+initialize; 
+while(test) {
+  statement;
+  increment; 
+}
+
+Initialize:
+  JavaScript 允許 initialize 是個 var 變數宣告 statement(var variable declaration statement)，所以可以同時宣告並初始化迴圈變數。
+Test:
+  The test expression is evaluated before each iteration and controls whether the body of the loop is executed. If test evaluates to a truthy value, the statement that is the body of the loop is executed.
+Increment:
+  Finally, the increment expression is evaluated. Again, this must be an expression with side effects in order to be useful. Generally, either it is an assignment expression, or it uses the ++ or -- operators.
+
+使用  comma operator
+  sometimes multiple variables change with each iteration of the loop. 
+  This situation is the only place that the comma operator is commonly used in JavaScript; 
+  it provides a way to combine multiple initialization and increment expressions into a single expression suitable for use in a for loop:
+
+  var i, j;
+
+  for (i = 0, j = 10 ; i < 10 ; i++, j --)
+    sum += i * j;
+
+目前迴圈變數都是 numeric，但並非必須：
+  使用 for loop to traverse a linked list data structure,
+  而且 return the last object in the list
+  (i.e., the first object that does not have a next property):
+
+  function tail(o) {                          // Return the tail of linked list o
+    for (; o.next ; o = o.next) /* empty */ ; // Traverse while o.next is truthy
+    return o;
+  }
+
+  
+
+可以省略的部分：
+  可以注意到上面的程式碼中沒有 initialize expression。
+  
+  for loop 三個 expression 都可以被省略，但是兩個分號是必要的
+  Any of the three expressions may be omitted from a for loop, but the two semicolons are required.
+
+  如果省略的 text expression，這樣將會造成無窮迴圈
+  If you omit the test expression, the loop repeats forever
+
+  for(;;) 是另一種無線迴圈的寫法，就像是 while(true)
+  for(;;) is another way of writing an infinite loop, like while(true).
+
+  
+
+
+
+
+
+

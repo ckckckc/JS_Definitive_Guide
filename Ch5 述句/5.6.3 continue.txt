@@ -1,0 +1,17 @@
+5.6.3 continue
+
+類似 break，但是不是跳脫，而是重新下次迭代。
+語法和 break 一樣
+
+continue;
+
+continue labelname;
+同樣不能換行，要繼續的迴圈並非最接近的時候， continue 也適用
+
+兩種形式的 continue 只限於迴圈主體中
+
+
+continue 在 for 迴圈還有 while 迴圈的差異性：
+while 迴圈直接跳回測試條件，判斷是否執行下次迭代；
+但是 for 迴圈會先估算他的 increment 運算式，然後才會到條件式判斷是否執行下次迭代。
+

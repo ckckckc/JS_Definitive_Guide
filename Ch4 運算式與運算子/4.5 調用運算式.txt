@@ -1,0 +1,50 @@
+4.5 調用運算式
+    Invocation Expressions
+
+重點：
+  1.  分解呼叫函式(function expression)的過程
+  2.  呼叫函式時的 this 是指誰
+  3.  不為 method inovation 時，若在 strict 模式下， this 的會有差別
+
+調用運算式：是 JavaScript 用來呼叫或執行函式或方法的語法，他以函式運算式（function expression）開頭，這個函式運算式就是要被呼叫的函式。函式運算式後接左括號，0或多個引數運算式，以及右掛號。
+An invocation expression is JavaScript’s syntax for calling (or executing) a function or method. It starts with a function expression that identifies the function to be called. The function expression is followed by an open parenthesis, a comma-separated list of zero or more argument expressions, and a close parenthesis.
+
+調用運算式被估值的時候：
+  1.  先對函式運算式求值
+  2.  然後對引數運算式求值，進而產生一串引數的直
+      在此時，如果函式運算式的值是不可以呼叫的物件， throw TypeError
+      註：就算函式運算式不可以呼叫，2. 還是會執行到！
+          所有函式都是可以呼叫的，Host 物件也可能是可呼叫的，就算他們並非函式。
+    ex: 
+    var a = 1, 
+        b = "HaHaHa";
+    try{
+      b((function(){
+        a = a + 1;
+      })());           
+    } catch(error) {
+      console.log(error); // [TypeError: b is not a function]
+      console.log(a);     // 2
+    }
+
+  3.  接下來這些引數會依序給指定給函式定義時的參數名稱
+  4.  最後執行函式主體
+  5.  如果函式使用 return 敘述句，那麼 那個 value 就會是 invocation expression 的 value。
+      如果函式沒有使用 return 敘述句，那麼 invocation expression 的 value 就是 undefined
+
+When an invocation expression is evaluated, the function expression is evaluated first, and then the argument expressions are evaluated to produce a list of argument values. If the value of the function expression is not a callable object, a TypeError is thrown. Next, the argument values are assigned, in order, to the parameter names specified when the function was defined, and then the body of the function is executed. If the function uses a return statement to return a value, then that value becomes the value of the invocation expression. Otherwise, the value of the invocation expression is undefined.
+
+如果 expression 是經由 property 取得的 expression，則  invocation 是為一個 method inovation。
+
+關於 this:
+  method inovation：
+    在 method invocations 中，當執行這個 function body 時，擁有這個 property 的 object 或 array 將成為 this
+  不為 method inovation：
+    通常使用 global object 作為 this 的值
+
+    若為 strict mode 在 ECMAScript5 中， this 為 undefined。
+
+
+ If that expression is a property access expression, then the invocation is known as a method invocation. In method invocations, the object or array that is the subject of the property access becomes the value of the this parameter while the body of the function is being executed.
+
+ Invocation expressions that are not method invocations normally use the global object as the value of the this keyword. In ECMAScript 5, however, functions that are defined in strict mode are invoked with undefined as their this value rather than the global object.

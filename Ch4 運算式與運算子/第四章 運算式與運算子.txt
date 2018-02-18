@@ -1,0 +1,8 @@
+第四章 運算式與運算子
+      Expressions and Operators
+
+An expression is a phrase of JavaScript that a JavaScript interpreter can evaluate to produce a value.
+
+運算式 expression 是 JavaScript 的片語，JavaScript 直譯器可以 evaluate 他，進而產生一個結果值
+
+自簡單的運算式建構出複雜運算式最簡單的方式是使用運算子 operator。一個運算子用某種方式結合他的運算元 operands，並求出一個新的值。

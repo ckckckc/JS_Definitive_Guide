@@ -1,0 +1,17 @@
+4.10  邏輯運算式
+      Logical Expressions
+
+&& || !
+
+The logical operators &&, ||, and ! perform Boolean algebra and are often used in conjunction with the relational operators to combine two relational expressions into one more complex expression.
+
+falsy:
+  null
+  undefined
+  NaN
+  0
+  -0
+  ""
+
+truthy:
+  物件 其他值

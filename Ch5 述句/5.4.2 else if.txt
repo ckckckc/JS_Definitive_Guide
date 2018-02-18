@@ -1,0 +1,38 @@
+5.4.2 else if
+
+當你需要從多段程式碼中選出一段來執行時，其中一個方法就是使用 else if 述句：
+  else if 並不是真正的 JavaScript 述句，他只是重複 if/else 述句所產生的程式設計慣用語：
+
+  if (n == 1) {
+    // Execute code block #1 
+  }
+  else if (n == 2) {
+    // Execute code block #2 
+  }
+  else if (n == 3) {
+    // Execute code block #3
+  } 
+  else {
+    // If all else fails, execute block #4 
+  }
+
+  他只是一連串的 if 述句，其中每個緊接在 else 後的 if 述句都屬於他前一個的述句 else 子句。
+
+  我們偏好用 else if 慣用語，因為它比語法上等效的完整形式更清楚易讀：
+
+  if (n == 1) {
+    // Execute code block #1
+  } 
+  else {
+    if (n == 2) {
+      // Execute code block #2 
+    }
+    else {
+      if (n == 3) {
+        // Execute code block #3 
+      } 
+      else {
+        // If all else fails, execute block #4
+      }
+    }
+  }

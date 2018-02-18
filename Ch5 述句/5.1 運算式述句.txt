@@ -1,0 +1,18 @@
+5.1 運算式述句
+    expression statements
+
+assignment statements:
+
+  greeting = "Hello " + name;
+  i *= 3;
+
+遞增和遞減運算子與指定述句有關，他們有更變變數值得副作用
+  counter++;
+
+delete 運算子具有刪除物件特性的重要副作用，因此他幾乎都被當作述句用
+  delete o.x;
+
+function calls 是另一大類的運算式述句
+  alert(greeting);
+  window.close();
+

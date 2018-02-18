@@ -1,0 +1,54 @@
+6.4 Testing Properties
+
+三種方式：
+  in
+    The in operator expects a property name (as a string) on its left side and an object on its right. It returns true if the object has an own property or an inherited property by that name
+    in 運算子期待左側的 字串為 右側的 物件 的 property。
+    如果右側的 Object 自有這個 property 或繼承了這個名稱的 property 則回傳 true。
+
+    ex:
+      var o = { x: 1 };
+      "x" in o;         // true
+      "y" in o;         // false
+      "toString" in o;  // true
+
+  hasOwnProperty()
+  測試該物件是否有指定名稱的自有特性，有則回傳 true。
+  若測試的特性名稱為繼承而來，則回傳 false。
+
+  ex:
+      var o = { x: 1 };
+      o.hasOwnProperty('x');        // true
+      o.hasOwnProperty('y');        // false
+      o.hasOwnProperty('toString')  // false
+
+  propertyIsEnumerable()
+  比 hasOwnProperty() 更嚴謹，他只會在指定名稱的特性為自有特性，
+  而且 enumerable property 為 true 時才會回傳 true，
+
+  ex:
+      var o = Object.create({ y: 2});
+      o.x = 1;
+      o.propertyIsEnumerable('x');              // true
+      o.propertyIsEnumerable('y');              // false
+      Object.hasOwnProperty('toString')         // true
+      Object.propertyIsEnumerable('toString')   // false
+
+簡單的測法： !== undefined / in
+
+ex:
+  var o = { x: 1 }
+  o.x !== undefined;        // true
+  o.y !== undefined;        // false
+  o.toString !== undefined; // true
+
+in 做得到而 !== undefined 做不到的，值為 undefined 的 property。
+
+ex:
+  var  o = { x: undefined };
+  o.x !== undefined;          // false
+  o.y !== undefined;          // false
+  "x" in o;                   // true
+  "y" in o;                   // false
+  delete o.x;
+  "x" in o;                   // flase

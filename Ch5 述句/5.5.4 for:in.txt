@@ -1,0 +1,83 @@
+5.5.4 for/in
+
+syntax:
+
+  for(variable in object)
+    statement
+
+variable : variable name，
+或是估算值為 lvalue 的運算式，
+或是宣告單一變數的 var statement
+variable 可以適任意值，
+只要他的結果值適合放在運算式的左邊，
+他的估算值可能每次都不同(example1)
+
+object 是個估算結果為物件的運算式
+
+statement 
+迴圈主體的 statement 或是
+statement block 
+
+直譯器執行順序：
+  1. 估算 object 運算式 (expression)
+    1.1 如果是 null 或 undefined 跳過迴圈，執行下個迴圈
+
+    1.2 如果是 primitive value，該直會被轉成 wrapper 物件，
+        如果不是代表該運算式已經是一個物件了，接著執行 2.
+
+  2. 直譯器會對每個可列舉 enumerable 的特性都執行一次迴圈主體，接者 3.
+  
+  3. 在每次迭代之前，直譯器會估算 variable 運算式 (expression)，
+     並把 property name assign 給 variable。
+
+  for (2(4) variable in 1 object)
+    3(5) statement
+
+
+example1: 將所有特性名稱 copy 到陣列中
+var o = {"a":1,"b":2,"c":3};
+var a = [], i = 0;
+for(a[i++] in o) /* empty */;
+
+JavaScript 陣列其實只是一種特化的物件：
+JavaScript arrays are simply a specialized kind of object 
+and array indexes are object properties that can be enumerated with a for/in loop. 
+
+
+example2: 列舉陣列索引 0, 1 和 2
+var o = {"a":1,"b":2,"c":3};
+var a = [], i = 0;
+for(a[i++] in o)
+for (i in a) console.log(i);
+
+
+for/in 迴圈實際上並沒有列舉所有特性，
+而僅列舉 enumerable （可列舉）特性(6.7)。
+由核心定義的內建方法就不能被列舉。
+例如所有物件都有 toString() 方法，
+但是 for/in 迴圈並不會列舉這個 toString 特性。
+
+In addition to built-in methods, 
+many other properties of the built-in objects are nonenumerable.
+除了內建的方法之外，
+許多內建物件的特性也是不可列舉的。
+
+All properties and methods defined by your code are enumerable。
+你程式碼所定義的所有特性與方法都是可列舉的。
+
+（註：在 ECMAScript5 中可以使用 6.7 的技巧將他們設為不可列舉）
+
+User-defined in- herited properties (see §6.2.2) are also enumerated by the for/in loop.
+使用只定義的繼承特性也可以被 for/in 迴圈列舉
+
+
+當 for/in 迴圈執行時，如果主體刪除了一個尚未被列舉的特性，那個特性將不會被列舉。
+如果迴圈主體在物件上定義了新特性，這些特性一般來說也不會被列舉
+（然而某些實作可能會列舉迴圈開始後加入的計程特性)
+
+
+
+
+
+
+

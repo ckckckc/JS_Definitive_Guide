@@ -1,0 +1,20 @@
+4.2 物件與陣列的初值設定式
+    Object and Array Initializers
+
+Array Initializer
+  An array initializer is a comma-separated list of expressions contained within square brackets.
+
+    []        // An empty array: no expressions inside brackets means no elements 
+    [1+2,3+4] // A 2-element array. First element is 3, second is 7
+  陣列表示在陣列之中，當 array initializar is evaluated 時會每次都被再被 evaluated
+
+    The element expressions in an array initializer are evaluated each time the array ini- tializer is evaluated. This means that the value of an array initializer expression may be different each time it is evaluated.
+
+    在陣列最後一個 expression 後再加上一個 , 並不會創造一個 undefined element
+
+Object Initializer
+  Object initializer expressions are like array initializer expressions, but the square brack- ets are replaced by curly brackets, and each subexpression is prefixed with a property name and a colon
+
+  Object literals can be nested
+
+  The expressions in an object initializer are evaluated each time the object initializer is evaluated, and they need not have constant values: they can be arbitrary JavaScript expressions. 

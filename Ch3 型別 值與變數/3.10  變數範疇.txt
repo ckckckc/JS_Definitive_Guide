@@ -1,0 +1,37 @@
+3.10  變數範疇
+      Variable Scope
+注意 var 的使用，會區分出給值目標的是 全域變數 或 區域變數
+
+
+全域變數有全域的 scope，他在程式碼中的所有地方都有定義
+
+宣告在函式中的變數只有只有該函式的 body 中有定義
+函式中的變數是該函式的區域變數
+函式的參數 parameters 也是該函式中的區域變數
+
+如果函式中有跟全域變數相同名稱的區域變數
+那區域變數的優先訊序 precedence 比同樣名稱的全域變數高
+
+var scope = "global";       // Declare a global variable
+function checkscope() {
+  var scope = "local";      // Declare a local variable with the same name
+  return scope;             // Return the local value, not the global one
+}
+checkscope();               // => "local"
+
+
+雖然你在 global scope 中可以不用 var 宣告變數也能宣告出 global 變數，
+但你一定要用 var 來宣告 local 變數：
+
+scope = "global";           // Declare a global variable, even without var.
+function checkscope2() {
+  scope = "local";          // Oops! We just changed the global variable.
+  myscope = "local";        // This implicitly declares a new global variable. // Return two values.
+  return [scope, myscope];
+} 
+checkscope2()               // => ["local", "local"]: has side effects! 
+scope                       // => "local": global variable has changed.
+myscope                     // => "local": global namespace cluttered up.
+
+
+

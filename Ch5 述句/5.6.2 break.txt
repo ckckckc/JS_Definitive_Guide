@@ -1,0 +1,50 @@
+5.6.2 break
+
+作用
+可使最內層的外圍迴圈或 switch statement 立即終止並跳離
+
+語法
+break;
+
+只有在 switch 和 迴圈 中出現才合法
+
+JavaScript 允許 break 後面接者 labeled statement:
+  break labelname;
+不能換行，如果換行會被當只有 break;
+
+這種形式下使用 break 時， labeled statement 不限於 迴圈 或 switch
+
+如果要跳脫的外圍迴圈或 switch  並非最接近，那就要使用 break labe;
+ex:
+
+  var matrix = getData();
+
+  var sum = 0, success = false;
+
+  compute_sum: if (matrix) {
+    for (var x = 0 ; x < matrix.length ; x++) {
+      var row = matrix[x];
+      if (!row) break compute_sum;
+      for(var y = 0; y < row.length ; y++) {
+        var cell = row[y];
+        if (isNaN(cell)) break compute_sum;
+        sum += cell;
+      }
+    }
+    success = true;
+  }
+
+  // break 會跳到這。如果是用 break 的話， success = false
+  // 那取得的矩陣必有某些錯誤
+  // 不然， sum 就包含每一個 cell 的總和
+
+Finally, note that a break statement, with or without a label, 
+can not transfer control across function boundaries. 
+You cannot label a function definition statement, for example, 
+and then use that label inside the function.
+
+不能這樣作：
+
+somFun: function func() {
+  if (1) break sumFun;
+}

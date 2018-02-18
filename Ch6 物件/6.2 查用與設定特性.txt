@@ -1,0 +1,27 @@
+6.2 查用與設定特性
+    Querying and Setting Properties
+
+要得物件到 property 的值有兩種方法：
+（左側的 expression 必須是 object）
+  .  點:右邊一定要用命名特性的識別字
+  [] 中括號: 在括號中的值必須估算出特性的字串
+
+The left-hand side should be an expression whose value is an object. If using the dot operator, the right-hand must be a simple identifier that names the property. If using square brackets, the value within the brackets must be an expression that evaluates to a string that contains the desired property name
+
+ECMAScript 3 
+  會有保留字不能當作 property name 的限制，例如 class for 不能這樣用：
+  object.for
+  object.class
+  如果硬是要這樣命名須這樣：
+  object["for"]
+  object["class"]
+
+  而 ECMAScript 5 有放寬了這項限制
+
+取得 property 值
+var author = book.author;
+var title = book["main title"]
+
+設定 property 值
+book.edition = 6
+book["main title"] = "ECMAScript";

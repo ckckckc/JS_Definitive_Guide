@@ -1,0 +1,22 @@
+5.6 跳躍句
+    Jumps
+
+Jump statements 會使 JavaScript 直譯器跳至原始碼的新位置。
+
+JavaScritp 允許 statement 被命名，或是加上標籤 (labeled)，
+藉此 break 與 continue 能夠便是目標迴圈或是其他述句標籤。
+JavaScript allows statements to be named, or labeled, 
+and the break and continue can identify the target loop or other statement label.
+
+ex:
+  break
+
+  continue
+
+  return
+
+  throw
+    當有例外被擲出時，
+    直譯器就跳至最接近的外圍 (enclosing) 例外處理器 (exception handler)，
+    他可能位於同一個函式中，
+    或是呼叫堆疊 (call stack) 中上一層的調用者函式 (invoking function)

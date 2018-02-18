@@ -1,0 +1,22 @@
+22.4  Web Workers
+
+Client Side JavaScript 的特色之一就是單執行緒：
+  瀏覽器永遠不會同時執行兩個事件處理器
+  也不會在一個事件處理器正在執行時，去處發一個計時器
+
+
+一個 client side JavaScript 函式不能執行太久：
+  否則他們會佔去事件迴圈，
+  使瀏覽器會無法回應使用者的輸入
+
+Web worker 活在一個自成一體的執行環境中，
+無法存取 window document 物件，
+而且只能藉由非同步的訊息傳遞來與主執行緒溝通
+
+和其他執行緒 API 相同， Web Workers 分為兩個部分：
+  一 Worker Object:
+      在產生他的執行緒，在 worker 從外在看起來的樣子
+
+  二 WorkerGlobalScop：
+      這是新的 worker 的 global object，
+      這在 worker 執行緒在內部看起來的樣子

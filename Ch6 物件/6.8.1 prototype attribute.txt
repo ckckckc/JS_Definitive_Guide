@@ -1,0 +1,37 @@
+6.8.1 The prototype Attribute
+
+prototype 兩大重點：
+  1 指名該物件從哪個物件繼承 properties
+
+  2 當 prototype 以 code 形式出現(someObj.prototype) ，他 refers to ordinary object property 而非 refers to  the prototype attribute。
+
+An object’s prototype attribute specifies the object from which it inherits properties.
+Also, it is important to understand that when prototype appears in code font, it refers to an ordinary object property, not to the prototype attribute.
+
+
+在 ECMAScript 5 中可以使用 Object.getPrototypeOf() query 傳入物件的 prototype。
+Objct.getPrototypeOf(inputObject) // return inputObject's prototype
+
+
+在這之前，是使用 o.constructor.prototype：
+
+
+var o1 = {};
+var o2 = Object.create({});
+
+o1.constructor.prototype refers to correct prototype.
+o2.constructor.prototype 不一定 refers to correct prototype.
+
+
+Object.create() have a constructor property that refers to the Object() constructor. Thus, constructor.prototype refers to the correct prototype for object literals, but does not usually do so for objects created with Object.create().
+
+用 Object.isPrototypeOf() 來檢查互相繼承的關係，他跟 instanceof operator 類似 (4.9.4)：
+
+var p = { a: 1};
+var q = Object.create(p);
+p.isPrototypeOf(q);                 // true q 繼承自 p
+Object.prototype.isPrototypeOf(q);  // true q 繼承自 Object.prototype
+
+
+Mozilla 使用 __proto__ 來實作 prototype attribute（在 ECMAScript5 之前），他可以 get / set 任何 obj 的 prototype， chrome 和 safari 有 implemente 但是 IE 沒有。 
+

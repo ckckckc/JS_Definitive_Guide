@@ -1,0 +1,16 @@
+4.7 運算子概觀
+    Operator Overview
+
+運算子在 JavaScript 中運用在：
+  算術運算式
+  比較運算式
+  邏輯運算式
+  指定運算式
+  and more...
+
+Operators are used for JavaScript’s 
+  arithmetic expressions, 
+  comparison expressions, 
+  logical expressions, 
+  assignment expressions, 
+  and more.

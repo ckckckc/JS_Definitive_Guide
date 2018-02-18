@@ -1,0 +1,64 @@
+4.8.2 一元算數運算子
+      Unary Arithmetic Operators
+
+在 JavaScript 中，
+一元運算子皆有高優先序，
+而且全部都是 右結合 (right-associative)
+
+In Java- Script, the unary operators all have high precedence and are all right-associative.
+
+Unary plus (+)
+  一元加號運算子將他的運算元轉為數字(或 NaN)，
+  然後回傳轉換後的值。
+  若用在已經是數字的運算元上，
+  他不會進行任何動作
+
+Unary minus (-)
+  他會先把運算元轉為數字，
+  然後改變結果值得正負號
+
+Increment (++)
+  遞增（ add 1 to）其單一運算元素，
+  該運算元必須是個 lvalue，
+  這個運算子將他的運算元為數字，然後加1給那個數字，
+  然後回傳遞增後的值給那個 lvalue
+  The operator converts its operand to a number, adds 1 to that number, and assigns the incremented value back into the variable, element, or property.
+
+  他的回傳值取取決於運算元的位置：
+    在運算元之前：稱為 pre-increment operator
+    他增加該運算子，
+    然後回傳遞增過後的值
+
+    When used before the operand, where it is known as the pre-increment operator, it increments the operand and evaluates to the incremented value of that operand. 
+
+    在運算元之後：稱為 post-increment operator
+    他遞增他的運算元後，
+    回傳沒遞增過後的值
+    When used after the operand, where it is known as the post-increment operator, it increments its operand but evaluates to the unincremented value of that operand.
+
+  註 lvalue:
+    a variable, an element of an array, or a property of an object
+
+  var i = 1, j = ++i;     // i and j are both 2
+  var i = 1, j = i++;     // i is 2, j is 1
+
+  ++x 並不一定與 x = x + 1 相同：
+  ++ 運算子不會執行字串串接：
+    他會把運算元轉為數字，然後遞增它
+
+  ex:
+    x = "1";
+    ++x   // number 2
+    x + 1 // "11"
+
+  JavaScript 的自動分號填補 (semicolon insertion)，你不能在 post-increment operator 運算子和他前面的運算元之間插入換行。
+  如果這麼做， JavaScript 會把運算元本身視為一個完整的敘述句，並在運算子前加上分號。
+
+Decrement (--)
+  轉為數字，減1，然後把遞減後的值指定回該運算元。
+  回傳值為減之前還是減之後跟 ++ 一樣。
+  用在運算元之後，然後回傳為未遞減前(undecremented)的值。
+  用在運算元之後時，運算元與運算子之間不允許換行。
+
+
+

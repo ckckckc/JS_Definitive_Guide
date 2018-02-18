@@ -1,0 +1,34 @@
+4.11  指定運算式
+      Assignment Expressions
+
+JavaScript uses the = operator to assign a value to a variable or property.
+
+i = 0     // Set the variable i to 0.
+o.x = 1   // Set the property x of object o to 1.
+
+= 運算子的左側運算元是 lvale: 一個 變數/物件特性(或是陣列元素)
+
+The = operator expects its left-side operand to be an lvalue: a variable or object property (or array element).
+
+可以在同一個運算式中指定並測試一個值
+ex:
+  (a = b) == 0
+
+= 的優先序很低
+
+
+The assignment operator has right-to-left associativity, which means that when multiple assignment operators appear in an expression, they are evaluated from right to left.Thus, you can write code like this to assign a single value to multiple variables:
+
+i = j = k = 0; // Initialize 3 variables to 0
+
+指定運算子具有右至左的結合律
+
+
+
+
+
+
+
+I want to be free. I want to leave where I am now. 
+I want to fly away like a little bird, leaving all the worries and burdens.
+I want to find someone who can love as I am. The end.

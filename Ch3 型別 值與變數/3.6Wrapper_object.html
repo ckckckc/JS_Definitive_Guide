@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>3.6 Wrapper Object</title>
+</head>
+<body>
+<ul>
+  <li>var s = "hello world"; var word = s.substring(s.indexOf(" ") + 1, s.length); 然而字串並非物件，位什麼他們會有 property?</li>
+  <li>每當你去 refer 字串 s 的一個 property 時， JavaScript 就把這個字串轉為一個物件，彷彿呼叫了 new String(s)一般。</li>
+  <li>這個 new String(s) 物件繼承了字串的方法，他備用來處理 property reference</li>
+  <li>一旦 property 被參考完畢，這個新創的物件計被丟棄</li>
+  <li>實作中不需要創建多丟棄這個臨時的物件，但他們的行為要看起來像是經過這樣的處理</li>
+  <li>原文：Whenever you try to refer to a property of a string s, JavaScript converts the string value to an object as if by calling new String(s).</li> 
+  <li>This object inherits (see §6.2.2) string methods and is used to resolve the property reference.</li>
+  <li>Once the property has been resolved, the newly created object is discarded.</li>
+  <li>Implementations are not required to actually create and discard this transient object: they must behave as if they do, however.</li>
+  <hr>
+  <pre>
+    <code>
+      var s = "test";   // Start with a string value. 
+      s.len = 4;        // Set a property on it. 創建一個暫時的 String 物件，將給這個暫存的物件一個 len 特性為 4
+      var t = s.len;    // Now query the property. 用原字串值 (並未修改) 創建一個新的 String 物件，然後嘗試去讀取他的 len 特性，這個特性並不存在，因此該運算式結果為 undefined.
+    </code>
+  </pre>
+  <hr>
+  <li>這段程式碼顯示，當你要讀取字串 數字 boolean 值的特性之時，他們的行為就像是物件，但是如果你嘗試設定一個特性的值，這個嘗試會被默默的忽略: 這個改變發生在暫時物件(temporary object)身上，無法續存</li>
+  <hr>
+  <li>Wrapper 物件定義:</li>
+  <li>The temporary objects created when you access a property of a string, number, or boolean are known as wrapper objects, and it may occasionally be necessary to distin- guish a string value from a String object or a number or boolean value from a Number or Boolean object.</li>
+  <li>You just need to know that string, number, and boolean values differ from objects in that their properties are read-only and that you can’t define new properties on them.</li>
+  <hr>
+  <li>創建 wrapper 物件是可能的(但幾乎不必要或實用)</li>
+  <pre>
+    <code>
+      var s = "test";         // 字串值
+      var S = new String(s);  // String 物件
+    </code>
+    typeof s //=> "string"
+    typeof S //=> "object"
+    <hr>
+    Javascript 會在需要時把 wrapper 物件轉為他們所包父的基本型別值
+    <code>
+      s == S  //=> true == 相等性運算子一將一個值與 wrapper 物件視為相同
+      s === S //=> false 所以可以用 === 區分它們
+    </code>
+  </pre>
+  <li>
+    null 與 unfefined 值並無這種 wrapper 物件： 任何嘗試存取這些值特性的動作都會引發 TypeError.
+  </li>
+</ul>
+</body>
+</html>

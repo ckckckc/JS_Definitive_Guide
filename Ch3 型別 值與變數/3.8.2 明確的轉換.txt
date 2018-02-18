@@ -1,0 +1,105 @@
+3.8.2 明確的轉換
+      Explicit Conversions
+最簡單的方式是使用：
+Boolean()
+Number()
+String()
+Object()
+這些函式
+
+其中使用  wrapper 的建構式當作函式
+Boolean()
+Number()
+String()
+當我們不使用 new 運算子，他們就可以作為轉換函式
+而 Object 可以轉換為物件
+
+<hr>
+
+除了 null 和 undefined 之外，
+任何值都有 toString()，
+他產生的結果通常都跟 String() 函式回傳的結果相同
+
+<hr>
+
+運算子 implicit 的型別轉換：
+搭配 運算子 + 的運算域(operand)之中，若有一個是字串，他會把另一個也轉為字串，
+若是
+
+x + ""    // Same as String(x)
++x        // Same as Number(x). You may also see x-0
+!!x       // Same as Boolean(x). Note double !
+
+<hr>
+
+Number => String : toString toFixed toExponential toPrecision
+
+Number 定義 toString 一個額外的引數
+
+var n = 17;
+binary_string = n.toString(2);      // Evaluates to "10001"
+octal_string = "0" + n.toString(8); // Evaluates to "021"
+hex_string = "0x" + n.toString(16); // Evaluates to "0x11"
+
+toFixed toExponintial toPrecision
+這三個方法都會在需要時 round
+
+var n = 123456.789; 
+n.toFixed(0);         // "123457"
+n.toFixed(2);         // "123456.79"
+n.toFixed(5);         // "123456.78900"
+n.toExponential(1);   // "1.2e+5"
+n.toExponential(3);   // "1.235e+5"
+n.toPrecision(4);     // "1.235e+5"
+n.toPrecision(7);     // "123456.8"
+n.toPrecision(10);    // "123456.7890"  
+  
+<hr>
+
+String => Number : Number parseFloat parseInt
+
+Number()
+只會轉字串為 10 進位的 number 型態
+而且字面上有一個無法表示為 number 的字元即轉換為 NaN
+
+parseFloat() parseInt() 為兩著接會跳過開頭的空白，盡可能的解析更多數字自完，並忽略之後的任何字元
+
+parseFloat()
+可解析整數及浮點數
+第一個 無法表示為 number 的字元即轉換為 NaN
+
+parseInt()
+以 Ox 或 0X 開頭的字串，並且沒有給定二個參數時
+會轉換為 16 進位。
+第一個無法表示為 integer 的字元即轉換為 NaN。
+可以接受第二個參數指定為多少進位來解讀字串
+
+parseInt("3 blind mice")    // => 3
+parseFloat(" 3.14 meters")  // => 3.14
+parseInt("-12.34")    // => -12
+parseInt("0xFF")      // => 255
+parseInt("0xff")      // => 255
+parseInt("-0XFF")     // => -255
+parseFloat(".1")      // => 0.1
+parseInt("0.1")       // => 0
+parseInt(".1")        // => NaN: integers can't start with "."
+parseFloat("$72.47"); // => NaN: numbers can't start with "$"
+
+parseInt("11", 2);    // => 3 (1*2 + 1)
+parseInt("ff", 16);   // => 255 (15*16 + 15)
+parseInt("zz", 36);   // => 1295 (35*36 + 35)
+parseInt("077", 8);   // => 63 (7*8 + 7)
+parseInt("077", 10);  // => 77 (7*10 + 7)
+
+  
+
+
+
+
+
+
+
+
+
+ 
+

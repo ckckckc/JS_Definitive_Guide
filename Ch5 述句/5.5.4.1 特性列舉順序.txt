@@ -1,0 +1,45 @@
+5.5.4.1 特性列舉順序
+        Property enumeration order
+
+ECMAScript 並沒有規範 for/in 迴圈列舉物件特性的順序。
+然而實務上所有主要瀏覽器供應商的 JavaScript 實作ㄉ是以特性被定義的順序來列舉簡單物件的特性。
+JavaScript implementations from all major browser vendors enumerate the properties of simple objects in the order in which they were defined, with older properties enumerated first.
+
+如果是用字面值所創建的物件，
+列舉的順序就跟字面中出現的順序相同。
+ex:
+  var obj = {
+    "a" : 1,
+    "b" : 2
+  };
+
+  for (var i in obj) 
+    console.log(i);
+
+// a
+// b
+
+因為 WEB 上有網站和 libraries 依賴這個順序來運作，
+所以瀏覽器供應商不大可能改變它。
+There are sites and libraries on the Web that rely on this enumeration order, and browser vendors are unlikely to change it.
+
+以上順序的規則都是在 "simple" object 上成立的，
+以下是依據實作的方式而有不同結果：
+• The object inherits enumerable properties;
+• the object has properties that are integer array indexes;
+• you have used delete to delete existing properties of the object; or
+• you have used Object.defineProperty()(§6.7) or similar methods to alter property  attributes of the object.
+
+Typically (but not in all implementations), inherited properties (see §6.2.2) are enum- erated after all the noninherited “own” properties of an object, but are also enumerated in the order in which they were defined. If an object inherits properties from more than one “prototype” (see §6.1.3)—i.e., if it has more than one object in its “prototype chain”—then the properties of each prototype object in the chain are enumerated in creation order before enumerating the properties of the next object. Some (but not all) implementations enumerate array properties in numeric order rather than creation order, but they revert to creation order if the array is given other non-numeric properties as well or if the array is sparse (i.e., if some array indexes are missing).
+
+如果物件繼承一個以上原型 prototype，那麼串練中每個圓形物件的特性一他們被創建的順序列舉，
+列舉完後再行列舉下個物件。
+
+某些（並非全部）實作依數值順序列舉陣列特性，
+而非創建順序，
+但如果陣列被賦予了其他非數值特性，
+或是個稀疏陣列，
+那麼還是用創建順序列舉。
+
+
+

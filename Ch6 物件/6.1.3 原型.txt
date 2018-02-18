@@ -1,0 +1,37 @@
+6.1.3 原型
+      prototypes
+
+Every JavaScript object has a second JavaScript object (or null, but this is rare) associated with it. 
+This second object is known as a prototype, 
+and the first object inherits properties from the prototype.
+
+每個 JavaScript 有兩個 JavaScript 物件與之關聯：
+  prototype
+  從 prototype 繼承 property 的物件
+
+所有 {} 創建的物件都有同一個 prototype，
+可以用 Object.prototpye 來參考到這個原型物件。
+
+透過 new keyword and a constructor invocation 產生的物件，
+其原型為建構函式的 prototpye 特性值。
+
+Objects created using the new keyword and a constructor invocation use the value of the prototype property of the constructor function as their prototype.
+
+藉由 new Object()
+創建的物件繼承自 Object.prototype 
+跟用 {} 創建的物件相同。
+
+使用 new Array() 創建的物件，把 Array.prototype 當作其原型
+同樣的 new Date() 的原型是 Date.prototpye。
+
+Object.prototype 是少數沒有原型的物件：
+  沒有繼承任何特性
+
+所有內建的建構式（及大多數使用者定義的建構式）都有個繼承自 Object.prototype 的原型。
+
+例如：
+Date.prototype 從 Object.prototype 繼承特性，
+所以使用 new Date() 的 Date 物件，同時也繼承了 Date.prototype 與 Object.prototype 兩個的特性，
+這些串連成一系列的原型物件就稱為 原型鏈 (prototype chain)
+
+This linked series of prototype objects is known as a prototype chain.

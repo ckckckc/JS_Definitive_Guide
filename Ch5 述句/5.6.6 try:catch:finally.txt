@@ -1,0 +1,63 @@
+5.6.6 try/catch/finally
+
+Both the catch and finally blocks are optional, but a try block must be accompanied by at least one of these blocks.
+
+catch 與 finally 區塊都是 optional，但是 try block 必須結合這兩者之一。
+
+syntax:
+  try{}
+  catch{}
+  finally{}
+
+  都是用大括號開頭與結尾，這些大括號是必要的語法，
+  就算子句僅包含單一個述句也不可以省略。
+
+
+try{
+  
+}
+catch (e) {
+  // 這個區塊可用某些方式處理例外，或是忽略該例外，
+  // 什麼也不作，或是用 throw 再次擲出該例外
+}
+finally{
+  try 區塊以下列認一種方式終止時，
+  finally 就會被執行：
+  1) normally, after reaching the bottom of the block
+  2) because of a break, continue, or return statement
+  3) with an exception that is handled by a catch clause above
+  4) with an uncaught exception that is still propagating
+}
+
+catch block 有自己的 scope:
+Unlike regular variables, 
+the identifier associated with a catch clause has block scope—it is only defined within the catch block.
+
+The finally clause is guaranteed to be executed if any portion of the try block is executed, 
+regardless of how the code in the try block completes. 
+It is generally used to clean up after the code in the try clause.
+
+如果因為 return continue 或 break statement 離開 try block，
+finally block 會在到達新的地點之前執行。
+If the interpreter left the try block because of a return, continue, or break statement, the finally block is executed before the interpreter jumps to its new destination.
+
+如果沒有 catch statement 但是有例外發生，
+在到達最近的 catch statement 之前 finally 會先執行。
+
+If a finally block itself causes a jump with a return, continue, break, or throw statement, or by calling a method that throws an exception, the interpreter abandons whatever jump was pending and performs the new jump. For example, if a finally clause throws an exception, that exception replaces any exception that was in the process of being thrown. If a finally clause issues a return statement, the method returns normally, even if an exception has been thrown and has not yet been handled.
+如果 finally 自己使用 return continue break 或 throw 或是呼叫了會 throw Exception 的方法，直譯器會放棄還沒進行的 JUMP，執行最新的 JUMP。
+也就是 finally 擲出的例外會取代任何還沒被處理的例外。
+如果 finally 使用 return statement，這個方法就正常回傳，
+就算例外尚未被處理也一樣。
+
+模擬 for(iniialize; test ; increment) body;
+
+initialize ;
+while( test ) {
+  try { body; }
+  finally { increment; }
+}
+
+結論：還是無法完全模擬 for loop，如果在 body 中使用了 break statement，
+他在離開迴圈時會 increment！
+Note, however, that a body that contains a break statement behaves slightly differently (causing an extra increment before exiting) in the while loop than it does in the for loop, so even with the finally clause, it is not possible to completely simulate the for loop with while.

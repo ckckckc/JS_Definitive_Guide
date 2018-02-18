@@ -1,0 +1,9 @@
+6.7.1 Legacy API for Getters and Setters
+
+在 ECMAScript 5 使用 Object.getOwnPropertyDescriptor() / Object.defineProperty() 操作 accessor propert 之前，多數的 JavaScript （除了 IE）實作 get set 語法：
+
+__lookupSetter__()
+__lookupGetter__()
+
+__defineGetter__()
+__defineSetter__()

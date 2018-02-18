@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>3.3 boolean</title>
+</head>
+<body>
+<ul>
+  <li>任何 Javascript 得值都可以轉為 boolean 值</li>
+  <li>六可可轉為 false 的值 :
+    <ol>
+      <li>undefined</li>
+      <li>null</li>
+      <li>NaN</li>
+      <li>""</li>
+      <li>0</li>
+      <li>-0</li>
+    </ol>
+  </li>
+  <li>這六個可有時被稱作 falsy 值，其他所有的值被稱為 truthy 值</li>
+  <li>每當 JavaScript 預期 boolean 值時，一個 falsy 值用起來像是 false，而 truthy 值用起來像 true</li>
+  <li>&&</li>
+  <li>||</li>
+  <li>!</li>
+</ul>
+<script>
+var fun1 = function(){
+  alert();
+};
+
+var fun2 = function() {
+  return true;
+}
+
+// fun1 will not be excute
+if (fun2() || fun1()) {
+  console.log(12345);
+}
+
+if (fun1() || fun2()) {
+  console.log(67890);
+}
+</script>
+</body>
+</html>

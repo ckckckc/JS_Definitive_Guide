@@ -1,0 +1,103 @@
+3.10.1  函式範疇與 Hoisting           
+        Function Scope and Hoisting
+
+註：令人 confuse 的  hoisting
+重點：
+  如果在 function 中使用 var ，會使該 function 中都會產生該區域變數，且 var 的動作會被提到 function 中的最上方，所以 function scope 任何地方都會讀到這個變數。
+  
+  如果在 function 中不使用 var ，則會往 function 外部尋找該變數名
+
+    如果外部是 function scope 且有定義該變數名，則會存取該 function 中的變數
+
+    如果外部是 global scope 且有定義該變數名，則會存取 global 中的變數
+
+    如果往外找都沒有該變數名 : Uncaught ReferenceError: 該變數名 is not defined
+
+結論：
+  所以好習慣是在每個 scope 都準確的使用 var 操作該 scope 中的變數，
+  且在該 scope 的最上方就宣告該變數，
+  才能準確反應該 scope 中的情形。
+  This technique makes their source code accurately reflect the true scope of the variables.
+
+Block Scope：
+在類C的程式語言中，{}中的程式碼區塊都有自己的 scope，在宣告變數的 block 之外，是看不到這些變數。
+
+JavaScript 並 沒有 這種東西！
+
+JavaScript 用的是 function scope：
+只有在定義變數的函式及其內的任何巢狀函式中，才看得到這些變數。
+variables are visible within the function in which they are defined and within any functions that are nested within that function.
+
+function test(o) { 
+  var i = 0;                      // i is defined throughout function
+
+  if (typeof o == "object") { 
+    var j = 0;                    // j is defined everywhere, not just block
+
+    for(var k=0; k < 10; k++) {   // k is defined everywhere, not just loop
+      console.log(k);             // print numbers 0 through 9
+    }
+    console.log(k);               // k is still defined: prints 10
+  } 
+  console.log(j);                 // j is defined, but may not be initialized
+} 
+
+
+hoisting:
+ JavaScript 會表現的好像函式中的變數宣告 (var) 都被 提升 至函是的最上方
+ JavaScript code behaves as if all variable declarations in a function (but not any associated assignments) are “hoisted” to the top of the function.
+
+var scope = "global"; 
+function f() {
+  console.log(scope);   // Prints "undefined", not "global"
+  var scope = "local";  // Variable initialized here, but defined everywhere 
+  console.log(scope);   // Prints "local"
+}
+
+因為函式中宣告了 var scope ，
+所以 function f 每個地方都有定義 scope 這個 local 變數，
+所以這 f 中的任何定方要使用 scope 都是使用 local 的 scope，
+因使盎面的函式等於接下來的這個，其中變數宣告被提升 hoisted  至最上方，
+而變數初值設定的位置不變
+
+function f() {
+  var scope;            // Local variable is declared at the top of the function
+  console.log(scope);   // It exists here, but still has "undefined" value
+  scope = "local";      // Now we initialize it and give it a value
+  console.log(scope);   // And here it has the value we expect
+}
+
+既然 JavaScript 沒有 block scope，也些程式設計師會將所有的變數宣告在函式最上方，
+而非靠近被用處，因為這讓他們的原始碼準確的反應變數真正的 scope
+
+Since JavaScript does not have block scope, some programmers make a point of declaring all their variables at the top of the function, rather than trying top declare them closer to the point at which they are used. This technique makes their source code accurately reflect the true scope of the variables.
+
+
+
+
+
+while I try this...
+
+window.a = "global";
+function f() {
+  console.log(a);         // undefined
+  console.log(window.a);  // global
+  var a = "local";        // 因為這個 var 使的 a 變成在函式的最上方先宣告了 這個 scope 的 a ，且在這行的 a 才被初始化為 local
+  console.log(a);         // local
+  console.log(window.a);  // global
+}
+
+f();
+
+var scope2 = "global";
+function f2() {
+  console.log(scope2);  // global 同樣讀到全域的
+  scope2 = "local";
+  console.log(scope2);  // local  全域的 global 被改成 local
+}
+
+console.log(scope2);    // global 讀到全域的
+
+f2();
+
+console.log(scope2);    // local  已經被改變的全域

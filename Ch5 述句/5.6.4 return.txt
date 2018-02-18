@@ -1,0 +1,27 @@
+5.6.4 return
+
+只能出現在函式主體中，放在別的地方會語法錯誤。
+
+return expression;
+
+return 被執行時，包含他的函式會回傳 expression 的值給 caller
+ex:
+
+  function square(x) {return x*x; } // A function that has a return statement
+  square(2)                         // This invocation evaluates to 4
+
+如果沒有 return statement ， the invocation expression evaluates to undefined
+With no return statement, a function invocation simply executes each of the statements in the function body in turn until it reaches the end of the function, and then returns to its caller. In this case, the invocation expression evaluates to undefined.
+
+The return statement can also be used without an expression to make the function return undefined to its caller. For example:
+  function display_object(o) {
+    // Return immediately if the argument is null or undefined. if (!o) return;
+    // Rest of function goes here...
+  }
+
+因為 JavaScript’s automatic semicolon insertion (§2.5), 
+you cannot include a line break between the return keyword and the expression that follows it.
+
+return 1; // 1
+return 
+1;        // undefined

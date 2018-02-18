@@ -1,0 +1,13 @@
+6.5 Enumerating Properties
+    列舉特性
+
+三種方式列舉 property：
+
+for in loop:
+  會把包含繼承及自己可列舉的 property 都在 for in loop 跑過一次
+
+Object.keys()
+  會回傳把自己可以列舉的 property 回傳。（不包含繼承）
+
+Object.getOwnPropertyNames()
+  會回傳自己可列舉及不可列舉的 property name 陣列。（不包含繼承）

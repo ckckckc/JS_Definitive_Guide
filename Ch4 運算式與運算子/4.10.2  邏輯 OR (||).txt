@@ -1,0 +1,30 @@
+4.10.2  邏輯 OR (||)
+        Logical OR (||)
+
+|| 運算子在他兩個運算元上執行 Boolean OR 運算。
+  如果有一個或者兩個運算元是 truthy 值，
+  他就會 return truthy 值
+  
+  如果兩個運算元都是 falsy 值
+  他就會 return falsy 值
+
+  和 && 回傳的邏輯類似
+
+運算順序
+
+  先估算第一個運算元，如果是 truthy 值，就直接回傳該值
+
+  如果第一個運算元是 falsy 值
+  他就回傳右側的 (truthy or falsy 值)
+
+常見用法 :
+  
+  ex1:
+  var max = max_width || preferences.max_width || 500;
+
+
+  ex2:
+  function(o, p) {
+    p = p || {};  // 如果沒有傳入物件作為 p ，就用一個新創物件
+    // 函式主體...
+  }

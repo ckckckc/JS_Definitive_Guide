@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>3.5 Global object</title>
+</head>
+<body>
+<ul>
+  <li>Global object 也是一個正規的物件，這種物件的特性是全域定義的符號，整個 JavaScript 程式都可以接觸到他們</li>
+  <li>
+    當 JavaScript 直譯器啟動（或美當 web 瀏覽器載入新頁面），它會創建一個新的全域物件，並給他一組初始特性 :
+    <ul>
+      <li>global property: undefined Infinity Nan...</li>
+      <li>global function: isNan() parseInt() eval()</li>
+      <li>global construct: Date() RegEp() String() Object Array()...</li>
+      <li>global objcet: Math JSON</li>
+    </ul>
+  </li> 
+  <li>在 client side, Window 物件提供了一些全域定義，而 Window 物件就是那個全域物件</li>
+  <li>在頂層 (top-level) 程式碼 (也就是不屬於任何函式的程式碼)中，你可以使用 JavaScript 關鍵字 this refer to 這個全域物件: var global = this</li>
+</ul>
+</body>
+</html>
