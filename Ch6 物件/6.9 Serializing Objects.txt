@@ -1,0 +1,30 @@
+6.9 Serializing Objects
+
+Object serialization：將物件的狀態轉成一字串（而且能被回復）的過程。
+在 ECMAScript 5 中，使用 JSON.stringify() / JSON.parse() 可以 物件轉換成字串/字串回復成物件，而且是以 JSON 的資料格式轉換。
+
+關於 JSON:
+   JavaScript Object Notation。他和 JavaScript 的 object and array literals 類似：
+    o = {x:1, y:{z:[false,null,""]}}; // Define a test object
+    s = JSON.stringify(o);            // s is '{"x":1,"y":{"z":[false,null,""]}}'
+    p = JSON.parse(s);                // p is a deep copy of o
+
+  JSON 是 JavaScript 的子集(subset)，他並無法表示所有 JavaScript 的值：
+    支援而且可以(反)序列化：Objects, arrays, strings, finite numbers, true, false, and null。
+    不支援：NaN, Infinity, and -Infinity are serialized to null.
+
+    （註： falsy 值： null undefined 0 -0 NaN ""）
+
+  Date 物件會被序列化成 ISO-formatted date string，但是 JSON.parse() 留下轉過去的字串形式，並不能還原為原本的 Date object。
+
+  無法被序列化：Function, RegExp, and Error objects and the undefined value cannot be serialized or restored. 
+
+  JSON.stringify() 只會將 enumerable own properties 給序列化.
+
+  如果某個 property 的值無法被序列化，那個 property 會在序列化的時候被忽略。
+
+  在序列化時可以更加客制化：JSON.stringify() 和 JSON.parse() 都接受第二個參數，該參數可以在轉化過程給予特定的 serialization and/or restoration process。例如只轉換特定的值在(反)序列之時。
+
+  參考更多 MDN JSON.stringify 的範例及說明:
+  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+

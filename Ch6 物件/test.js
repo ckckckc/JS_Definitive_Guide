@@ -258,3 +258,37 @@ var obj1 = { a: 1};
 var obj2 = { x: 2, a: 3};
 obj1.extend(obj2); 
 console.log(obj1);   // { a: 1, x: 2 }
+
+var o = {
+  a: [NaN, null, true, -Infinity, undefined],
+  b: undefined,      // 會忽略
+  c: function() {},  // 會忽略
+  d: ''
+};
+
+console.log(JSON.stringify(o))
+console.log(JSON.parse(JSON.stringify(o)))
+
+
+var obj = {
+  a: 1234,
+  b: 333,
+  c: 9090,
+  d: '242'
+};
+
+function replacer(key, value) {
+  var isEven = function(input) {
+    return input%2 === 0;
+  };
+
+  if (typeof value === "number" && isEven(value)) {
+    return undefined;
+  }
+
+  return value;
+}
+
+var stringify = JSON.stringify(obj, replacer);
+
+console.log(stringify);
