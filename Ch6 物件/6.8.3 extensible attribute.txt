@@ -1,0 +1,30 @@
+6.8.3 The extensible Attribute
+
+extensible 為 true 的 object 可以加入 attribute，反之。
+
+若 extensible 為 false 的 object，若在該 object 的 prototype 加入 property ，則該 object 也會繼承新加入的 property。
+
+ECMAScript5 的所有內建及使用者自訂的物件原則上都是可擴充的，而 host 物件則取決於該實作方式。
+
+使用 Object.isExtensible() 可以得知傳入的物件是否 extensible。
+
+使用 Object.preventExtensions() 可以讓傳入的物件變成 nonextensible，而且只對該物件影響，一但變成 nonextensible 就不能變回 extensible。
+
+這個 object attribute 的墓釘是要讓我們 lock down 物件，讓他保持一個可已知的狀態，進而防止外部修改。
+
+通常，extensible 常常跟 cofigurable 及 writable property attribute 一起使用，ECMAScript5 定義了幾個 function 讓操作簡單些：
+
+  Object.seal()：類似 Object.preventExtensions()，但是他同時讓該 object 的自有 property 都變成 nonconfigurable，所以新的 property 無法加入，既有的 property 也不能被 delete / configure，但 writable 還是可以設定，如同 Object.preventExtensions() 一樣，一經設定無法變成 unseal。可以用 Object.isSealed() 判斷是否 seal。
+  seal: 密閉，閉緊
+
+  Object.freeze()：比 seal 鎖更緊，除了 seal 的作用外，他讓該物件的的 property 都變成 read-only（setter accessor property 不被引響）。可以用 Object.isFrozen() 判斷是否 frozen。
+
+  Object.preventExtensions(), Object.seal(), and Object.freeze() 都回傳該影響後的物件，所以可以:
+
+// 產生 x 唯讀，y 可寫的物件
+Object.seal(
+  Object.create(
+    Object.freeze({x:1}),
+    {y: {value: 2, writable: true}}
+  )
+);
