@@ -230,3 +230,31 @@ console.log(o.x)            // 0
 
 // Legacy API
 console.log(o.__lookupGetter__('x'))
+
+
+
+
+
+function classOf(obj) {
+  if (obj === null) return "Null";
+  if (obj === undefined) return undefined;
+  return Object.prototype.toString.call(obj).slice(8, -1);
+}
+
+console.log(classOf(null));             // "Null"
+console.log(classOf(1));                // "Number"
+console.log(classOf(""));               // "String"
+console.log(classOf(false));            // "Boolean"
+console.log(classOf({}));               // "Object"
+console.log(classOf([]));               // "Array"
+console.log(classOf(/./));              // "Regexp"
+console.log(classOf(new Date()));       // "Date"
+console.log(classOf(global));           // "global"
+function someFun() {}
+console.log(classOf(new someFun()));    // "Object"
+
+
+var obj1 = { a: 1};
+var obj2 = { x: 2, a: 3};
+obj1.extend(obj2); 
+console.log(obj1);   // { a: 1, x: 2 }

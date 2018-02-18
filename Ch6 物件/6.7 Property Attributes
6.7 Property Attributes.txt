@@ -118,6 +118,15 @@ Object.defineProperty(o, "x", {
 
 console.log(o.x)            // 0
 
+
+// 新增不可列舉的 extends 方法至 Object.prototype
+// 可以擴充物件的 property 至原本的物件
+// ex:
+// var obj1 = { a: 1};
+// var obj2 = { x: 2, a: 3};
+// obj1.extend(obj2); 
+// console.log(obj1);   // { a: 1, x: 2 }
+
 Object.defineProperty(Object.prototype, "extends", {
   writable: true,
   enumerable: false,

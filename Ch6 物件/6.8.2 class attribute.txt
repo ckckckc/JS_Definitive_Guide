@@ -1,1 +1,37 @@
 6.8.2 The class Attribute
+
+物件的 class attribute 是一個字串，表示該物件的類型，要 query 該物件的 class attribute 方法很迂迴(ECMAScript 3 / 5 都沒有定義方法定義它)，使用 toString()，而且要是繼承自 Object.prototype 的 toString()，他通常會回傳類似以下的形式：
+
+var obj = {};
+Object.prototype.toString.call(obj);
+
+"[object Object]"
+
+而得到 class 的正在上面回傳值的第 8 個字元（包含）至倒數第二個字元（包含）字串 => Object。
+
+要注意的是， toString 通常會因為繼承關係而不是原本 Object.prototype 的版本，我們比須使用 Function.call 的方法如此間接的方式正確呼叫它。
+
+自己定義一個 function 以方便查詢 class attribute:
+
+function classOf(obj) {
+  if (obj === null) return "Null";
+  if (obj === undefined) return undefined;
+  return Object.prototype.toString.call(obj).slice(8, -1);
+}
+
+console.log(classOf(null));             // "Null"
+console.log(classOf(1));                // "Number"
+console.log(classOf(""));               // "String"
+console.log(classOf(false));            // "Boolean"
+console.log(classOf({}));               // "Object"
+console.log(classOf([]));               // "Array"
+console.log(classOf(/./));              // "Regexp"
+console.log(classOf(new Date()));       // "Date"
+console.log(classOf(global));           // "global" => client-side host object
+console.log(classOf(window));           // "Window" => client-side host object
+function someFun() {}
+console.log(classOf(new someFun()));    // "Object"
+
+client-side host object 回傳的 class 則是取決該 client 的實作方式。
+而自定義的 constructor function，使用 new 來產生的 object 會有一個 class attribute "Object" 但他沒辦法更改。
+
