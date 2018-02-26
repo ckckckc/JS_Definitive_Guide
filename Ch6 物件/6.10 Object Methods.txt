@@ -1,0 +1,5 @@
+6.10 Object Methods
+
+幾乎所有 JavaScript Object 都會繼承 Object.prototype，當然創建時沒有 prototype 的物件除外，因此繼承的物件都會有 Object.prototype 上的 method，我們對這些 method 有興趣。
+
+這節會介紹在 Object.property 上的幾個 method，當然他們會被些更特定的 class overriden。

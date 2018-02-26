@@ -1,0 +1,5 @@
+6.10.4 The valueOf() Method
+
+valueOf() 跟 toString() 很像，但他會在物件需要轉換為 Primitive Type 而不是 字串 時被呼叫，通常在換為 Number 這個 Primitive type。
+
+如同上面幾節的情境，預設的 valueOf() 並不會做些有趣的事，但某些 class 定義了自己的 valueOf 方法。

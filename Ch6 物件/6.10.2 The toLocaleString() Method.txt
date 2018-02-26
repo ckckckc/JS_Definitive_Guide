@@ -1,0 +1,9 @@
+6.10.2 The toLocaleString() Method
+
+這個方法的目的是回傳轉換為本地化(localized)後的該物件代表字串。
+
+Object.prototype.toLocaleString 僅僅呼叫並回傳 Object.prototype.toString 的值。
+
+Date Number 自定義了 toLocaleString()，他們都會 local conventions。
+
+Array 的 toLocaleString() 跟 toString() 很像，除了他會呼叫每個元素的 toLocaleString() method 格式化每個元素而不是他們的 toString()。

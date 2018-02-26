@@ -1,0 +1,5 @@
+6.10.3 The toJSON() Method
+
+Object.prototype 並沒有定義 toJSON 方法。
+
+JSON.stringify 方法會先看呼叫該方法的物件有沒有定義 toJSON 方法，有的話就呼叫他回傳該值，例如 Date.toJSON()。

@@ -1,0 +1,8 @@
+6.10.1 The toString() Method
+
+toString 
+  不需要傳入參數，他會回傳呼叫他的物件的代表字串。
+
+  JavaScript 會在把物件傳承字串的時候呼叫這個方法，例如使用 + operator。
+
+  Object.prototype.toString 並不會提供太多資訊，所以許多 class 覆寫了這個方法，例如 Array 的 toString 會把陣列中的每個元素轉成字串，Function 得到 function 的原始碼。
