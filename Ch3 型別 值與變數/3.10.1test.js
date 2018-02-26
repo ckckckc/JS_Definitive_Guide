@@ -25,8 +25,9 @@ function f() {
 
 f();
 
-console.log(this);
+console.log(scope);
 
+console.log("\n");
 
 var scope2 = "global";
 function f2() {
