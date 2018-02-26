@@ -3,17 +3,17 @@
 
  * Usage:
   
-  classof(null)        // => "NULL"
-  classof(1)           // => "Number"
-  classof("")          // => "String"
-  classof(false)       // => "Boolean"
-  classof({})          // => "Object"
-  classof([])          // => "Array"
-  classof(/./)         // => "Regexp"
-  classof(new Date())  // => "Date"
-  classof(window)      // => "Window"
+  classOf(null)        // => "NULL"
+  classOf(1)           // => "Number"
+  classOf("")          // => "String"
+  classOf(false)       // => "Boolean"
+  classOf({})          // => "Object"
+  classOf([])          // => "Array"
+  classOf(/./)         // => "Regexp"
+  classOf(new Date())  // => "Date"
+  classOf(window)      // => "Window"
   function f() {}; 
-  classof(new f());    // => "Object"
+  classOf(new f());    // => "Object"
 
  */
 
