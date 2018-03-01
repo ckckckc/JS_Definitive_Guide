@@ -1,0 +1,31 @@
+7.1 Creating Arrays
+
+創建 Array 的方式：
+  
+  array literal (陣列字面值？):
+
+    var empty = [];
+
+    var base = 1;
+    var table = [base + 1, base + 2, base + 3];
+
+    var count = [1, , 3];   // count[1] = undefined
+    var undefs = [, , ];    // 沒有 element，但 length = 2;
+
+    這種創建方式允 optional trailing comma，所以最後一個逗號不會當作最後還多一個 undefnied 的值。
+
+  Array() constructor 可以給三種形式的參數:
+    沒給 Argument：
+      var a = new Array();  // 和 var a = []; 一樣
+
+    給單一 number 的 argument：
+      var a = new Array(10);
+
+      預先配置一個元素值都為 undefined 的已知長度陣列。
+
+    若傳入 兩個參數 || 更多參數 || 單一但不是 number:
+      var a = new Array(4, 3, 2, "some string");
+
+      傳入的參數會當作新陣列的 element。
+
+使用 array literal 通常比使用 Array() constructor 來得簡單。

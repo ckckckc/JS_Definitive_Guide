@@ -1,0 +1,21 @@
+Ch7 Arrays
+
+JavaScript Array:
+  是一個有排序集合，每個值稱為 element (元素？)，每個 elememt 有一個數值位置(index)。
+
+  不具型別的 untyped，每個元素可以是任何型別。
+
+  起始位置為 0 (zero-based)，使用 32-bit indexes，最大 index 是 2^32 - 1，例如：
+    var maxArrayLength = Math.pow(2, 32) - 1;
+    new Array(maxArrayLength)
+    new Array(maxArrayLength + 1)   // rangeError
+
+  動態陣列，不需要先宣告一個固定大小的長度值，就算長度改變也不用事先宣告。
+
+  陣列可能會是 sparse (稀疏的?)：元素之間不需要相鄰的 index，他們之間會許會有間隔。
+  
+  每個 Array 會有 length property，若是 nonsparse array(index 之間沒間隔的陣列)， length 代表 array element 的數目，若為 sparse array， length 會大於 array element 的數目。
+
+  陣列是特殊形式的 Object，而 index 只不過剛好是整數的 property name。而這個特殊的 Object 實作通常會經過優化，使得取得整數 index 的 element比起取得一般 Object 的值更快。
+
+  Array 繼承自 Array.prototype。
