@@ -1,0 +1,28 @@
+7.2 Reading and Writing Array Elements
+
+可讀/可寫的 Array index 範圍：<= Math.pow(2, 32) -2 的非負整數
+
+使用 [] 符號能讀/寫陣列元素，要讀/寫的 reference 則在 [] 左邊，[] 之中可以使用非負整數（0 或正整數）。
+
+使用 [] 讀取陣列元素的運作方式跟讀取物件特性的中括號相同，JavaScript 會把給入的 index 數值轉換成字串，array[1] 會變成 array["1"]，然後使用轉換過的字串當作 property name。這種轉換並不特殊，一般的物件也可以這麼做：
+
+var obj = {};
+obj[1] = "one";
+console.log(obj)          // { '1': 'one' }
+console.log(obj.length)   // undefined （obj不是陣列）
+
+Array 特殊的地方在於，如果使用小於 Math.pow(2, 32) -2 的非負整數，陣列會自動替你維護 length 的值。
+
+清楚的分別 array index 和 object property name：所有 index 都是 property name，但是只有在 property name 是 0 和 Math.pow(2, 32) - 2 (最大陣列長度 Math.pow(2, 32) - 2)時，他才是 index。又因為所有陣列都是物件，所以可以為他們創建任何名稱的特性。
+
+如果使用不是使用可讀/可寫的 Array index 範圍的 數字 存取陣列，他會被轉成字串，然後那個字串會變成 property name，即被視為普通的 object property。相反的使用 可讀/可寫的的 Array index 範圍的 字串，他的行為就會像是 Array index 的方式在存取 Array。
+
+例如：
+a[-1.23] = true;   // This creates a property named "-1.23"
+a["1000"] = 0;     // This the 1001st element of the array
+a[1.000]           // Array index 1. Same as a[1]
+
+JavaScript  沒有 out of bounds 的錯誤，當查詢的元素不在時，他會回傳 undefined 而不會產生錯。
+
+JavaScript 的元素若是 getter/setter 定義的話，存取該元素的時間跟存取一般物件的 getter/setter 的時間是類似的。
+
