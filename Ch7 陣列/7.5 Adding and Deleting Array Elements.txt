@@ -1,0 +1,27 @@
+7.5 Adding and Deleting Array Elements
+
+使用 push() 可以在陣列尾端加入一個或多個值
+
+var a = [];
+a.push('zero');
+a.push('one', 'two');
+
+將單一值 push into 陣列等同指定給 a[a.length] 值。
+
+unshift() 可已將一個值插入至 array 開頭，原來的 element 會 shift 到較高的 index 位置。
+
+delete 可以用來刪除，就跟刪除 Object property 一樣。
+
+var a = [3, 4, 5];
+delete a[1];
+console.log(1 in a);      // false
+console.log(a.length);    // 3
+console.log(a);           // [3, ,5]
+
+刪除 array element 不會更動 length property，也不會讓更高 index 的 element 填補被刪除的缺口。使用 delete 刪除 array element 之後，該 array 會變成 sparse array。
+
+pop() 可以讓 array length - 1，並回傳刪除 elemnt 的值。
+
+shift() 用來移除開頭第一個 element，所有的 element index 會 -1。
+
+splice() 可以用來 插入 刪除 取代 element element，他也可能會更動 length property。
