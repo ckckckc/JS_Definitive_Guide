@@ -1,0 +1,23 @@
+7.3 Sparse Arrays
+    稀疏陣列
+
+sparse array 的元素不具有從 0 開始，連續的 index，length property 會比 array element 數目還來得大。
+
+產生 sparse array 有三種方式：
+  使用給單一數字給 Array() constructor 方式產生的陣列
+    new Array(5)
+
+  給一個 element ，該 index 比目前陣列 length 還要大
+    var arr = [];
+    arr[100] = 1234;
+
+  使用 delete operator
+    var arr = [1, 2, 3, 4];
+    delete arr[0]
+
+
+sparse array 和一般 array 相比之下，會以一種較慢，較講究記憶體是用效率的方式實作，而陣列中查詢 element 所花的時間與查詢普通物件的 property 大致相同。
+
+不存在的 element 值為 undefined。
+
+實務上若用到 sparse array 時，可以機ㄤ他們視為具有 undefined element 的 nonsparse array 操作。

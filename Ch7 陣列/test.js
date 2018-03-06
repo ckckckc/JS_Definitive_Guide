@@ -41,3 +41,19 @@ arr6['2'] = 'test2';
 arr6[3.00] = 'test3';
 console.log('arr6:', arr6)
 console.log('arr6.length:', arr6.length)
+
+var sparseArr1 = [,'some value',,];
+var sparseArr2 = new Array(3);
+var denseArr3 = [undefined, undefined, undefined];
+
+console.log('index 0 in sparseArr1:', 0 in sparseArr1)
+console.log('length sparseArr1:', sparseArr1.length)
+console.log('index 0 in sparseArr2:', 0 in sparseArr2)
+console.log('length sparseArr2:', sparseArr2.length)
+console.log('index 0 in denseArr3:', 0 in denseArr3)
+console.log('length denseArr3:', denseArr3.length)
+console.log('sparseArr1[0] === denseArr3[0]: ', sparseArr1[0] === denseArr3[0])
+
+var sparseArr4 = [1, 2, 3, 4];
+delete sparseArr4[0]
+console.log('sparseArr4: ', sparseArr4);
