@@ -1,0 +1,23 @@
+7.7 Multidimensional Arrays
+
+JavaScript 沒有真正的支援多維 (multidimensional) 陣列，但你可以用陣列組成陣列的方式來模擬。
+
+var rowLength = 9;
+var columnLegnth = 9;
+var table = new Array(rowLength);
+
+for (var i = 0 ; i < rowLength ; i++ ) {
+  table[i] = new Array(columnLength);
+  for (var j = 0 ; j < columnLength ; j ++) {
+    table[i][j] = i * j;
+  }
+}
+
+console.log(table)
+
+註：
+What is a true multi dimensional array?
+https://stackoverflow.com/questions/8685081/what-is-a-true-multi-dimensional-array
+
+recursive explained this issue:
+A true multi-dimensional array must be indexed with multiple indices. An array of arrays can be indexed with a single index, which will return another array. A true multi-dimensional array stores all its data contiguously. An array of arrays stores all its constituent arrays arbitrarily scattered around. This can improve iteration performance because of cache effects for true arrays.

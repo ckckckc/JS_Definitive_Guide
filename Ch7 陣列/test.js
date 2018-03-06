@@ -122,3 +122,17 @@ array7.forEach((value) => {
   if (value === 11) return;
   console.log(value);
 });
+
+
+var rowLength = 9;
+var columnLength = 9;
+var table = new Array(rowLength);
+
+for (var i = 0 ; i < rowLength ; i++ ) {
+  table[i] = new Array(columnLength);
+  for (var j = 0 ; j < columnLength ; j ++) {
+    table[i][j] = i * j;
+  }
+}
+
+console.log(table)
