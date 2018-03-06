@@ -1,0 +1,29 @@
+7.6 Iterating Arrays
+
+使用 for 迴圈是最常見的做法，如果要確保 iterate 的順序，用 for loop 取代 for in loop，或是使用 ECMAScript 5 中的 forEach()，他只會 iterate 存在值的 index，而且只會是陣列 index property。
+
+var keys = Object.keys(someObject);
+
+var values = [];
+
+for (var i = 0, len = keys.length ; i < len ; i++) {
+  var key = keys[i];
+  valuse[i] = o[key];
+}
+
+for loop 會把每個 index 跑過，包含 undefined 及 不存在 的 elemnt。
+
+for in loop 會把可列舉的 property 跑過，而且是包含繼承而來可列舉的 property，可以用在 sparse array，不存在 element 的 index 會跳過，但小心繼承而來的 property，另外，這種方式無法確保 loop 的順序
+
+for (var i in a) {
+  // 跳過繼承而來的 property
+  if (!a.hasOwnProperty(i)) continue;
+}
+
+或是
+
+for (var i in a) {
+  // 如果 i 不是非負整數就跳過，但超過 32bit 的 index 不會篩選掉
+  if (String(Math.floor(Math.abs(Number(i)))) !== i) continue;
+}
+

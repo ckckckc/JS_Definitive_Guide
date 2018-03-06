@@ -87,3 +87,38 @@ lengthTest2 = [1, 2, 3, 4];
 lengthTest2.length = 0;
 console.log('lengthTest2: ', lengthTest2);
 
+var iteArray = [,undefined,,,];
+
+Array.prototype.somePro = 'somePro';
+
+for (var i = 0, len = iteArray.length ; i < len ; i++) {
+  console.log('for loop: ', i)
+  console.log(`for loop ${i} in iteArray: `, i in iteArray)
+}
+
+for (var index in iteArray) {
+  console.log('for in loop: ', index)
+  console.log(`for in loop ${index} in iteArray: `, index in iteArray)
+}
+
+iteArray.forEach((element) => {
+  console.log('forEach element: ', element);
+});
+
+iteArray[Math.pow(2, 32)] = 111;
+
+for (var i in iteArray) {
+  // 如果 i 不是非負整數就跳過
+  console.log(i)
+  if (String(Math.floor(Math.abs(Number(i)))) !== i) continue;
+  console.log('formated for in loop: ', i)
+  console.log(`formated for in loop ${i} in iteArray: `, i in iteArray)
+}
+
+var array7 = [1, 3, 5, 7 , 9, 11, 13, 15, 17];
+
+array7.forEach((value) => {
+  // forEach 中使用 return 代替 for loop 中的 continue 
+  if (value === 11) return;
+  console.log(value);
+});
