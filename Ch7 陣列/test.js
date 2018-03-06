@@ -57,3 +57,33 @@ console.log('sparseArr1[0] === denseArr3[0]: ', sparseArr1[0] === denseArr3[0])
 var sparseArr4 = [1, 2, 3, 4];
 delete sparseArr4[0]
 console.log('sparseArr4: ', sparseArr4);
+
+var lengthTest = [1, 2, 3, 4, 5];
+console.log('lengthTest: ', lengthTest);
+lengthTest.length = 2;
+console.log('lengthTest: ', lengthTest);
+lengthTest.length = 5;
+console.log('lengthTest: ', lengthTest);
+
+Object.seal(lengthTest);
+lengthTest[0] = 9;
+lengthTest[10] = 888;
+console.log('lengthTest seal: ', lengthTest);
+lengthTest.length = 0;
+console.log('lengthTest seal: ', lengthTest);   // 既有的 element 刪不掉
+lengthTest.length = 7;
+console.log('lengthTest seal: ', lengthTest);   // 可以變長
+
+Object.freeze(lengthTest);
+lengthTest[0] = 3;
+lengthTest[10] = 888;
+console.log('lengthTest freeze: ', lengthTest);
+lengthTest.length = 1;
+console.log('lengthTest freeze: ', lengthTest);
+lengthTest.length = 10;
+console.log('lengthTest freeze: ', lengthTest);
+
+lengthTest2 = [1, 2, 3, 4];
+lengthTest2.length = 0;
+console.log('lengthTest2: ', lengthTest2);
+

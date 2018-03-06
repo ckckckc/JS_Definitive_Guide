@@ -1,0 +1,22 @@
+7.4 Array Length
+
+每個 array 都有 length property，這個 property 讓它有別於普通的 JavaScript Object。
+
+Array 有兩個關於 length 的特別行為：
+  若我們給定一個 element 給 array 位於 index i 的位置，而 i 比目前的 length 要大，則 length 會被設定為 i + 1。
+
+  若將 length 設定為一個 非負整數 且小於目前的 length n，則任何 index 大約或等於 n 的元素都會從陣列中刪除。
+
+當然你也可以設定 length 值比現在還要大，但是這只會創造一個 sparse area 在被設定的 array 的後面。
+
+當然可以使用 6.8.3 中的 Object.defineProperty 讓 length 變成 read-only。
+
+a = [1,2,3];
+Object.defineProperty(a, "length", {
+    writable: false
+  }
+);
+
+a.length = 0;  // a 不變
+
+也可以使用 Object.seal() Object.freeze() 讓 array element 變成 nonconfigurable，那麼 elemnt 就不能被刪除，length 就不能設為讓目前的 element 變少的值。

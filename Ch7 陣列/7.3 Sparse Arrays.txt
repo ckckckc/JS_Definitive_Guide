@@ -3,7 +3,7 @@
 
 sparse array 的元素不具有從 0 開始，連續的 index，length property 會比 array element 數目還來得大。
 
-產生 sparse array 有三種方式：
+產生 sparse array 有幾種方式：
   使用給單一數字給 Array() constructor 方式產生的陣列
     new Array(5)
 
