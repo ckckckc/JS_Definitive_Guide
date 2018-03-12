@@ -1,0 +1,12 @@
+7.8.1 join()
+
+Array.join 把 Array 中的所有 element 轉成一個字串接起來。
+
+若沒給方法參數，則預設使用逗點(comma)使用接起來的，若給參數為某字串，則陣列元素則以傳入的字串連接起來。
+
+Ex:
+  var array = ['some_value', null, 333, , function fun(){}];
+  array.join();
+  console.log(array);   // some_value,,333,,function fun(){}
+
+Array.join 是 String.split() 方法的相反動作， String.split() 會把字串根據傳入的參數，將字串切成 array。

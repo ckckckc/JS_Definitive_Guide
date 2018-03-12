@@ -1,0 +1,8 @@
+7.8.2 reverse()
+
+Array.reverse() 會倒轉陣列元素的順序，並回傳倒轉後的陣列，他會更改原本陣列的元素位置 (reference)，而不會創建新的 array。
+
+Ex:
+  var array = [1, 2, 3];
+  console.log(array.reverse().join());  // "3,2,1"
+  console.log(array)                    // [3, 2, 1]

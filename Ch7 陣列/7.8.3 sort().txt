@@ -1,0 +1,48 @@
+7.8.3 sort()
+
+Array.sort():
+  會在呼叫該方法的陣列做排序並回傳排序後的陣列，他並不會新創一個陣列，而是直接排序呼叫的陣列。
+
+  如果呼叫該方法時候沒有傳入 argument，則會以字母順序排列陣元素，如果有位定義的元素則會被排列在陣列的尾端。
+    Ex:
+    var a = ['banana', 3, 'cherry',,, 'apple'];
+    a.sort();
+    console.log(s = a.join(', '));  // '3, apple, banana, cherry, , '
+    console.log(a)                  // [3, 'apple', 'banana', 'cherry',,,]
+
+  自訂排列順序，則需要傳入一個 function 參數，function 裡有兩個正在比較的陣列元素，依據不同回傳值決定比較中的兩個參數，回傳值分為
+    < 0    : 第一個元素出現順序在第二個元素之前
+    === 0  : 兩個元素的順序相等，即他們的順序無關緊要
+    > 0    : 第二元素應該出現在在第一個元素之前 
+     
+Ex1: 若要排列數值順序而非字母順序:
+  var arraySort3 = [3, 2, 44, 5, 1111];
+
+  console.log(arraySort3.sort());     // 字母順序
+
+  arraySort3.sort(function(a, b) {    // 數字順序 小至大
+    return a - b;
+  });
+  console.log(arraySort3)
+
+  arraySort3.sort(function(a, b) {    // 數字順序 大至小
+    return b - a;
+  });
+  console.log(arraySort3);
+
+Ex2: 不分大小寫的字母排序:
+  var arraySort4 = ['bb', 'AA', 'CC', 'aa', 'BB'];
+
+  console.log(arraySort4.sort());      // [ 'AA', 'BB', 'CC', 'aa', 'bb' ]
+
+  arraySort4.sort(function(a, b) {
+    var lowerA = a.toLowerCase();
+    var lowerB = b.toLowerCase();
+    if (lowerA > lowerB) return 1;    // 後面小的往前排
+    if (lowerA < lowerB) return -1;   // 前面小的在前面
+    return 0;
+  });
+  console.log(arraySort4);            // [ 'AA', 'aa', 'BB', 'bb', 'CC' ]
+
+
+

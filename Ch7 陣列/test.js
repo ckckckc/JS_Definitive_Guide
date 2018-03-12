@@ -136,3 +136,72 @@ for (var i = 0 ; i < rowLength ; i++ ) {
 }
 
 console.log(table)
+
+  
+  
+var arrayJoin = ['some_value', null, 333, , function fun(){}];
+
+console.log('arrayJoin: ', arrayJoin.join());
+
+var arrayReverse = [1, 2, 3];
+console.log('arrayReverse and join: ', arrayReverse.reverse().join());  // "3,2,1"
+console.log('arrayReverse: ', arrayReverse)                    // [3, 2, 1]
+
+// var arraySort = [3, 6, 3, 2,, 9, 1];
+var arraySort = [3, 2, 1, 99, 0];
+var count = 0;
+
+arraySort.sort(function(a, b) {
+  count++;
+  console.log('\n')
+  console.log(`comparing ${a} ${b}`)
+  // return a > b ? -1 : 1;
+  return b - a;
+});
+
+console.log(arraySort)
+console.log('count: ', count);
+
+var arraySort2 = ['banana', 3, 'cherry',,, 'apple'];
+arraySort2.sort();
+console.log(arraySort2.join(', '));  // '3, apple, banana, cherry, , '
+console.log(arraySort2)                  // [3, 'apple', 'banana', 'cherry',,,]
+
+var arraySort3 = [3, 2, 44, 5, 1111];
+arraySort3.sort();
+console.log(arraySort3);            // 字母順序
+arraySort3.sort(function(a, b) {    // 數字順序 小至大
+  return a - b;
+});
+console.log(arraySort3)
+arraySort3.sort(function(a, b) {    // 數字順序 大至小
+  return b - a;
+});
+console.log(arraySort3);
+
+var arraySort4 = ['bb', 'AA', 'CC', 'aa', 'BB'];
+console.log(arraySort4.sort());      // [ 'AA', 'BB', 'CC', 'aa', 'bb' ]
+arraySort4.sort(function(a, b) {
+  var lowerA = a.toLowerCase();
+  var lowerB = b.toLowerCase();
+  if (lowerA > lowerB) return 1;
+  if (lowerA < lowerB) return -1;
+  return 0;
+});
+console.log(arraySort4);            // [ 'AA', 'aa', 'BB', 'bb', 'CC' ]
+
+var arrayConcat = [1, 2, 3];
+console.log(arrayConcat.concat(4, 5));            // [ 1, 2, 3, 4, 5 ]
+console.log(arrayConcat.concat([4, 5]));          // [ 1, 2, 3, 4, 5 ]
+console.log(arrayConcat.concat([4, 5], [6, 7]));  // [ 1, 2, 3, 4, 5, 6, 7 ]
+console.log(arrayConcat.concat(4, [5, [6, 7]]));  // [ 1, 2, 3, 4, 5, [6, 7 ] ]
+console.log(arrayConcat);                         // [ 1, 2, 3 ]
+
+
+var arraySlice = [1, 2, 3, 4, 5];
+console.log(arraySlice.slice(0, 3));    // [ 1, 2, 3]
+console.log(arraySlice.slice(3));       // [ 4, 5 ]
+console.log(arraySlice.slice(1, -1));   // [ 2, 3, 4 ]
+console.log(arraySlice.slice(-3, -2));  // [ 3 ]
+console.log(arraySlice.slice(2, 0));    // [ ]
+console.log(arraySlice);                // [ 1, 2, 3, 4, 5 ]

@@ -1,0 +1,22 @@
+7.8.5 slice()
+
+  slice
+    會回傳呼叫該方法的 Array 的部分 `slice`，他不會改變呼叫該方法的 array。
+
+    若指定的位置是負的，他指定的是元素位置相對於陣列最後一個元素。
+      -1 => 最後一個元素
+      -3 => 從未後一個元素算起第三個元素
+
+    參數接受一個時，回傳指定的 index 位置到最後一個位置的 array。
+
+    參數接受兩個時，包前不包後，第一個是起始點，第二個是不會包含到的結束點。
+
+Ex:
+
+var arraySlice = [1, 2, 3, 4, 5];
+console.log(arraySlice.slice(0, 3));    // [ 1, 2, 3]
+console.log(arraySlice.slice(3));       // [ 4, 5 ]
+console.log(arraySlice.slice(1, -1));   // [ 2, 3, 4 ]
+console.log(arraySlice.slice(-3, -2));  // [ 3 ]
+console.log(arraySlice.slice(2, 0));    // [ ]
+console.log(arraySlice);                // [ 1, 2, 3, 4, 5 ]

@@ -1,0 +1,18 @@
+7.8.4 concat()
+
+Array.concat：
+  創建並回傳新的陣列，回傳的 array 會包含呼叫 concat 的陣列，接著傳入 concat 裡的元素。
+
+  參數如果傳入的是一個陣列，則會 concat 該陣列的元素，而非陣列本身。
+
+  若傳入的陣列裡有陣列，則不會 recursively 把陣列 flattern。 => 整個元素只會攤開一次
+
+  concat() 不會修改呼叫的陣列。
+
+Ex:
+var arrayConcat = [1, 2, 3];
+console.log(arrayConcat.concat(4, 5));            // [ 1, 2, 3, 4, 5 ]
+console.log(arrayConcat.concat([4, 5]));          // [ 1, 2, 3, 4, 5 ]
+console.log(arrayConcat.concat([4, 5], [6, 7]));  // [ 1, 2, 3, 4, 5, 6, 7 ]
+console.log(arrayConcat.concat(4, [5, [6, 7]]));  // [ 1, 2, 3, 4, 5, [6, 7 ] ]
+console.log(arrayConcat);                         // [ 1, 2, 3 ]

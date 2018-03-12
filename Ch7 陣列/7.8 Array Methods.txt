@@ -1,0 +1,5 @@
+7.8 Array Methods
+
+在 ECMAScritp3 中，Array prototype 中實做了許多實用的 Array function，讓任何陣列都可以使用，接下來的小節會介紹幾種這些 method。
+
+ECMAScript 5 中的新增方法在 7.9 節介紹。
