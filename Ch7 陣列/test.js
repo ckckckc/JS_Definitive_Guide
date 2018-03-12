@@ -205,3 +205,65 @@ console.log(arraySlice.slice(1, -1));   // [ 2, 3, 4 ]
 console.log(arraySlice.slice(-3, -2));  // [ 3 ]
 console.log(arraySlice.slice(2, 0));    // [ ]
 console.log(arraySlice);                // [ 1, 2, 3, 4, 5 ]
+
+
+var arraySplice1 = [1, 2, 3, 4, 5, 6, 7, 8];
+console.log(arraySplice1.splice(4));
+console.log('arraySplice1:', arraySplice1);
+console.log(arraySplice1.splice(2, 1));
+console.log('arraySplice1:', arraySplice1);
+
+var arraySplice2 = [1, 2, 3, 4, 5, 6, 7, 8];
+// [1, 2, 3, 4, 5, 6, 7, 8]
+console.log('arraySplice2:', arraySplice2);
+
+// splice(2, 0, "a", "b")):  []
+console.log('splice(2, 0, "a", "b")): ', arraySplice2.splice(2, 0, 'a', 'b'));
+
+// arraySplice2: [ 1, 2, 'a', 'b', 3, 4, 5, 6, 7, 8 ]
+console.log('arraySplice2:', arraySplice2);
+
+// splice(2, 2, [1, 2], 3):  [ 'a', 'b' ]
+console.log('splice(2, 2, [1, 2], 3): ', arraySplice2.splice(2, 2, [1, 2], 3));
+
+// arraySplice2: [ 1, 2, [ 1, 2 ], 3, 3, 4, 5, 6, 7, 8 ]
+console.log('arraySplice2:', arraySplice2);
+
+
+var stack1 = [];
+console.log('stack1: ', stack1)                             // []
+console.log('stack1.push(1, 2): ', stack1.push(1, 2));      // 2
+console.log('stack1: ', stack1)                             // [ 1, 2 ]
+console.log('stack1.pop(): ', stack1.pop());                // 2
+console.log('stack1: ', stack1)                             // [ 1 ]
+console.log('stack1.push([4, 5]): ', stack1.push([4, 5]));  // 2
+console.log('stack1: ', stack1);                            // [ 1, [4, 5] ]
+console.log('stack1.pop(): ', stack1.pop());                // [4, 5]
+console.log('stack1: ', stack1);                            // [ 1 ]
+console.log('stack1.pop(): ', stack1.pop());                // 1
+console.log('stack1: ', stack1);                            // []
+console.log('stack1.pop(): ', stack1.pop());                // undefined
+console.log('stack1: ', stack1);                            // []
+
+var stack2 = [];
+console.log('stack2: ', stack2);
+console.log('stack2.unshift(1): ', stack2.unshift(1));
+console.log('stack2: ', stack2);
+console.log('stack2.unshift(22): ', stack2.unshift(22));
+console.log('stack2: ', stack2);
+console.log('stack2.shift(): ', stack2.shift());
+console.log('stack2: ', stack2);
+console.log('stack2.unshift(3, [4, 5]): ', stack2.unshift(3, [4, 5]));
+console.log('stack2: ', stack2);
+console.log('stack2.shift(): ', stack2.shift());
+console.log('stack2: ', stack2);
+console.log('stack2.shift(): ', stack2.shift());
+console.log('stack2: ', stack2);
+console.log('stack2.shift(): ', stack2.shift());
+console.log('stack2: ', stack2);
+console.log('stack2.shift(): ', stack2.shift());
+console.log('stack2: ', stack2);
+
+console.log('[1, 2, 3].toString(): ', [1, 2, 3].toString()); //1,2,3
+console.log('["a", "b", "c"].toString()', ['a', 'b', 'c'].toString()); // a,b,c
+console.log('["a", [2, "c"]].toString()', [1, [2, "c"]].toString());   // 1,2,c

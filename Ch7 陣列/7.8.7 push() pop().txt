@@ -1,0 +1,22 @@
+7.8.7 push() pop()
+
+push 和 pop 可以讓你把 Array 當作 stacks 來操作(first in, last out)，他都會直接更改呼叫他的 Array。
+
+push: 在 Array 尾端加入一個或多個 element，並回傳新的 array length
+
+pop: 將 Array 最後一個 element 刪除，遞減原來的 Array length，並回傳他刪掉的值。
+
+var stack = [];
+console.log('stack: ', stack)                             // []
+console.log('stack.push(1, 2): ', stack.push(1, 2));      // 2
+console.log('stack: ', stack)                             // [ 1, 2 ]
+console.log('stack.pop(): ', stack.pop());                // 2
+console.log('stack: ', stack)                             // [ 1 ]
+console.log('stack.push([4, 5]): ', stack.push([4, 5]));  // 2
+console.log('stack: ', stack);                            // [ 1, [4, 5] ]
+console.log('stack.pop(): ', stack.pop());                // [4, 5]
+console.log('stack: ', stack);                            // [ 1 ]
+console.log('stack.pop(): ', stack.pop());                // 1
+console.log('stack: ', stack);                            // []
+console.log('stack.pop(): ', stack.pop());                // undefined
+console.log('stack: ', stack);                            // []

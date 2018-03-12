@@ -1,6 +1,6 @@
 7.8.1 join()
 
-Array.join 把 Array 中的所有 element 轉成一個字串接起來。
+Array.join 把 Array 中的所有 element 轉成字串，並串起來回傳一個字串。
 
 若沒給方法參數，則預設使用逗點(comma)使用接起來的，若給參數為某字串，則陣列元素則以傳入的字串連接起來。
 

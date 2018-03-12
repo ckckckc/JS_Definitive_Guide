@@ -1,0 +1,14 @@
+7.8.9 toString() toLocaleString()
+
+Array 的 toString 的方法會將每個陣列元素轉成字串，必要時會呼叫元素的 toString() 方法，然後輸出用逗點分隔的字串，他不會有任何 square bracket [] 符號。
+
+Ex:
+console.log([1, 2, 3].toString());       // 1,2,3
+console.log(['a', 'b', 'c'].toString()); // a,b,c
+console.log([1, [2, "c"]].toString());   // 1,2,c
+
+join() 如果沒給參數，也會回傳一樣的字串。
+
+toLocaleString() 是 toString() 的 localized 版本，他會呼叫 element 的 toLocaleString() 來轉成字串，然後由 locale-specific 的分隔符號 (根據實作定義) 把元素接起來。
+
+

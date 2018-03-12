@@ -1,0 +1,33 @@
+7.8.8 unshift() shift()
+
+unshift() 和 shift() 的關係就像 push() 和 pop()，只是他們是從陣列的開頭位置操作。
+
+unshift()：
+  在陣列的開頭新增一個或一組元素，將現存的 array element 移至較高的 index 來空出位置。
+  一次給多個參數會照參數的樣子直接插入最前面，若一個一個參數依序分開插入，則會跟一次傳入的插入順序相反，可以當作 splice 的插入方法使用。
+  回傳新的 array length。
+
+shift():
+  移除並回傳陣列的第一個元素，之後的陣列元素會降一個 index 填補開頭的缺口。
+  回傳刪除的 element。
+
+Ex:
+var stack2 = [];
+console.log('stack2: ', stack2);                                       // []
+console.log('stack2.unshift(1): ', stack2.unshift(1));                 // 1
+console.log('stack2: ', stack2);                                       // [ 1 ]
+console.log('stack2.unshift(22): ', stack2.unshift(22));               // 2
+console.log('stack2: ', stack2);                                       // [ 22, 1 ]
+console.log('stack2.shift(): ', stack2.shift());                       // 22
+console.log('stack2: ', stack2);                                       // [ 1 ]
+console.log('stack2.unshift(3, [4, 5]): ', stack2.unshift(3, [4, 5])); // 3
+console.log('stack2: ', stack2);                    // [ 3, [4, 5], 1]
+console.log('stack2.shift(): ', stack2.shift());    // 3
+console.log('stack2: ', stack2);                    // [ [4, 5], 1]
+console.log('stack2.shift(): ', stack2.shift());    // [ 4, 5 ]
+console.log('stack2: ', stack2);                    // [ 1 ]
+console.log('stack2.shift(): ', stack2.shift());    // 1
+console.log('stack2: ', stack2);                    // []
+console.log('stack2.shift(): ', stack2.shift());    // undefined
+console.log('stack2: ', stack2);                    // []
+

@@ -1,2 +1,37 @@
 7.8.6 splice()
 
+splice:
+  可以刪除陣列中的元素或是插入新元素至陣列，或同時執行兩個動作。
+
+  他會直接改變呼叫 splice 的 array。
+
+  第一個參數：指定要 插入/刪除 的 index，會包含該 index，若只給第一個參數，他會將該 index 至最後一個陣列最後一個元素移除。
+
+  第二個參數：要刪除的元素數目。
+
+  三個以上參數：要插入的元素。
+
+  若有元素刪除/插入陣列之中，在刪除/插入點之後的陣列元素會在需要時增加或減少他們的 index，如此讓他們在陣列中與其他元素接續不中斷。
+
+  splice 回傳值：被刪除的元素陣列，若沒有元素被刪除則回傳空陣列。
+
+  和 concat 不同的是，若遇到 要插入的參數是 array，他會插入該 array，而非該 array 的元素。
+
+Ex:
+var arraySplice = [1, 2, 3, 4, 5, 6, 7, 8];
+
+// [1, 2, 3, 4, 5, 6, 7, 8]
+console.log('arraySplice:', arraySplice);
+
+// splice(2, 0, "a", "b")):  []
+console.log('splice(2, 0, "a", "b")): ', arraySplice.splice(2, 0, 'a', 'b'));
+
+// arraySplice: [ 1, 2, 'a', 'b', 3, 4, 5, 6, 7, 8 ]
+console.log('arraySplice:', arraySplice);
+
+// splice(2, 2, [1, 2], 3):  [ 'a', 'b' ]
+console.log('splice(2, 2, [1, 2], 3): ', arraySplice.splice(2, 2, [1, 2], 3));
+
+// arraySplice: [ 1, 2, [ 1, 2 ], 3, 3, 4, 5, 6, 7, 8 ]
+console.log('arraySplice:', arraySplice);
+
