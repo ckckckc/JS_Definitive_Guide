@@ -1,0 +1,33 @@
+7.9.5 reduce() reduceRight()
+
+var finalAccumulate = {array}.reduce(function(accumulate, ele, i, arr) {
+  return nextAccumulate
+}[, initialAccumulate]);
+
+第一次呼叫傳入的 function 時，第一個 accumulate 是傳入的 第二個參數 作為初始值，
+第二次呼叫該 function 時， accumulate 則為第一次 funciton 的回傳值。
+
+若沒有給初始值，第一次呼叫 function 的 accumulate 則是第一個 array 的 eleemnt。
+
+若使用 [] 空陣列呼叫 reduce 而沒有給初始值，則會導致 TypeError 產生。
+
+有兩個情況不會呼叫 第一個參數的 function:
+  如果呼叫的陣列只有一個 element，沒有初始值
+    => return 第一個 element
+
+  空陣列，有給初始值
+    return 初始值
+
+保險起見，每次呼叫 reduct 都給定初始值。
+
+reduce 和 reduceRight 的差別在於：
+  reduce 的順序由小至大
+
+  reduceRight 由大至小
+
+reduce 和 reduceRight 不接受 this 參數，若要指定 function 中的 this 值，可以使用 bind 方法。
+
+reduce 和 reduceRight 應用在 union 時，可以產生不同的 union 順序造成不同的結果。
+
+可以再參考 mdn:
+https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce

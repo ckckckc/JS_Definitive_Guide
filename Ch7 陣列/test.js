@@ -321,3 +321,9 @@ console.log(someArray.some((ele, i) => {
 
 console.log([].every(ele => true));
 console.log([].some(ele => true));
+
+var reduceArray = [1, 3, 5, 6];
+
+console.log(reduceArray.reduce((accu, ele) => accu + ele, 0))
+console.log(reduceArray.reduce((accu, ele) => accu * ele, 1))
+console.log(reduceArray.reduce((accu, ele) => accu > ele ? accu : ele))
