@@ -1,2 +1,22 @@
 7.9.4 every() some()
 
+every():
+  檢查 element 是否符合傳入參數 function 的 predicate，
+  若每個 element 都符合(return true)，
+  則 return true。
+
+  若迭代過程中出現一次 false，即停止迭代並回傳 false。
+
+some():
+  檢查是否有 element 符合 predicate，
+  若每個都不符合，
+  則 return false。
+
+  若迭代過程中出現一次 true，則停止迭代並回傳 true。
+
+空陣列特例：
+  無論傳入的 somePredicate function 內容是什麼：
+
+  [].every(somePredicate)   // => true
+
+  [].some(somePredicate)    // => false

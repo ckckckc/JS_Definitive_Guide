@@ -36,7 +36,7 @@ foreach([2, 3, 4, 5], function(element) {
   console.log(element);
 });
 
-var arr = [, 0, , '', , null, , undefined, 'foo', false];
+var arr = [, NaN, , -0, 0, , '', , null, , undefined, 'foo', false];
 var denseArr = arr.compact();
 
 console.log(denseArr);

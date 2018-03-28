@@ -6,8 +6,8 @@
  *
  * @example
  *
- * [, 0, , '', , null, , undefined, 'foo', false].compact(); 
- * // => [ 0, '', null, undefined, 'foo', false ]
+ * [, NaN, , -0, 0, , '', , null, , undefined, 'foo', false].compact(); 
+ * // => [ NaN, -0, 0, '', null, undefined, 'foo', false ]
  */
 
 Object.defineProperty(Array.prototype, "compact", {

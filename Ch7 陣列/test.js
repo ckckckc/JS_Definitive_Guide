@@ -304,3 +304,20 @@ console.log(filterArray.filter(function(ele) {
 }));
 
 console.log('filterArray: ', filterArray);
+
+var everyArray = [2, 4, 6, 8, 10];
+
+console.log(everyArray.every((ele, i) => {
+  console.log('every index: ', i);
+  return ele % 2 === 0;
+}));
+
+var someArray = [1, 4, 5, 7, 9];
+
+console.log(someArray.some((ele, i) => {
+  console.log('some index: ', i);
+  return ele % 2 === 0;
+}));
+
+console.log([].every(ele => true));
+console.log([].some(ele => true));
