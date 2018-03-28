@@ -1,0 +1,16 @@
+7.9 ECMAScript 5 Array Methods
+
+一般來說，這些 Array Methods 會接受一個 function 作為第一個 argument，
+第二個可以傳入的值可以作為第一個 function 的 this 值。若陣列是 sparse 的，第一個 function 不會 invoked 為不存在的 element。
+
+forEach
+
+map
+
+filter
+
+every some
+
+reduce reduceRight
+
+

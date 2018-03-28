@@ -1,0 +1,17 @@
+7.9.3 filter()
+
+filter() 在 function 參數的回傳值為 true 時，該迭代的 element 會加入 filter() 的回傳陣列中。
+
+filter() 會跳過陣列的 sparse 部分，他一定回傳 dense 陣列。
+
+若要關上 sparse 陣列的缺口可以這麼做：
+
+var denseArray = sparseArray.filter(function() {
+  return true;
+});
+
+若要 關閉缺口 並移除 undefined 或 null 可以這樣做：
+
+var specificArray = unspecificArray.filter(function(element) {
+  return element !== undefined && element !== null;
+});

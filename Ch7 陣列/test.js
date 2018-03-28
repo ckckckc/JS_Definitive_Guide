@@ -267,3 +267,40 @@ console.log('stack2: ', stack2);
 console.log('[1, 2, 3].toString(): ', [1, 2, 3].toString()); //1,2,3
 console.log('["a", "b", "c"].toString()', ['a', 'b', 'c'].toString()); // a,b,c
 console.log('["a", [2, "c"]].toString()', [1, [2, "c"]].toString());   // 1,2,c
+
+
+
+
+
+function foreach(a,f,t) { 
+  try { a.forEach(f,t); }
+  catch(e) {
+    if (e === foreach.break) return; 
+    else throw e;
+  }
+}
+foreach.break = new Error("StopIteration");
+
+foreach([2, 3, 4, 5], function(element) {
+  if (element === 3) {
+    throw foreach.break;
+  }
+  console.log(element);
+});
+
+var mapArray = [4, 5, 6,, 7, 8];
+
+var newMapArray = mapArray.map(function(element) {
+  return Math.pow(element, 2);
+});
+
+console.log('mapArray: ', mapArray);
+console.log('newMapArray: ', newMapArray);
+
+var filterArray = [3, 5,,, 6, 7, 7];
+
+console.log(filterArray.filter(function(ele) {
+  return ele % 2 === 0;
+}));
+
+console.log('filterArray: ', filterArray);

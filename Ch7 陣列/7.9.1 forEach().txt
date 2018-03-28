@@ -1,0 +1,37 @@
+7.9.1 forEach()
+
+forEach 無法使用 break statement 提早結束每個 element 的迭代，如果要提前終止迴圈，必須 throw an exception，而且要用 try catch 的 try block 將 呼叫 forEach 的 statement 包入其中。
+
+var data = [1, 2, 3, 4];
+
+var sum = 0;
+
+data.forEach(function(value) {
+  sum += value;
+});
+
+console.log(sum); // 10
+
+data.forEach(function(value, index, array) {
+  array[index] = value + 1;
+});
+
+console.log(data);  // [2, 3, 4, 5]
+
+自己做一個可以 break 的 foreach function:
+function foreach(a,f,t) { 
+  try { a.forEach(f,t); }
+  catch(e) {
+    if (e === foreach.break) return; 
+    else throw e;
+  }
+}
+foreach.break = new Error("StopIteration");
+
+Ex:
+foreach([2, 3, 4, 5], function(element) {
+  if (element === 3) {
+    throw foreach.break;
+  }
+  console.log(element);
+});

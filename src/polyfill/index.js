@@ -1,1 +1,2 @@
-require('./extend.js');
+require('./ArrayCompact.js');
+require('./ObjectExtend.js');

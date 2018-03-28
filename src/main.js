@@ -1,8 +1,11 @@
 require('./polyfill');
 
-var classOf = require('./lib').classOf;
-var inherit = require('./lib').inherit;
-var isFalsy = require('./lib').isFalsy;
+var lib = require('./lib');
+
+var classOf = lib.classOf;
+var inherit = lib.inherit;
+var isFalsy = lib.isFalsy;
+var foreach = lib.foreach;
 
 console.log(classOf(1234))
 
@@ -24,3 +27,16 @@ console.log(isFalsy('1234'))
 console.log(isFalsy({}))
 console.log(isFalsy(Object))
 console.log(isFalsy(Date))
+
+
+foreach([2, 3, 4, 5], function(element) {
+  if (element === 4) {
+    throw foreach.break;
+  }
+  console.log(element);
+});
+
+var arr = [, 0, , '', , null, , undefined, 'foo', false];
+var denseArr = arr.compact();
+
+console.log(denseArr);

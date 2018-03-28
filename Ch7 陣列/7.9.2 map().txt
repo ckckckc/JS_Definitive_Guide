@@ -1,0 +1,4 @@
+7.9.2 map()
+
+和 forEach 類似，但不同的是，他會回傳一個新的 array，而新 array 的 element 值取決於每次迭代時的回傳值，若呼叫 map 的 array 是 sparse 的，則回傳的新 array 也會有相同的 sparse 方式，即相同位置 sparse，且 array length 相同。
+
