@@ -1,0 +1,28 @@
+7.11 Array-Like Objects
+
+當 object 有數非負整數值的 property "length" 就是 Array like object，你可能無法使用 Array 才有的 method，但是你還是能像真的 array 一樣的下 iterate 的 code 取得那些 array element。
+
+JavaScript arrays have some special features that other objects do not have:
+• The length property is automatically updated as new elements are added to the list.
+• Setting length to a smaller value truncates the array.
+• Arrays inherit useful methods from Array.prototype.
+• Arrays have a class attribute of “Array”.
+
+It is often perfectly reasonable to treat any object with a numeric length property and corresponding non-negative integer properties as a kind of array.
+
+Array 的方法許多都是通用在 array-like object 上的，但是這些 object 並非繼承自 Array，所以要使用 Array 的方法必須使用 call 的方式：
+
+var a = {"0": "foo", "1": "bar", length: 2};
+
+Array.prototype.join.call(a); // "foo,bar"
+
+Firefox 將這些方法直接定義在 Array coustructor 之中，
+讓上面的寫法可以這樣：
+
+Array.join(a);
+
+這些 static 版本並非標準，確保可以執行可以：
+
+Array.join = Array.join || funciton(arr, sep) {
+  return Array.prototype.join.call(arr, sep);
+};

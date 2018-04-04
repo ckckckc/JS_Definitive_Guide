@@ -1,5 +1,6 @@
 var maxArrayLength = Math.pow(2, 32) - 1;
 new Array(maxArrayLength)
+console.log(new Array(maxArrayLength).length)
 // new Array(maxArrayLength + 1)   // rangeError
 
 var arr1 = [1, 2, 3];
@@ -31,9 +32,12 @@ console.log('obj.length: ', obj.length)
 
 var arr5 = [];
 console.log('arr5.length:', arr5.length);
-arr5[maxArrayLength] = 'test';
-console.log('arr5[maxArrayLength + 1]:', arr5[maxArrayLength]); // convert to property
+arr5[maxArrayLength - 1] = 'test1';
+arr5[maxArrayLength] = 'test2';
+console.log('arr5[maxArrayLength]:', arr5[maxArrayLength]); // convert to property
 console.log('arr5.length:', arr5.length);
+
+console.log('isArrayLike(arr5): ', isArrayLike(arr5));
 
 var arr6 = [];
 arr6[-1] = 'test1';
@@ -327,3 +331,60 @@ var reduceArray = [1, 3, 5, 6];
 console.log(reduceArray.reduce((accu, ele) => accu + ele, 0))
 console.log(reduceArray.reduce((accu, ele) => accu * ele, 1))
 console.log(reduceArray.reduce((accu, ele) => accu > ele ? accu : ele))
+
+const findAllIndex = (arr, value) => {
+  let results = [],
+      currentIndex = 0,
+      len = arr.length;
+
+  while(currentIndex < len) {
+    currentIndex = arr.indexOf(value, currentIndex);
+    if (currentIndex === -1) {
+      break;
+    }
+    results.push(currentIndex++);
+  }
+
+  return results;
+};
+
+var arrIndexToFind = [1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5];
+
+console.log(findAllIndex(arrIndexToFind, 1));
+console.log(arrIndexToFind.join(''));
+console.log(findAllIndex(arrIndexToFind.join(''), 1));
+
+
+function isArrayLike(o) {
+  if (o &&
+      typeof o === 'object' &&
+      isFinite(o.length) &&
+      o.length >= 0 &&
+      o.length === Math.floor(o.length) &&
+      o.length < 4294967296) return true;
+  return false;
+}
+
+var arrayLike = {};
+arrayLike[maxArrayLength - 1] = 1;
+arrayLike.length = maxArrayLength;
+console.log('arrayLike arrayLike', arrayLike);
+console.log('isArrayLike arrayLike', isArrayLike(arrayLike));
+
+var arrayLike2 = {};
+var i = 0;
+while(i < 10) {
+  arrayLike2[i] = i*i;
+  i += 2;
+}
+arrayLike2.length = i;
+
+for(var j = 0; j < arrayLike2.length ; j++) {
+  console.log(j)
+}
+
+console.log(arrayLike2)
+
+var arrayLike3 = {"0": "foo", "1": "bar", length: 2};
+
+console.log(Array.prototype.join.call(arrayLike3)); // "foo,bar"

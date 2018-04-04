@@ -1,0 +1,24 @@
+7.9.6 indexOf() lastIndexOf()
+
+從陣列裡找傳入參數值的 index 位置，如果沒找到則回傳 -1。
+
+indexOf 從頭開始， lastIndexOf 從最後開始，如果有給第二個參數則代表從該位置開始找。
+
+字串也有這些方法，運作方式也相同的 indexOf lastIndexOf。
+
+延伸應用，找到 陣列/字串 中符合值的所有位置：
+const findAllIndex = (arr, value) => {
+  let results = [],
+      currentIndex = 0,
+      len = arr.length;
+
+  while(currentIndex < len) {
+    currentIndex = arr.indexOf(value, currentIndex);
+    if (currentIndex === -1) {
+      break;
+    }
+    results.push(currentIndex++);
+  }
+
+  return results;
+};
