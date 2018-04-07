@@ -388,3 +388,21 @@ console.log(arrayLike2)
 var arrayLike3 = {"0": "foo", "1": "bar", length: 2};
 
 console.log(Array.prototype.join.call(arrayLike3)); // "foo,bar"
+
+var str = 'abcde';
+
+console.log(str)
+console.log(str[0])
+str[0] = 'g';
+console.log(str.charAt(0))
+console.log(str[0])
+console.log(str[0] === str.charAt(0))
+
+console.log(typeof str)
+console.log(Array.isArray(str))
+
+console.log(Array.prototype.filter.call(str, (c) =>
+  c.match(/[^aeiou]/)
+).join(''));
+
+// console.log(Array.prototype.reverse.call(str, 'fg'));

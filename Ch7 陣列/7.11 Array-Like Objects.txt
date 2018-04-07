@@ -1,6 +1,6 @@
 7.11 Array-Like Objects
 
-當 object 有數非負整數值的 property "length" 就是 Array like object，你可能無法使用 Array 才有的 method，但是你還是能像真的 array 一樣的下 iterate 的 code 取得那些 array element。
+當 object 有數非負整數值對應的 property，以及數值 "length" property， 就是 Array like object，你可能無法使用 Array 才有的 method，但是你還是能像真的 array 一樣的下 iterate 的 code 取得那些 array element。
 
 JavaScript arrays have some special features that other objects do not have:
 • The length property is automatically updated as new elements are added to the list.
