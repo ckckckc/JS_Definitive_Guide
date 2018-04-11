@@ -1,0 +1,22 @@
+8. Functions
+
+關於 JavaScript Function:
+
+  是一個 JavaScript 程式碼區塊，他被定義一次但可以多次被執行多次被呼叫。
+
+  Function 定義一串 identifiers，稱為 parameters，他們在 function body 裡作為 local variable 使用。
+
+  呼叫 Function 時提供 argument 值給 Function 的 parameter。
+
+  每次呼叫 Function 時，會有一個 this 值，這根據 invocation context 而定。
+
+  若 Function 為一個 object 的 property，則稱為 method。
+
+  若 function 經由 object 呼叫，則該 object 就是 invocation context，該 object 就是 function 的 this 值。(When a function is invoked on or through an object, that object is the invocation context or this value for the function.)
+
+  若 function 用來初始化新創造的 object，則稱為 constructor。
+
+  JavaScript 的 function 是 object，你可以將它作為其他變數的值，或是將它作為其他 function 的 property，並且經由該 function 呼叫它。
+
+  JavaScript 的 function 可以 nested 在其他 function 之中，在存取變數時會以 scope 定義時的值為依據，意即 JavaScript 為 closures。
+
