@@ -1,0 +1,21 @@
+8.1.1 Nested Functions
+
+Nested Functions: function nested within other function。例如：
+
+function calculateCircleWaterBuoyancy(radius) {
+  const WATER_DENSITY = 1000,
+        GRAVITY_ACCELERATION = 9.81;
+  const waterWeight = calculateWaterWeight(calculateCircleValumn(radius));
+
+  function calculateCircleValumn(r) { 
+    return 4/3*Math.PI*Math.pow(r, 3); 
+  } 
+
+  function calculateWaterWeight(valumn) { 
+    return valumn * WATER_DENSITY * GRAVITY_ACCELERATION;
+  }
+
+  return waterWeight;
+}
+
+Nested Functions 特別的地方在於變數 scope 存取規則， inner function 可以存取 outer function 的變數，例如上面例子中 calculateCircleValumn 和 calculateWaterWeight 都可以讀/寫 radius 變數，在 8.6 中會再次討論。

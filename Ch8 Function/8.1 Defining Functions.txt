@@ -1,0 +1,45 @@
+8.1 定義 Funcitons
+    Defining Functions
+
+Functions 使用 function 關鍵字定義，可以用兩種方式定義：
+  function definition expression(4.3)
+    var fun1 = function() {};
+    var fun2 = function funName() {};
+
+  function declaration statement(5.3.2)
+    function funName() {}
+
+這兩種 function 宣告方式的差異：(可以看 5.3.2)
+  主要在於呼叫相同 scope 裏，兩個變數名都在，但是 function assign 到該變數的時機不同。
+  (同時也要明白變數 hoisted (3.10.1)的意義)
+
+  function declaration statement 不能存在在 loops ,conditionals, or try/catch/finally or with statements，但是 expression 可存在在 JavaScript 中任何地方。但其實 function declaration statement 在某些瀏覽器中有放鬆這些限制，允許出現在 if statement 中。
+
+兩種形式都由三個部分組成一個 function:
+  Identifier name: 
+    就是 function 的變數名稱，最新定義的 function 會 assign 給這個變數名稱(意即同名 function 找最後定義的 function 為該值)。
+
+    這在 function declaration statement 是 required 的。
+
+    在 function definition expression 是 optional 的。
+
+    如果有給的話，這個 function name 可以給該 function object 的 body refer 自己，意即 function body 裡可以呼叫自己的 function name，自己呼叫自己，若沒有特別處理就會有 Error:
+    RangeError: Maximum call stack size exceeded，善用自己呼叫自己的例子：
+      function factorial(x) {
+        if (x <= 1) return 1;
+        return x * factorial(x-1); 
+      }
+
+  一對圓括號包著 由逗點分隔的零個或多個 identifiers:
+    這些 identifiers 就是 parameter names（參數名稱），它們的行為就像是 function body 裡的 locale 變數。
+
+  彎曲的大括號裡包著零個或多個 JavaScript statement：
+    這些 statement 會在 function invoked 的時候執行。
+
+關於 function 中的 return:
+  如果 return 會讓 funciton 停止執行，並將 expression 回傳給 caller。
+
+  如果 return 後面沒有關聯的 express，則回傳 undefined。
+
+  如果 function 中沒有 return，則 function body 中的每個 statement 都執行後回傳 undefined 給 caller，function 沒有回傳值有時稱為 procedure。
+
