@@ -6,6 +6,10 @@ describe('isNaN lib', () => {
     assert.equal(isNaN(NaN), true);
   });
 
+  it('should return type boolean', () => {
+    assert.typeOf(isNaN(), 'boolean');
+  });
+
   it('should return false, while isNaN(0)', () => {
     assert.equal(isNaN(0), false);
   });

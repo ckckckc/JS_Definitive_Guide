@@ -1,0 +1,12 @@
+8.2 Invoking Functions
+
+JavaScript 的 function body 是在 function 被 invoking 的時候執行，而非在 function 被定義的時候執行。
+
+JavaScript 的 function can be invoked 的方式有四種：
+  function
+
+  method
+
+  constuctor
+
+  間接使用該 function 的 apply call method

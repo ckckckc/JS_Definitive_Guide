@@ -67,3 +67,76 @@ function hypotenuse(a, b) {
 }
 
 console.log(hypotenuse(1, 1));
+
+// (function() {
+//   'use strict';
+//   console.log(this);
+// })();
+
+// (function() {
+//   console.log(this);
+// })();
+
+
+var thisTestObj = {
+  method: function() {
+    // 'use strict';
+    console.log('this === global: ', this === global);
+    console.log('this === thisTestObj: ', this === thisTestObj);
+
+    // function invocation
+    nestedFun();
+
+    function nestedFun() {
+      console.log('this === global: ', this === global);
+      console.log('this === thisTestObj: ', this === thisTestObj);
+    }
+  }
+};
+
+// method oinvocation
+thisTestObj.method();
+
+
+var calculator = {
+  operand1: 1,
+  operand2: 2,
+  add: function() {
+    this.result = this.operand1 + this.operand2;
+  }
+};
+
+calculator.add();
+console.log('calculator result:', calculator.result);
+
+var nestedTest1 = {
+  outer: function() {
+    console.log('nestedTest1 this', this);
+
+    var innerObj = {
+      inner: function() {
+        console.log('nestedTest1 this', this);
+      }
+    };
+
+    innerObj.inner();
+  }
+};
+nestedTest1.outer();
+
+var nestedTest2 = {
+  outer: function() {
+    var self = this;
+    console.log('nestedTest2 this', this);
+
+    var innerObj = {
+      inner: function() {
+        console.log('nestedTest2 self', self);
+        console.log('nestedTest2 this', this);
+      }
+    };
+
+    innerObj.inner();
+  }
+};
+nestedTest2.outer();

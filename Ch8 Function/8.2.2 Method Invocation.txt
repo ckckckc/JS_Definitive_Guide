@@ -1,0 +1,37 @@
+8.2.2 Method Invocation
+
+method 就是存在 Object property 中的 function。
+
+簡單的情境： f 為 function， o 為 Object
+  定義 method
+    o.m = f;
+  invoke method:
+    o.m();
+    o.m(someArg)  // 如果有必要給參數的話
+
+上面的例子中，argument 和 return value 和一般的 function invocation 處理方式完全相同，和 function invocation 不同且重要的是：the invocation context。上面的例子中， o 就是 invocation context，也就是 this 的值。
+
+Method 和 this 關鍵字是物件導向程式設計的核心。
+這種語法隱含且優雅地表達了 function 作用在 object 之上的概念。
+例：
+  rect.setSize(width, height);      // 清楚表達了 物件 rect 是這項動作的主要目標。
+  setRectSize(rect, width, height);
+
+
+關於 this:
+  this 是個關鍵字，不能指定值給他。
+
+  this 與 nested function 相關：
+    this 不含有 scope，而且 nested function 不會繼承 caller this 的值。
+
+    如果 nested functoin 當作 method 來 invoke，他的 this 就是 the object it was invoked on。
+
+    如果 nested function 當作 function 來 invoke，他的 this 就是 global object(non-strict mode)或是 undefined (strict mode)。
+
+    常見誤會： nested function 作為 function invoked 時，可以得到 outer function 的 this 值，當然事實上是不行的，所以 nested function 想要得到 outer function 的 this 值，需要儲存該 this 值 that is in scope for the inner function，常見的變數名稱使用 self。
+
+關於 Method Chaining(方法鏈串)：
+  當方法回傳的事物間時，你可以接著使用該物件的方法，若回傳的都是相同的物件(回傳 this)，則寫出可以一連串的方法 invocation，方法串鏈和 constructor chaining (建構式鏈串)不同(9.7.2)。
+
+  例子如 jQuery library：
+  // Find all headers, map to their ids, convert to an array and sort them $(":header").map(function() { return this.id }).get().sort();

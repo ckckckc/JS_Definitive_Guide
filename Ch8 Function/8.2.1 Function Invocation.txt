@@ -1,0 +1,21 @@
+8.2.1 Function Invocation
+
+function invocation 的組成：
+  function expression 可以估算為 function object 後面接者 () 符號，裡面有著逗點分隔的 argument expressions。
+
+在 function invocation 的時：
+  每個 argument 都會先被估算，然後估算的結果會作為 function 的 argument，對應到 funtion body 裡位置相對應的變數命稱。
+
+return 值：
+  若 return 後面有 expression，則 return 值為 expressin 的估算值。
+
+  若執行到 functon end 沒有 return satement，則 function 的回傳值是 undefined。
+
+  若 return statement 後面沒有 value，則回傳 undefined。
+
+invocation context(this 的值):
+  在 ECMAScript 3 還有 nonstrict ECMAScript 5，是 global object。
+
+  在 strict mode， invocation context 為 undefined。
+
+若 function expression 為一個 object 的 property 或是 array 的 element，則就不是 funtion invocation，而是 method invocation expression，下一個小節再介紹。
