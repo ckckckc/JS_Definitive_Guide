@@ -10,7 +10,7 @@
  * // => [ NaN, -0, 0, '', null, undefined, 'foo', false ]
  */
 
-Object.defineProperty(Array.prototype, "compact", {
+Object.defineProperty(Array.prototype, 'compact', {
   wirtable: true,
   enumerable: false,
   configurable: true,

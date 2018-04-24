@@ -18,7 +18,7 @@
  */
 
 function classOf(obj) {
-  if (obj === null) return "Null";
+  if (obj === null) return 'Null';
   if (obj === undefined) return undefined;
   return Object.prototype.toString.call(obj).slice(8, -1);
 }

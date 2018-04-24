@@ -1,0 +1,32 @@
+8.2.3 Constructor Invocation
+
+如果一個 function 或是 method invocatin 的前面有 new 關鍵字，他就是 constructor invocation（4.6 及 6.1.2，在 ch 9 會介紹更多）。
+
+constructor invocation 會產生一個新的空物件，該物件會繼承 constructor 的 prototype property。
+
+A constructor invocation creates a new, empty object that inherits from the prototype property of the constructor. 
+
+和 refular function 還有 method invocation 不同在於:
+  處理 arguments 的方式
+    若有 arguments 一樣會被 evaluated 然後 passed 到 funciton ，這和 function / method 一樣。
+    若 constructor 沒有 parameters， constructor invocatin syntax 可以將 argument linst 跟 括號() 給完全省略。
+      ex
+        // 都一樣
+        var o = new Objct();
+        var o = new Object;
+
+  invocation context
+    在 constructor invocation 時會新創一個 object，新創的 object 就是 invocation context，也就是 this 的值。
+
+    這個新創物件作為 invocation context 的規則在像是 method invocation （偽裝 method 的 constructor）的時候也是如此。
+      ex:
+        new o.m() // o 不是 invocation context
+
+  return value
+    若 constructor 一般是不會去用 return keyword 的，他會在執行到 constructor body 底部後，會隱含的將初始化後的新 object 回傳回去，他就是 constructor invocation expression 的值。
+
+    如果在 constructor 中明確的使用 return statement 的話：
+      回傳的是 object：那麼該 object 就會是 constructor invocation 的值。
+      A constructor explicitly used the return statement to return an object, then that object becomes the value of the invocation expression.
+
+      回傳的是 primitive value 或是沒有回傳值：那麼 return 的值會將它忽略，而那個新的物件將作為 constructor invocation 的值。

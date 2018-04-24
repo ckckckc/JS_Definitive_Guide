@@ -31,7 +31,7 @@ Method 和 this 關鍵字是物件導向程式設計的核心。
     常見誤會： nested function 作為 function invoked 時，可以得到 outer function 的 this 值，當然事實上是不行的，所以 nested function 想要得到 outer function 的 this 值，需要儲存該 this 值 that is in scope for the inner function，常見的變數名稱使用 self。
 
 關於 Method Chaining(方法鏈串)：
-  當方法回傳的事物間時，你可以接著使用該物件的方法，若回傳的都是相同的物件(回傳 this)，則寫出可以一連串的方法 invocation，方法串鏈和 constructor chaining (建構式鏈串)不同(9.7.2)。
+  當方法回傳的是物件時，你可以接著使用該物件的方法，若回傳的都是相同的物件(回傳 this)，則寫出可以一連串的方法 invocation，方法串鏈和 constructor chaining (建構式鏈串)不同(9.7.2)。
 
   例子如 jQuery library：
   // Find all headers, map to their ids, convert to an array and sort them $(":header").map(function() { return this.id }).get().sort();

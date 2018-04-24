@@ -1,7 +1,7 @@
 const findAllIndex = (arr, value) => {
   let results = [],
-      currentIndex = 0,
-      len = arr.length;
+    currentIndex = 0,
+    len = arr.length;
 
   while(currentIndex < len) {
     currentIndex = arr.indexOf(value, currentIndex);

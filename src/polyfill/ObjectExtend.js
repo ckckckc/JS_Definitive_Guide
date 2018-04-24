@@ -2,7 +2,7 @@
  * CH6 6.7 p.134 Add a nonenumerable extend() method to Object.prototype.
  */
 
-Object.defineProperty(Object.prototype, "extend", {
+Object.defineProperty(Object.prototype, 'extend', {
   writable: true,
   enumerable: false,
   configurable: true,

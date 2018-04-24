@@ -1,7 +1,7 @@
 4.6 物件創建運算式
     Object Creation Expressions
 
-重點： object creatin exprsssion 創造物件的程序
+重點： object creation exprsssion 創造物件的程序
 
 
 An object creation expression （物件創建運算式） 創造一個新的物件，而且調用一個 function （該 function 稱為 constructor 建構式）來初始化這個物件的 properties。
@@ -20,10 +20,9 @@ new Object
 new Date
 
 1.  當 object creation expression 被估算的時候，JavaScript 先創造一個新的空物件
-    就像是一個被 object initializer created 的 {}
+    就像是一個被 object initializer created 的 {}。
 
-2.  家接下來他 invokes 指定的 function 和給定的 arguments，傳入新的這個物件當作 this 的值
-    這個 function 可以用這個 this 來初始化這個新創的物件的 properties
+2.  在 invokes 指定的 function 時，將給定的 arguments 作為新物件 this 的 property 之用。
 
 3.  用來當作 constructors 的 function do not return a value，接者這個
     object creation expression 就是這個新創且經過初始化的 object 值
