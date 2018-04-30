@@ -1,0 +1,15 @@
+8.2.4 Indirect Invocation
+
+Indirect Invocation: 使用 call apply 呼叫 function。
+
+JavaScript 的 function 是物件，他們也有 method: call apply，可以藉由這兩個 method 間接的呼叫 function。
+
+這兩個 function 可以明確的指定 function invocation 時的 this 值，意即你可以將要呼叫的 function 當作任何 object 的 method，即使該 function 不是指定 object 的 method。
+
+call apply 都可以讓你指定 this 以外要傳入的參數，差別在於要傳入參數以外的格式：
+  call this 值作為第一個參數，後面接著用逗點分隔的參數值。
+
+  apply this 值作為第一個參數，第二個參數為 array，array 裡面為傳入的參數，依序放入 array 之中。
+
+8.7.3 將會介紹更多 call apply。
+

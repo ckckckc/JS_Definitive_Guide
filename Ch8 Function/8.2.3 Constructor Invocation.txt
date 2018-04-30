@@ -6,9 +6,9 @@ constructor invocation 會產生一個新的空物件，該物件會繼承 const
 
 A constructor invocation creates a new, empty object that inherits from the prototype property of the constructor. 
 
-和 refular function 還有 method invocation 不同在於:
+和 regular function 還有 method invocation 不同在於:
   處理 arguments 的方式
-    若有 arguments 一樣會被 evaluated 然後 passed 到 funciton ，這和 function / method 一樣。
+    若有 arguments 一樣會被 evaluated 然後 passed 到 funciton ，這和 function/method 一樣。
     若 constructor 沒有 parameters， constructor invocatin syntax 可以將 argument linst 跟 括號() 給完全省略。
       ex
         // 都一樣
@@ -18,7 +18,7 @@ A constructor invocation creates a new, empty object that inherits from the prot
   invocation context
     在 constructor invocation 時會新創一個 object，新創的 object 就是 invocation context，也就是 this 的值。
 
-    這個新創物件作為 invocation context 的規則在像是 method invocation （偽裝 method 的 constructor）的時候也是如此。
+    這個新創物件作為 invocation context 的規則在像是 method invocation （偽裝成 method 的 constructor）的時候也是如此。
       ex:
         new o.m() // o 不是 invocation context
 
