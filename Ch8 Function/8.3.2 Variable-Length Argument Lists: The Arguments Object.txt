@@ -1,0 +1,69 @@
+8.3.2 Variable-Length Argument Lists: The Arguments Object
+
+重點一大堆的一節，主要環繞在 arguments...
+
+如果呼叫 function 時給的參數比定義的還多時，function body 無法直接 reffer 到這些不具名的參數， Argument 物件則是為了解決這個問題。
+
+在 function body 中， 是別字 (identifier) arguments reffer 至 Argument 物件，他能讓我們使用數字來得到傳入 function 的 argument。
+
+關於 Arguments 物件：
+  Arguments 一個重要用途是，可以讓我們寫出任意數目 arguments 的 funciton。
+    Ex:
+      function max(/* ... */) {
+        var max = Number.NEGATIVE_INFINITY;
+        for (var i = 0 ; i < arguments.length ; i++) {
+          if (arguments[i] > max) max = arguments[i];
+        }
+        return max;
+      }
+
+      var largest = [1, 10, 10, 2, 3, 340913, 19, 999]; // => 340913
+
+  這種可以接受任意多個 arguments 的 function 可以被稱為： variadic functions, variable arity functions, or varargs functions. 最口語的 varargs 可以回朔至早期的 C 程式語言。
+
+  是種 array-like object（7.11），每個 Arguments 物件及定義具有編號的陣列元素，及一個 length property。
+
+  非 strict mode 中：
+    當 function 有具名的參數時，這個 Arguments 物件的 array elements 會 reffer 相同值：
+      Ex: 
+        function argTest1(x, y) {
+          console.log('argTest1:', x);              // 2
+          arguments[0] = null;
+          console.log('argTest1:', x);              // null
+
+          console.log('argTest1:', arguments[1]);   // 3
+          y = null;
+          console.log('argTest1:', arguments[1]);   // null
+        }
+
+        argTest1(2, 3);
+
+    arguments 是 識別字(identifier)。
+
+  在 strict mode 中:
+    具名參數和 arguments 對應的值是不同 refference，這種行為已經被移除了：
+      Ex:
+        function argTest2(x, y) {
+          'use strict';
+          console.log('argTest2:', x);                          // 1
+          arguments[0] = null;
+          console.log('argTest2:', x);                          // 1
+          console.log('argTest2 arguments[0]:', arguments[0]);  // null
+
+          console.log('argTest2:', arguments[1]);               // 2
+          y = null;
+          console.log('argTest2:', arguments[1]);               // 2
+          console.log('argTest2 y:', y);                        // null
+
+          // SyntaxError: Unexpected eval or arguments in strict mode
+          arguments = 1234;
+        }
+
+        argTest2(1, 2);
+
+    arguments 是 保留字(reserved word)
+
+    不能把 arguments 當作參數名稱或區域變數名稱
+
+    不能給 arguments 指定值。
+

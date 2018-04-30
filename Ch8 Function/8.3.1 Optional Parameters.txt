@@ -1,0 +1,24 @@
+8.3.1 Optional Parameters
+
+在呼叫參數時，如果傳入的參數比 function 中宣告的參數少時，沒傳入的參數都會是 undefined。
+
+情境：我們想要設計彈性的 function，可以有一些 optional 的參數選擇性的傳入。
+Ex:
+  function getPropertyNames(o, /* optional */ a) {
+    if (a === undefined) a = [];
+    for (var property in o) a.push(property);
+    return a;
+  }
+
+  簡單的技巧：
+    使用 === undefined：argument === undefined。
+
+    使用 ||: argument || []，但是要注意 falsy 值問題。
+
+  一些設計 optional parameter 的原則：
+    把非必需的參數放到 argument list 的最後面：
+      因為在呼叫 fucntion 時不能省略第一個 argument 只傳入第二個 argument，除非他明確的傳入 undefined 作為第一個 argument。
+
+    可以使用註解強調非必須：
+      如 /* optional */。
+

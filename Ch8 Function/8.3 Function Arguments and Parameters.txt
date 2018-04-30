@@ -1,0 +1,10 @@
+8.3 Function Arguments and Parameters
+
+JavaScript 在 function 宣告之時：
+  不會預期 function paramemter 的型別。
+
+  不會再預期傳入 function 參數的型別。
+
+  在呼叫參數時，不會做參數的型別確認，甚至連傳入 function 參數的數目也不檢查。
+
+接下來的幾節在介紹如何檢查傳入 function arguments 數目及型別，及傳入的參數不如預期時該如何處理。

@@ -213,3 +213,73 @@ var someObj2 = {
 
 console.log('new someObj2.methodOfConstructor(1):', new someObj2.methodOfConstructor(1));
 console.log('someObj2.methodOfConstructor(1): ', someObj2.methodOfConstructor(1));
+
+
+(function (a){
+  console.log('argument undefined test:', a === undefined);
+})();
+
+function argTest1(a, b, c) {
+  console.log('arguments.a', arguments.a);
+  console.log('arguments[0]', arguments[0]);
+  console.log('arguments[4]', arguments[4]);
+  console.log('arguments', arguments);
+
+  console.log('b:', b);
+  arguments[1] = null;
+  console.log('b:', b);
+  arguments = 1234;
+  console.log(arguments);
+}
+
+argTest1(1, 2, 3, 4, 5);
+
+function argTest2(a, b, c) {
+  'use strict';
+  console.log('--use strict argTest--');
+  console.log('arguments.a', arguments.a);
+  console.log('arguments[0]', arguments[0]);
+  console.log('arguments[4]', arguments[4]);
+  console.log('arguments', arguments);
+
+  console.log('b:', b);
+  arguments[1] = null;
+  console.log('b:', b);
+
+  // SyntaxError: Unexpected eval or arguments in strict mode
+  // arguments = 1234;
+}
+
+argTest2(1, 2, 3, 4, 5);
+
+
+function argTest3(x, y) {
+  console.log('argTest3:', x);
+  arguments[0] = null;
+  console.log('argTest3:', x);
+
+  console.log('argTest3:', arguments[1]);
+  y = null;
+  console.log('argTest3:', arguments[1]);
+}
+
+argTest3(2, 3);
+
+// arguments 不能當作參數名稱
+// SyntaxError: Unexpected eval or arguments in strict mode
+function argTest4(x, y) {
+  'use strict';
+  // SyntaxError: Unexpected eval or arguments in strict mode
+  // var arguments = 1234; 
+  console.log('argTest4:', x);
+  arguments[0] = null;
+  console.log('argTest4:', x);
+  console.log('argTest4 arguments[0]:', arguments[0]);
+
+  console.log('argTest4:', arguments[1]);
+  y = null;
+  console.log('argTest4:', arguments[1]);
+  console.log('argTest4 y:', y);
+}
+
+argTest4(1, 2);

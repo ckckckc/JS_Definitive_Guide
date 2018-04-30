@@ -1,0 +1,24 @@
+8.3.2.1 The callee and caller properties
+
+除了 Arguments 自己的 array element 之外， Arguments 還有定義兩個 property: callee（被呼叫者） caller（呼叫者）。
+
+在 ECMAScript 5 的 strict mode 中呼叫他們保證會出錯:
+  TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them
+
+calllee: 可以參照到目前正在執行的 function，這在匿名 function 要遞迴的呼叫自己時滿有用的。
+  Ex:
+    var factorial  = function(x) {
+      if (x <= 1) { 
+        console.log(arguments.callee);
+        return 1;
+      }
+      return x * arguments.callee(x - 1);
+    };
+
+    console.log(factorial(10));
+
+callee：callee property refers to the currently running function and the callee property is occasionally useful to allow unnamed functions to call themselves recursively.
+
+caller: 是非標準但廣泛實作的 perperty，他可以查看 call stack。(但是我在 chrome 66.0.3359.117 (正式版本) (64 位元) 找不到這個 property)
+
+caller:caller is a nonstandard but commonly implemented property that refers to the function that called this one. The caller property gives access to the call stack.
