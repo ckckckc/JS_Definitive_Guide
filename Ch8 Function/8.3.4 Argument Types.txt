@@ -1,0 +1,67 @@
+8.3.4 Argument Types
+
+情境一：
+  你想寫一個使用多次的 function，嚴格限制 arguments 型別，對傳入不對的值立即產生失敗，如此比起在之後才帶著不清不楚的錯誤訊息的程式碼有價值。
+
+Ex:
+// isArrayLike 7.11
+function isArrayLike(o) {
+  if (o &&
+      typeof o === 'object' &&
+      isFinite(o.length) &&
+      o.length >= 0 &&
+      o.length === Math.floor(o.length) &&
+      o.length < 4294967296) return true;
+  return false;
+}
+
+function sum(a) {
+  if (isArrayLike(a)) { var total = 0;
+    for(var i = 0; i < a.length; i++) { // Loop though all elements var element = a[i];
+      if (element == null) continue; // Skip null and undefined if (isFinite(element)) total += element;
+      else throw new Error("sum(): elements must be finite numbers"); 
+    }
+    return total; 
+  }
+  else throw new Error("sum(): argument must be array-like"); 
+}
+
+  這個例子還是有彈性的部分：
+    array-like 陣列都可以接受
+    array element 如果是 null 或 undefined 也可以接受，處理方式是跳過它
+
+
+情境二：
+  由於 JavaScript 有非常彈性且型別寬鬆得特性，你想藉此寫的比情境一更有彈性的 function。
+
+Ex:
+function flexisum(a) {
+  var total = 0;
+  for(var i = 0; i < arguments.length; i++) {
+    var element = arguments[i], n;
+
+    // Ignore null and undefined arguments
+    if (element == null) continue;
+
+    // If the argument is an array
+    if (Array.isArray(element))
+      // compute its sum recursively  
+      n = flexisum.apply(this, element);
+    
+    // Else if it's a function
+    else if (typeof element === "function")
+      // invoke it and convert.
+      n = Number(element());
+
+    // Else try to convert it
+    else n = Number(element);
+
+    // If we couldn't convert to a number, throw an error 
+    if (isNaN(n))
+      throw Error("flexisum(): can't convert " + element + " to number");
+
+    // Otherwise, add n to the total 
+    total += n;
+  }
+  return total; 
+}

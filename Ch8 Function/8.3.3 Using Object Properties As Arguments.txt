@@ -1,0 +1,25 @@
+8.3.3 Using Object Properties As Arguments
+
+情境：
+  如果有一個 function 需要接收三個以上的參數，傳入的順序會因為難記著而使人困擾，每次呼叫 function 都要再確認一次順序。
+
+解法：
+  使用 object 作為接受得參數的型別， object 裡用 name / value 做對應的參數值，這樣就不用記住順序了。
+
+Ex:
+function arraycopy(/* array */ from, /* index */ from_start,
+/* array */ to, /* index */ to_start, /* integer */ length)
+{
+  // code goes here
+}
+
+function easycopy(args) {
+  arraycopy(args.from,
+            args.from_start || 0, // Note default value provided args.to,
+            args.to_start || 0,
+            args.length);
+}
+
+// Here is how you might invoke easycopy(): 
+var a = [1,2,3,4], b = [];
+easycopy({from: a, to: b, length: 4});
