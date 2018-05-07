@@ -1,0 +1,40 @@
+8.5 Functions As Namespaces
+
+利用 function scope 製造獨立 namespace 的方式。
+
+其實我覺得用 ES6 import/export 就解了，這節看懂例子即可。
+
+(function(){
+  // Module code goes here.
+}());
+
+var extend = (function() {
+  // We work around an IE bug here: in many versions of IE, the for/in loop
+  // won't enumerate an enumerable property of o if the prototype of o has
+  // a nonenumerable property by the same name. This means that properties
+  // like toString are not handled correctly unless we explicitly check for them.
+  for(var p in {toString:null}) {
+    return function extend(o) {
+      for(var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+        for(var prop in source) o[prop] = source[prop];
+      }
+      return o;
+    };
+  }
+
+  var protoprops = ["toString", "valueOf", "constructor", "hasOwnProperty",
+                    "isPrototypeOf", "propertyIsEnumerable", "toLocaleString"];
+
+  return function patched_extend(o) {
+    for(var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for(var prop in source) o[prop] = source[prop];
+
+      for(var j = 0; j < protoprops.length; j++) {
+        prop = protoprops[j];
+        if (source.hasOwnProperty(prop)) o[prop] = source[prop]; }
+      }
+    return o; 
+  };
+}());

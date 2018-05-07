@@ -99,5 +99,4 @@ function f2() {
 console.log(scope2);    // global 讀到全域的
 
 f2();
-
 console.log(scope2);    // local  已經被改變的全域

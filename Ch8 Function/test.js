@@ -315,4 +315,4 @@ factorial[1] = 1;   // 初始化 factorial[1]
 
 console.log('factorial(2)', factorial(2))
 console.log('factorial(3)', factorial(3))
-console.log('factorial(10)', factorial(10))
+console.log('factorial(10)', factorial(10));
