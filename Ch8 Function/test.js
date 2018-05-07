@@ -283,3 +283,36 @@ function argTest4(x, y) {
 }
 
 argTest4(1, 2);
+
+var operator = {
+  add: function(x, y) { return x + y; },
+  pow: Math.pow,
+};
+
+console.log(operator.pow(3, operator.add(1, 1)));
+
+autoIncrement.id = 0;
+
+function autoIncrement() {
+  return ++autoIncrement.id;
+}
+
+console.log('autoIncrement: ', autoIncrement());
+console.log('autoIncrement: ', autoIncrement());
+console.log('autoIncrement: ', autoIncrement());
+
+function factorial(n) {
+  if (!isFinite(n) || n <= 0 || n !== Math.floor(n)) {
+    return NaN;
+  }
+
+  if (!(n in factorial))
+    factorial[n] = n * factorial(n - 1);    // 計算 factorial[n] 的值，並將之 catch 作為 factorial 的 property
+  return factorial[n];
+}
+
+factorial[1] = 1;   // 初始化 factorial[1]
+
+console.log('factorial(2)', factorial(2))
+console.log('factorial(3)', factorial(3))
+console.log('factorial(10)', factorial(10))

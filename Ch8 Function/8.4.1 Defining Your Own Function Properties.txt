@@ -1,0 +1,28 @@
+8.4.1 Defining Your Own Function Properties
+
+JavaScript 的 function 不是 primitive values，他是特化的物件，這代表 function 也可以有 property。
+
+當 function 需要一個 'static' 的變數用來在每次呼叫該 function 時使用，則可以使用 property 的形式儲存，而不是在 function 之外命名一個變數，只有該 function body 用到而搞亂 global 的 namespacce。
+
+簡單的例子：
+
+autoIncrement.id = 0;         // Function declarations are hoisted so we really can
+                              // do this assignment before the function declaration.
+function autoIncrement() {
+  return ++autoIncrement.id;
+}
+
+比較厲害的例子：
+
+function factorial(n) {
+  if (!isFinite(n) || n <= 0 || n !== Math.floor(n)) {
+    return NaN;
+  }
+
+  if (!(n in factorial))
+    // 計算 factorial[n] 的值，並將之 catch 作為 factorial 的 property
+    factorial[n] = n * factorial(n - 1);
+  return factorial[n];
+}
+
+factorial[1] = 1;   // 初始化 factorial[1]

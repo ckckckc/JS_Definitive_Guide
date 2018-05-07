@@ -1,0 +1,42 @@
+8.4 Functions As Values
+
+這節的重點：JavaScript 的 function 可以指定給變數作為該變數的 '值'，因此可以將該值作為 object property， array element， function arguments。
+
+Ex:
+var operator = {
+  add: function(x, y) { return x + y; },
+  pow: Math.pow,
+};
+
+var arr = [function(x) { return x*x; }, 3];
+
+operator.pow(3, operator.add(1, 1));  // 9
+arr[0](arr[1]);                       // 9
+
+其他書上的範例，其實意思差不多，值得一提將 function 做為 arguments 的 Array.sort()，如果忘記可以看 7.8.3：
+
+function add(x,y) { return x + y; } 
+function subtract(x,y) { return x - y; } 
+function multiply(x,y) { return x * y; } 
+function divide(x,y) { return x / y; }
+
+function operate(operator, operand1, operand2) {
+  return operator(operand1, operand2);
+}
+
+var operators = {
+  add:function(x,y) { return x+y; },
+  subtract: function(x,y) { return x-y; },
+  multiply: function(x,y) { return x*y; },
+  divide: function(x,y) { return x/y; },
+  pow: Math.pow
+};
+
+function operate2(operation, operand1, operand2) {
+  if (typeof operators[operation] === "function")
+    return operators[operation](operand1, operand2);
+  else throw "unknown operator";
+}
+
+var j = operate2("add", "hello", operate2("add", " ", "world"));
+var k = operate2("pow", 10, 2);
