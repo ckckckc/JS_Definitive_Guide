@@ -1,0 +1,44 @@
+8.6 Closures
+
+重點：理解每個 function 在被呼叫的時候， function 中使用的變數是哪個，及不同方式呼叫 function 時，回傳值會是什麼。
+
+JavaScript 大全定義 Closure：
+JavaScript uses lexical scoping. This means that functions are executed using the variable scope that was in effect when they were defined, not the variable scope that is in effect when they are invoked.  In order to implement lexical scoping, the internal state of a JavaScript function object must in- clude not only the code of the function but also a reference to the current scope chain. This combination of a function object and a scope (a set of variable bindings) in which the function’s variables are resolved is called a closure in the computer science literature.
+
+MDN 定義 Closure：A closure is the combination of a function and the lexical environment within which that function was declared. 
+
+所有 JavaScript function 都是 closure：他們是 object，而且有與之關聯的 scope chain。
+
+
+開始理解 closure:
+
+  lexical scoping 的基本規則:
+    JavaScript 的 function 執行時所使用的 scope chain 是在 function 定義時的 scope chain。
+
+    Ex:
+    var scope = 'global';
+
+    function checkscope() {
+      var scope = 'local';
+      function f() { return scope; }
+      return f;
+    }
+
+    checkscope()() // local
+
+    上面的 scope 是 bound to 'local'，這個 binding 在 f 執行時任然有效，不管他在何處被執行皆是如此。
+    也就是說，這個強大的 clusure 本質是：他們會 binding  outer function 的 local 變數。
+
+    每次有 JavaScript function invoked 時，就會有一個新的 object 持有該次區域變數，且該 object 也會加入 scope chain 之中。當 function returns 之後，該 object 也回從 scope chain 中移除：
+
+      若沒有 nested function：
+        不會有其他與該物件的 reffer ，所以每次 function invoked 產生的 object 都會從 scope chain 移除而被 garbage collected。
+
+      若有 nested function：
+        所有 內外層的 function 都有一個和 scope chain 的 refernce ，而且該 scope chain 會 refer 至variable binding object.
+
+        如果巢狀 object 只有在包含他們自己的 function 之中，他們都會被 garbage collected。
+
+        如果 outer (return nested function) || (儲存 nested function 至 property 或其他地方)，這樣將會有 external reference to the nested function. 他不會被 garbage collected<
+        而且該 variable binding object 也不會被 garbage collected。
+         
