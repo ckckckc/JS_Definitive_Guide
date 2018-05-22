@@ -1,12 +1,4 @@
-var scope = 'global';
 
-function checkscope() {
-  var scope = 'local';
-  function f() { return scope; }
-  return f;
-}
-
-console.log(checkscope()())
 
 
 // var count = 100;
@@ -66,3 +58,64 @@ console.log(checkscope()())
 // console.log(counter1.reset())
 // console.log(counter1.n)
 
+// function createCounter() {
+//   var n = 0;
+//   return {
+//     count: function() { return n++; },
+//     reset: function() { n = 0; }
+//   };
+// }
+
+// var counter1 = createCounter();
+// var counter2 = createCounter();
+// console.log(counter1.count());               // 0
+// console.log(counter2.count());               // 0
+// console.log(counter1.reset());               // 
+// console.log(counter1.count());               // 0
+// console.log(counter2.count());               // 1
+
+function createCounter(n) {
+  return {
+    get count() { return n++; },
+    set count(m) {
+      if (m >= n) n = m;
+      else throw Error('count can only be set to a larger value');
+    }
+  };
+}
+
+var counter = createCounter(1000);
+console.log(counter.count);         // 1000
+console.log(counter.count);         // 1001
+counter.count = 2000;  //
+console.log(counter.count);         // 2000
+// counter.count = 2000;  // Error
+
+
+// TODO: demo addPrivateProperty
+function addPrivateProperty(targetObj, propertyName, setterPredicate) {
+  var privateValue;
+
+  targetObj['get' + propertyName] = function() { return privateValue; };
+
+  targetObj['set' + propertyName] = function(newPrivateValue) {
+    if (setterPredicate && !setterPredicate(newPrivateValue)) {
+      throw Error('set' + propertyName + ': invalid value ' + newPrivateValue);
+    }
+    else {
+      privateValue = newPrivateValue;
+    }
+  };
+}
+
+var someObj = {};
+
+addPrivateProperty(someObj, 'Name', function(x) { return typeof x === 'string'; });
+
+console.log(someObj.getName());
+
+someObj.setName('Leo');
+
+console.log(someObj.getName());
+
+// someObj.setName(null);

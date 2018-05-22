@@ -29,16 +29,105 @@ MDN 定義 Closure：A closure is the combination of a function and the lexical 
     上面的 scope 是 bound to 'local'，這個 binding 在 f 執行時任然有效，不管他在何處被執行皆是如此。
     也就是說，這個強大的 clusure 本質是：他們會 binding  outer function 的 local 變數。
 
-    每次有 JavaScript function invoked 時，就會有一個新的 object 持有該次區域變數，且該 object 也會加入 scope chain 之中。當 function returns 之後，該 object 也回從 scope chain 中移除：
+實作 Closure:
 
-      若沒有 nested function：
-        不會有其他與該物件的 reffer ，所以每次 function invoked 產生的 object 都會從 scope chain 移除而被 garbage collected。
+  `每次有 JavaScript function invoked 時，就會有一個新的 object 持有該次 invoke 的區域變數，且該 object 也會加入 scope chain 之中。當 function returns 之後，該 object 也回從 scope chain 中移除。`
 
-      若有 nested function：
-        所有 內外層的 function 都有一個和 scope chain 的 refernce ，而且該 scope chain 會 refer 至variable binding object.
+  若沒有 nested function：
+    不會有其他與該 binding 物件 reference ，所以每次 function invoked 產生的 object 都會在 function return 後從 scope chain 移除而被 garbage collected。
 
-        如果巢狀 object 只有在包含他們自己的 function 之中，他們都會被 garbage collected。
+  若有 nested function：
+    所有 內外層的 function 都有一個和 scope chain 的 reference ，而且該 scope chain 會 refers 至 variable binding object.
 
-        如果 outer (return nested function) || (儲存 nested function 至 property 或其他地方)，這樣將會有 external reference to the nested function. 他不會被 garbage collected<
-        而且該 variable binding object 也不會被 garbage collected。
-         
+    如果巢狀 function object 僅存在外層 function 之中，巢狀 function 還有它 reffers to 的 binding object 都會被 garbage collected。
+
+     If those nested functions objects remained within their outer function, however, then they themselves will be garbage collected, along with the variable binding object they referred to.
+
+    如果 function 定義了 nested function，然後 return nested function 若是儲存 nested function 至 property，這樣會有 external reference 至 nested function， function 不會被 gc，而且 refers to 該 function 的 variable binding object 也不會被 gc。
+
+private state:
+  Closure 可以捕捉單次 function invocation 的 local variables，並將這些 variables 作為 private state。
+
+  var uniqueInteger = (function{              // 定義且 invoke
+    var counter = 0;                          // return function 的 private state
+    return function() { return counter++; };
+  })();
+
+  Private variable 並不一定由單一 Closure 獨佔，他完全能被 兩個甚至更多的 nested function 共用同一個 outer function 的 scope。
+
+  function createCounter() {
+    var n = 0;  // count method 和 reset method 共享的 Private variable
+    return {
+      count: function() { return n++; },
+      reset: function() { n = 0; }
+    };
+  }
+
+  var counter1 = createCounter();
+  var counter2 = createCounter();
+  counter1.count();               // 0
+  counter2.count();               // 0
+  counter1.reset();               // 
+  counter1.count();               // 0
+  counter2.count();               // 1
+
+  這個例子的重點：
+    變數 n 為 count method 和 reset method 共享的 Private variable
+
+    每次 invaocation createCounter 都會產生新的 scope chain 還有新的 private variable。
+
+  結合 getter setter 的 counter：
+
+  function createCounter(n) {
+    return {
+      get count() { n++; },
+      set count(m) {
+        if (m >= n) n = m;
+        else throw Error('count can only be set to a larger value');
+      }
+    };
+  }
+
+  var counter = createCounter(1000);
+  counter.count;         // 1000
+  counter.count;         // 1001
+  counter.count = 2000;  //
+  counter.count;         // 2000
+  counter.count = 2000;  // Error
+  
+  這個版本的 counter 並沒有宣告 local variable，僅僅使用 parameter n 來讓每次 function invocation 時持有不同 private state 初始值 n，且 n 同時讓 property accessor methods 共用。
+
+  使用 Closure 創造 private property accessor methods 的例子：
+
+  function addPrivateProperty(targetObj, propertyName, setterPredicate) {
+    var privateValue;
+
+    targetObj['get' + propertyName] = function() { return privateValue; };
+
+    targetObj['set' + propertyName] = function(newPrivateValue) {
+      if (setterPredicate && !setterPredicate(newPrivateValue)) {
+        throw Error('set' + propertyName + ': invalid value ' + newPrivateValue);
+      }
+      else {
+        privateValue = newPrivateValue;
+      }
+    };
+  }
+
+  var someObj = {};
+
+  addPrivateProperty(someObj, 'Name', function(x) { return typeof x === 'string'; });
+
+  console.log(someObj.getName());
+
+  someObj.setName('Leo');
+
+  console.log(someObj.getName());
+
+  這個例子特別注意到：
+    getter setter 操作的 property value 不是存在 targetObj 之中，而是存在 function local variable。
+
+    getter setter 也是 function 的 local value，因此也可以存取 privateValue。
+
+    privateValue 僅能透過這兩個 accessor methods 存取它。
+

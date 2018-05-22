@@ -10,7 +10,7 @@ the scope of a variable can be thought of as the set of source code lines for wh
 Local variables are defined throughout the function in which they are declared, and also within any functions nested within that function.
 
 
-Every chunk of Java- Script code (global code or functions) has a scope chain associated with it. 
+Every chunk of JavaScript code (global code or functions) has a scope chain associated with it. 
 This scope chain is a list or chain of objects that defines the variables that are “in scope” for that code.
 When JavaScript needs to look up the value of a variable x (a process called variable resolution), it starts by looking at the first object in the chain.
 If x is not a property of any of the objects in the scope chain, then x is not in scope for that code, and a ReferenceError occurs.
