@@ -118,16 +118,68 @@ private state:
 
   addPrivateProperty(someObj, 'Name', function(x) { return typeof x === 'string'; });
 
-  console.log(someObj.getName());
+  console.log(someObj.getName());  // undefined
 
   someObj.setName('Leo');
 
-  console.log(someObj.getName());
+  console.log(someObj.getName());  // Leo
 
-  這個例子特別注意到：
+  這個例子特別注意的地方：
     getter setter 操作的 property value 不是存在 targetObj 之中，而是存在 function local variable。
 
     getter setter 也是 function 的 local value，因此也可以存取 privateValue。
 
     privateValue 僅能透過這兩個 accessor methods 存取它。
 
+
+上面的幾個例子都呈現了兩個 Closure 定義同樣的 scope chain 並且共用同樣的 private variable 或 variables，接下來要注意到 Closure 不經意的存取不該共用 variable 的例子：
+
+  // constFunc 回傳只會回傳 v 的 function
+  function constFunc(v) {
+    return function() {
+      return v;
+    };
+  }
+
+  var funcs = [];
+
+  for (var i = 0; i < 10 ; i++) {
+    funcs[i] = constFunc(i);
+  }
+
+  console.log(funcs[5]());  // 5
+
+  // 錯誤例子
+  function constFuncs() {
+    var funcs = [];
+
+    for (var i = 0 ; i < 10 ; i++) {
+      // 這樣寫讓每個 function 都 share access 至變數 i
+      funcs[i] = function() { return i; };
+
+      // 要改成這樣寫，才會讓每個 function 有自己的區域變數
+      funcs[i] = (function(i) { 
+        return function() { return i; }; 
+      })(i);
+    }
+
+    return funcs;
+  }
+
+  var funcs2 = constFuncs();
+
+  console.log(funcs2[5]()); // 回傳的是 10 不如預期！
+
+  上面是迴圈中常見的 closure 誤用例子。上面錯誤例子共創造了 10 個 closure，他們都在同樣的 invocation 定義這些 function，所以他們共用同一個 i 值。
+
+  這個例子告訴我們，scope chain 和 closure 的關聯是 "live"（中文書翻譯 直接連線，我覺得應該翻譯成 動態的）。Nested functions 並不會產生 private copies 的 scope，或是產生靜態 variable bindings 的 snapshots。
+  It is important to remember that the scope chain associated with a closure is “live.” Nested functions do not make private copies of the scope or make static snapshots of the variable bindings.
+
+最後要在撰寫 Closure 時要注意的問題是 this 及 arguments 值：
+  this 是 JavaScript 的 keyword，並不是 variable，每個 function invocation 都有 this 值， closure 無法在 nested function access outer function 的 this 值，除非 outer function 將自己的 this 值存到變數。
+
+    var self = this;
+
+  arguments 並不是 keyword 但是在每次 function invocation 時都會自動 declared，既然 Closure 有自己的 argument binding，他也無法存取 outer function 的 arguments，除非 outer function 將自己的 arguments 值存到變數。
+
+    var outerArguments = arguments;

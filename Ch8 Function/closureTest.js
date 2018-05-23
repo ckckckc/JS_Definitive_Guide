@@ -1,5 +1,23 @@
+function outer(v, s) {
+  console.log('v', v);
+  function inner(w) {
+    return new Promise(r => {
+      setTimeout(function() {
+        r(w + v);
+      }, 1000);
+    });
+  }
 
+  return new Promise((resolve) => {
+    setTimeout(function() {
+      console.log('v in p1', v);
+      resolve(inner);
+    }, s);
+  });
+}
 
+outer(5, 500).then(inner => inner(10)).then(console.log);
+outer(1, 2000).then(inner => inner(2)).then(console.log);
 
 // var count = 100;
 // function outer() {
@@ -74,48 +92,78 @@
 // console.log(counter1.count());               // 0
 // console.log(counter2.count());               // 1
 
-function createCounter(n) {
-  return {
-    get count() { return n++; },
-    set count(m) {
-      if (m >= n) n = m;
-      else throw Error('count can only be set to a larger value');
-    }
-  };
-}
+// function createCounter(n) {
+//   return {
+//     get count() { return n++; },
+//     set count(m) {
+//       if (m >= n) n = m;
+//       else throw Error('count can only be set to a larger value');
+//     }
+//   };
+// }
 
-var counter = createCounter(1000);
-console.log(counter.count);         // 1000
-console.log(counter.count);         // 1001
-counter.count = 2000;  //
-console.log(counter.count);         // 2000
-// counter.count = 2000;  // Error
+// var counter = createCounter(1000);
+// console.log(counter.count);         // 1000
+// console.log(counter.count);         // 1001
+// counter.count = 2000;  //
+// console.log(counter.count);         // 2000
+// // counter.count = 2000;  // Error
 
 
-// TODO: demo addPrivateProperty
-function addPrivateProperty(targetObj, propertyName, setterPredicate) {
-  var privateValue;
+// function addPrivateProperty(targetObj, propertyName, setterPredicate) {
+//   var privateValue;
 
-  targetObj['get' + propertyName] = function() { return privateValue; };
+//   targetObj['get' + propertyName] = function() { return privateValue; };
 
-  targetObj['set' + propertyName] = function(newPrivateValue) {
-    if (setterPredicate && !setterPredicate(newPrivateValue)) {
-      throw Error('set' + propertyName + ': invalid value ' + newPrivateValue);
-    }
-    else {
-      privateValue = newPrivateValue;
-    }
-  };
-}
+//   targetObj['set' + propertyName] = function(newPrivateValue) {
+//     if (setterPredicate && !setterPredicate(newPrivateValue)) {
+//       throw Error('set' + propertyName + ': invalid value ' + newPrivateValue);
+//     }
+//     else {
+//       privateValue = newPrivateValue;
+//     }
+//   };
+// }
 
-var someObj = {};
+// var someObj = {};
 
-addPrivateProperty(someObj, 'Name', function(x) { return typeof x === 'string'; });
+// addPrivateProperty(someObj, 'Name', function(x) { return typeof x === 'string'; });
 
-console.log(someObj.getName());
+// console.log(someObj.getName());
 
-someObj.setName('Leo');
+// someObj.setName('Leo');
 
-console.log(someObj.getName());
+// console.log(someObj.getName());
 
-// someObj.setName(null);
+// // someObj.setName(null);
+
+// function constFunc(v) {
+//   return function() {
+//     return v;
+//   };
+// }
+
+// var funcs = [];
+
+// for (var i = 0; i < 10 ; i++) {
+//   funcs[i] = constFunc(i);
+// }
+
+// console.log(funcs[5]());  // 5
+
+// function constFuncs() {
+//   var funcs = [];
+
+//   for (var i = 0 ; i < 10 ; i++) {
+//     // funcs[i] = function() { return i; };
+//     funcs[i] = (function(i) { 
+//       return function() { return i; }; 
+//     })(i);
+//   }
+
+//   return funcs;
+// }
+
+// var funcs2 = constFuncs();
+
+// console.log(funcs2[5]());
