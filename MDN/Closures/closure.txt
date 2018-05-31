@@ -1,0 +1,117 @@
+Closure:
+  A closure is the combination of a function and the lexical environment within which that function was declared.
+
+在迴圈中使用 Closure 常見的錯誤：
+
+  function showHelp(help) {
+    document.getElementById('help').innerHTML = help;
+  }
+
+  function setupHelp() {
+    var helpText = [
+        {'id': 'email', 'help': 'Your e-mail address'},
+        {'id': 'name', 'help': 'Your full name'},
+        {'id': 'age', 'help': 'Your age (you must be over 16)'}
+      ];
+
+    for (var i = 0; i < helpText.length; i++) {
+      var item = helpText[i];
+      document.getElementById(item.id).onfocus = function() {
+        showHelp(item.help);
+      }
+    }
+  }
+
+  setupHelp();
+
+  當 onfocus 觸發的時候， showHelp(item.help) 的 item 會是 helpText 的最後一個 element，因為
+  var item 的 scope 為 setupHelp function 之下，當個別 onfocus 已經 assign listener 時， item 已經是 helpText[2] 的值了。
+
+  解決方案有四種：
+  （一）
+  function makeHelpCallback(help) {
+    return function() {
+      showHelp(help);
+    };
+  }
+
+  function setupHelp() {
+    var helpText = [
+        {'id': 'email', 'help': 'Your e-mail address'},
+        {'id': 'name', 'help': 'Your full name'},
+        {'id': 'age', 'help': 'Your age (you must be over 16)'}
+      ];
+
+    for (var i = 0; i < helpText.length; i++) {
+      var item = helpText[i];
+      document.getElementById(item.id).onfocus = makeHelpCallback(item.help);
+    }
+  }
+
+  使用 makeHelpCallback 回傳具有 local 變數為 helpText[i] 的 listener
+
+  （二）IIFE (Immediately Invoked Function Expression) 
+  for (var i = 0; i < helpText.length; i++) {
+    (function() {
+       var item = helpText[i];
+       document.getElementById(item.id).onfocus = function() {
+         showHelp(item.help);
+       }
+    })(); // Immediate event listener attachment with the current value of item (preserved until iteration).
+  }
+
+  （三）ES6 let（block-scoped）
+  for (var i = 0; i < helpText.length; i++) {
+    let item = helpText[i];
+    document.getElementById(item.id).onfocus = function() {
+      showHelp(item.help);
+    }
+  }
+
+  let 讓 for() {} 每次迭代時，都有獨立的 scope
+
+  （四）ES6 forEach
+  helpText.forEach(function(text) {
+    document.getElementById(text.id).onfocus = function() {
+      showHelp(text.help);
+    }
+  });
+  每次都是迭代都是獨立的 function scope。
+
+效能考量：
+  不必要的使用 Closure 會造成執行效能上的消耗，並且佔用額外記憶體空間。
+
+  例如：
+  function MyObject(name, message) {
+    this.name = name.toString();
+    this.message = message.toString();
+    this.getName = function() {
+      return this.name;
+    };
+
+    this.getMessage = function() {
+      return this.message;
+    };
+  }
+
+  this.getMessage 和 this.getName 都沒有因為使用 Closure 而得到好處，而且每次 new MyObject 時候都會 method assign 給個別 new 出來的 object。
+
+  解決不必要的 Closure：
+  function MyObject(name, message) {
+    this.name = name.toString();
+    this.message = message.toString();
+  }
+  MyObject.prototype.getName = function() {
+    return this.name;
+  };
+  MyObject.prototype.getMessage = function() {
+    return this.message;
+  };
+
+  這樣一來每個繼承 prototype 的物件都能共享這些 method，每次 new 物件的時候也不需要重新 assign 這些 method。
+
+參考來源：
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
+
+更多關於 Object Model:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Details_of_the_Object_Model
