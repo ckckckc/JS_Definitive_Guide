@@ -1,0 +1,61 @@
+8.7.3 The call() and apply() Methods
+
+範例 6-4 的時候用過找出 class 屬性的值：
+function classOf(obj) {
+  if (obj === null) return "Null";
+  if (obj === undefined) return undefined;
+  return Object.prototype.toString.call(obj).slice(8, -1);
+}
+
+apply 跟 call ：
+  第一個參數，用來指出要在哪個 object function invocked，也就是指定 invocation context 的值， function body 中的 this keyword 值。
+
+  The first argument to both call() and apply() is the object on which the function is to be invoked; this argument is the invocation context and becomes the value of the this keyword within the body of the function.
+
+  使用範例，要在 object o 中呼叫 f，你可以用 apply 跟 call:
+
+    f.call(o)
+    f.call(o, 1, 2)     // 若要傳入參數
+
+    f.apply(o)
+    f.apply(o, [1, 2])  // 若要傳入參數
+
+  上面的兩種情境就好像：
+
+    o.m = f;    // 製作一個暫時的 method
+    o.m();      // Invoke(如果沒有參數要傳入)
+    delete o.m  // 刪除暫時的方法
+
+  call 的第二個至接續後面的參數：為要傳入目標 function 的參數。
+
+  apply 的第二個參數：以 array 或 array-like 的形式作為傳入目標 function 的參數。
+    Ex:
+    var biggest = Math.max.apply(Math, array_of_numbers);
+
+不同 JavaScript 版本比較 apply call 的第一個傳入參數：
+  ECMAScript 5 strict mode 中:
+    call apply 的第一個參數就算是 primitive value ， null ， undefined 都可以。
+
+  ECMAScript 3 中與 non-strict mode 中：
+    null 或 undefined 會被全域物件給取代，primitive value 會被對應的 wrapper object 取代。
+
+藉由 arguments 直接傳給 apply()，一個關於 monkey-patching 的範例：
+
+function monkeyPatching(targetObj, targetMethod) {
+  var originMethod = targetObj[targetMethod];
+
+  targetObj[targetMethod] = function() {
+    console.log('do something else...');
+    var result = originMethod.apply(this);
+    console.log('do something else...');
+    return result;
+  };
+}
+
+var someObj = {
+  someMethod: function() {}
+};
+
+monkeyPatching(someObj, 'someMethod');
+
+他可以將指定的方法取代為一個新方法，新方法會在原方法之外加上額外的功能。

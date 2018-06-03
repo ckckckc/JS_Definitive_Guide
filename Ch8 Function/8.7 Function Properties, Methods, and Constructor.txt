@@ -1,0 +1,7 @@
+8.7 Function Properties, Methods, and Constructor
+
+JavaScript 的 function 雖然 typeof operator 會回傳 'function'，但是 function 同時也是個特化後的 object。
+
+Function() constructor 可以 create new function object。
+
+接下來幾節會敘述關於 function properties，function methods，Function() constructor。

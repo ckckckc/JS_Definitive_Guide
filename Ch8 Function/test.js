@@ -316,3 +316,65 @@ factorial[1] = 1;   // 初始化 factorial[1]
 console.log('factorial(2)', factorial(2))
 console.log('factorial(3)', factorial(3))
 console.log('factorial(10)', factorial(10));
+
+
+function checkArgs(args) {
+  console.log(1234)
+  console.log('expected:', args.callee.length);
+  console.log('actual:', args.length);
+}
+
+function argCalleeExample(a, b, c){
+  // console.log('argCalleeExample.length', argCalleeExample.length);
+  // console.log('arguments.length', arguments.length);
+  checkArgs(arguments)
+  return a*b*c;
+}
+argCalleeExample({
+  a:1,
+  b:2
+});
+
+function trace(o, m) {
+  var original = o[m]; // Remember original method in the closure. 
+  o[m] = function() { // Now define the new method.
+    console.log(new Date(), "Entering:", m); // Log message.
+    var result = original.apply(this, arguments); // Invoke original. 
+    console.log(new Date(), "Exiting:", m); // Log message. 
+    return result; // Return result.
+  };
+}
+
+var someObj3 = {a: function() { console.log(1234) }};
+trace(someObj3, 'a');
+someObj3.a();
+
+function showThis() {
+  // 'use strict'
+  console.log(this);
+  console.log(typeof this);
+}
+
+showThis.call(1);
+showThis.apply(1);
+
+function monkeyPatching(targetObj, targetMethod) {
+  var originMethod = targetObj[targetMethod];
+
+  targetObj[targetMethod] = function() {
+    console.log('do something else...');
+    var result = originMethod.apply(this);
+    console.log('do something else...');
+    return result;
+  };
+}
+
+var someObj4 = {
+  someMethod: function() {
+    console.log('do something in someObj4.someMethod');
+  }
+};
+
+monkeyPatching(someObj4, 'someMethod');
+
+someObj4.someMethod();

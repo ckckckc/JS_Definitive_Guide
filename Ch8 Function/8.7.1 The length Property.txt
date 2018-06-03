@@ -1,0 +1,20 @@
+8.7.1 The length Property
+
+在 function body 中：
+  arguments 表示傳入 function 中的參數，所以 arguments.length 表示傳入的參數數目，而 function.legnth 表示宣告的參數數目，也就是預期被傳入的參數數目。
+
+  arguments.callee 表示 function 正在執行的 function 本身，而 arguments.callee.length 表示定義這個 function 時，他的 parameter 宣告的數目，就是它定義了幾個待傳入的參數。
+
+  arguments.callee.length 在這邊是用來檢查跟傳入 function 的參數數目是某有吻合。
+
+arguments.callee 比較有用的地方在於 anonymous function refer to its self。
+
+使用 argument.callee 在 strict mode 中會Throw TypeError。
+
+TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them
+
+MDN wraning:
+The 5th edition of ECMAScript (ES5) forbids use of arguments.callee() in strict mode. Avoid using arguments.callee() by either giving function expressions a name or use a function declaration where a function must call itself.
+
+更多關於 callee 的 mdn 參考：
+https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Functions/arguments/callee
