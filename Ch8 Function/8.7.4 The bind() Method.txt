@@ -1,0 +1,51 @@
+8.7.4 The bind() Method
+
+關於 bind() method:
+  ECMAScript5 中引進的。
+
+  主要用途：
+    把一個 function 聯繫至 (bind to) 一個物件。
+
+  用法：
+    當在 function f 上呼叫 bind() 方法，並將物件 o 傳入，bind() 方法會回傳一個新的 function ，呼叫這個新 function，就如同把原本的 function f 當作 o 的方法呼叫。
+
+    Ex:
+      function f(b) { return this.a + b; }
+      var obj = { a: 1 };
+      var boundF = f.bind(obj);
+      var result = boundF(2)
+      result // 3
+
+  partial application 有時稱為 currying 的 functional programming 技巧：
+    傳入 bind 第一個 argument 之後的所有 argument 也會綁定參數值。
+
+    Ex:
+
+    var sum = function(a,b) { return a + b };
+    var succ = sum.bind(null, 1); // this 為 null，a 為 1
+    succ(2) // 3
+
+    function f(y,z) { return this.x + y + z };
+    var g = f.bind({x:4}, 5);  // this 跟 y 都綁定
+    g(6) // 15
+
+  模擬 bind() method：
+    程式碼可以看 /src/polyfill/bind.js
+
+    bind() 方法回傳的是一個 closure，他會用到 outer function 中宣告的變數，分別儲存 bind 時傳入的 this(要被 bind 的 function 本身) 和 arguments，這兩個變數即使在 outer function return inner function 及 inner function 被呼叫後，inner function 還是能繼續使用這些變數。
+
+  ECMAScript 5 的 bind() 方法有些特色是 ECMAScript3 程式碼無法模擬的：
+    回傳後的 function object length property：
+      該 length 值為，bind 之前的 function 參數數目 減去 bind 傳入要 bind 的參數數目。
+
+    ECMAScript 5 的 bind() method 可以作為 partial application of constructor functions：
+      如果經過 bind() 產生的新 function 若作為 constructor，則傳入 bind() 的 this 值會被忽略，而且會直接呼叫原本的 function 作為 constructor，該 constructor 也會有 arguments 被 bind() 時傳入的 arguments 給 bound 著。
+
+    prototype property:
+      經由 bind() 回傳的 function 沒有 prototype property，而一般的 function 的 prototype property 不能被 deleted。
+
+      若用 bind() 之後的 function 作為 construstor 產生出來的物件，會繼承原本 unbound function 的 prototype。
+
+    instanceof operator:
+      bound constructor 在使用 instanceof 運算子時的結果就如同 unbound constructor。
+

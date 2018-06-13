@@ -40,3 +40,12 @@ var arr = [, NaN, , -0, 0, , '', , null, , undefined, 'foo', false];
 var denseArr = arr.compact();
 
 console.log(denseArr);
+
+
+function showSum(y, z) {
+  console.log(this.x + y + z);
+}
+
+var boundShowSum = showSum.bind({x: 1}, 2);
+
+boundShowSum(3);

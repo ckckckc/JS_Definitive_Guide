@@ -378,3 +378,89 @@ var someObj4 = {
 monkeyPatching(someObj4, 'someMethod');
 
 someObj4.someMethod();
+
+function showSomething(x) {
+  console.log(x);
+  console.log(this.y);
+}
+
+var bindingObj = {
+  y: 4
+};
+
+var bindShowSomething = showSomething.bind(bindingObj);
+
+bindShowSomething(2);
+
+function myBind(f, targetThis) {
+  return function() {
+    f.apply(targetThis, arguments);
+  };
+}
+
+var bindShowSomething2 = myBind(showSomething, bindingObj);
+bindShowSomething2(3)
+
+console.log('bindShowSomething2.length', bindShowSomething2.length)
+console.log('bindShowSomething2.prototype', bindShowSomething2.prototype)
+
+console.log(Object.prototype.hasOwnProperty.call(Function.prototype, 'bind'))
+
+if (!Object.prototype.hasOwnProperty.call(Function.prototype, 'bind')) {
+  Function.prototype.bind = function(targetObject/*, args */) {
+    var bindingFunction = this;
+    var bindingArguments = arguments;
+
+    return function() {
+      bindingFunction.apply(targetObject, bindingArguments.concat(arguments));
+    };
+  };
+}
+
+function showFunctionLength(a, b, c, d, e) {
+  console.log(arguments.callee.length);
+  // console.log(arguments.length);
+}
+
+var myBindingShowFunctionLength = myBind(showFunctionLength, bindingObj);
+
+console.log('myBindingShowFunctionLength.length', myBindingShowFunctionLength.length)
+console.log('myBindingShowFunctionLength.prototype', myBindingShowFunctionLength.prototype)
+
+var bindingShowFunctionLength = showFunctionLength.bind({}, 2, 3)
+
+console.log('bindingShowFunctionLength.length', bindingShowFunctionLength.length)
+console.log('bindingShowFunctionLength.prototype', bindingShowFunctionLength.prototype)
+
+function Point(x, y) {
+  this.x = x;
+  this.y = y;
+}
+
+var BoundPoint = Point.bind(null);
+
+var point = new Point(1, 2);
+var point = new Point(1, 2);
+var point2 = new BoundPoint(1, 2);
+var point2 = new BoundPoint(1, 2);
+
+console.log(point instanceof Point)
+console.log(point instanceof Object)
+console.log(point2 instanceof Point)
+console.log(point2 instanceof Object)
+console.log(Object.prototype.toString.call(Point))
+console.log(Object.prototype.toString.call(point))
+console.log(Object.prototype.toString.call(point2))
+
+
+function myBind2(){
+  console.log('myBind2 this:', this);
+}
+
+Function.prototype.myBind2 = myBind2;
+
+function test9() {
+
+}
+
+test9.myBind2()

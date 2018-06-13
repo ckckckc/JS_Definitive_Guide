@@ -1,11 +1,14 @@
 8.7.1 The length Property
 
 在 function body 中：
-  arguments 表示傳入 function 中的參數，所以 arguments.length 表示傳入的參數數目，而 function.legnth 表示宣告的參數數目，也就是預期被傳入的參數數目。
+  arguments 表示呼叫 function 時傳入 function 中的參數數目，所以 arguments.length 表示傳入的參數數目，而 function.legnth 表示宣告的參數數目，也就是預期被傳入的參數數目。
 
   arguments.callee 表示 function 正在執行的 function 本身，而 arguments.callee.length 表示定義這個 function 時，他的 parameter 宣告的數目，就是它定義了幾個待傳入的參數。
 
   arguments.callee.length 在這邊是用來檢查跟傳入 function 的參數數目是某有吻合。
+
+在 function body 之外：
+  你也可以直接用 function reffer 的變數名取得該 function 的 length，他就表示預計被傳入的參數數目。
 
 arguments.callee 比較有用的地方在於 anonymous function refer to its self。
 
