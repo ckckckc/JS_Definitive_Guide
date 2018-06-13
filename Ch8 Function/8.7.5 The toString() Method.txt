@@ -1,0 +1,10 @@
+8.7.5 The toString() Method
+
+就像所有 JavaScript objects， functions 也有 toString() 方法。
+
+ECMAScript spec 規定 Function 的 toString 要 return a string that follows the syntax of the function declaration statement.
+
+實務上，大部分的 Function toString 的實作：
+  會回傳 完整 function 的 source code string。
+
+  Build-in funcion 會回傳類似 [native code] 的字串表示 function body。

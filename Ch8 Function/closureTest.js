@@ -19,6 +19,21 @@ function outer(v, s) {
 outer(5, 500).then(inner => inner(10)).then(console.log);
 outer(1, 2000).then(inner => inner(2)).then(console.log);
 
+function outer2(d) {
+  return function inner2(c) {
+    console.log('d', d);
+    d = c;
+    console.log('c', c);
+    console.log('d', d);
+  };
+}
+
+var getInner = outer2(1);
+var getInner2 = outer2(1);
+getInner(2);
+getInner(3);
+getInner2(4);
+
 // var count = 100;
 // function outer() {
 //   var count = 0;

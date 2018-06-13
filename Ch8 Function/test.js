@@ -464,3 +464,7 @@ function test9() {
 }
 
 test9.myBind2()
+
+
+console.log(myBind2.toString());
+console.log(Function.prototype.bind.toString());
