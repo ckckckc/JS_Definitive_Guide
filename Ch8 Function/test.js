@@ -468,3 +468,11 @@ test9.myBind2()
 
 console.log(myBind2.toString());
 console.log(Function.prototype.bind.toString());
+
+var scope = 'global';
+function showScope() {
+  var scope = 'locale';
+  return new Function("return scope");
+}
+console.log('showScope', showScope()());
+

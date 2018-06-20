@@ -1,0 +1,32 @@
+8.7.6 The Function() Constructor
+
+先講結論，你應該很少需要用到 Function() constructor。
+
+Function() 建構式 i/o：
+  可以接受任意數目的參數。
+
+  最後一個參數或單一的參數以字串形式傳入，他會解析為 function body，他可以包含任意的 JavaScript statements，並以分號區隔彼此。
+
+  除了最後一個參數之外，其他參數都是指定 function arguments 名稱的字串。
+
+  Function 建構式中，沒有接受 function 命名的字串參數。
+
+  回傳值為一個匿名函數。
+
+
+Function() 建構式特性：
+  他可以在 runtime 動態創建併編譯 JavaScript function。
+
+  Function() constructor 每次被呼叫時，都會 parse function body 而且 create new function object。所以如果他出現在迴圈之中或是常用的 function 之中，就會造成效能低落。相對於出現在迴圈中的 nested function 和 function definition expressions，他們並不會在執行時重新再 compoile 一次。
+
+  Function() 建構式不用 lexical scoping，他每次都會編譯成就像他們是 top-level function。
+    例：
+      var scope = 'global';
+      function showScope() {
+        var scope = 'locale';
+        return new Function("return scope");
+      }
+      console.log('showScope', showScope()()) // global by Chrome
+
+    註：但是我在 node v8.11.1 回傳值是 undefined
+
