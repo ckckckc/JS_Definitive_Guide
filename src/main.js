@@ -6,6 +6,7 @@ var classOf = lib.classOf;
 var inherit = lib.inherit;
 var isFalsy = lib.isFalsy;
 var foreach = lib.foreach;
+var isFunction = lib.isFunction;
 
 console.log(classOf(1234))
 
@@ -49,3 +50,6 @@ function showSum(y, z) {
 var boundShowSum = showSum.bind({x: 1}, 2);
 
 boundShowSum(3);
+
+console.log('isFunction showSum', isFunction(showSum));
+console.log('isFunction arr', isFunction(arr));

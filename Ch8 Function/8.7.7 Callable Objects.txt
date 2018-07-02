@@ -1,0 +1,13 @@
+8.7.7 Callable Objects
+
+callable object 即任何物件可以被 function invocation expression 給 invoked。（如同 array-like object，類似的情形也發生在 function 上。）
+
+A callable object is any object that can be invoked in a function invocation expression. All functions are callable, but not all callable objects are functions.
+
+如何檢查是否為真正 Function 的方式，使用 class attribute：
+
+function isFunction(obj) {
+  return Object.prototype.toString.call(obj) === '[object Function]';
+}
+
+這個判斷方式如同 7.10 isArray() function 相似。
