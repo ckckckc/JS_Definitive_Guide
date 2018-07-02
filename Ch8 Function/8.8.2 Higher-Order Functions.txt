@@ -1,0 +1,46 @@
+8.8.2 Higher-Order Functions
+
+Higher-Order Function：
+  操作 function 的 function，接受一個或多個 function，會回傳新的 function。
+
+應用 Higher-Order Function 的 functional programming:
+
+  例一： 用 not function 包裝相反的 boolean 結果
+    function not(func) {
+      return !func.apply(this, arguments);
+    }
+
+    function even(x) {
+      return x % 2 === 0;
+    }
+
+    var odd = not(even);
+
+    [1, 2, 3, 4, 5].every(odd);
+
+  例二： 用 mapper 包裝處理單一參數的，成陣列操作 function
+    function mapper(func) {
+      return function(arr) {
+        return arr.map(func);
+      }
+    }
+
+    function increment(x) {
+      return x + 1;
+    }
+
+    var incrementer = mapper(increment);
+
+    console.log(incrementer([3, 4, 5]));
+
+  例三： 用 compose 包裝兩個連續傳入 function 的結果
+    function compose(f, g) {
+      return function() {
+        return f.call(this, g.apply(this, arguments));
+      };
+    }
+
+    var square = function(x) { return x*x; };
+    var sum = function(a, b) { return a + b; };
+    var squareofsum = compose(square, sum);
+    squareofsum(3, 7);

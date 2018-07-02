@@ -4,10 +4,11 @@ var finalAccumulate = {array}.reduce(function(accumulate, ele, i, arr) {
   return nextAccumulate
 }[, initialAccumulate]);
 
-第一次呼叫傳入的 function 時，第一個 accumulate 是傳入的 第二個參數 作為初始值，
+當回呼函式第一次被呼叫時，accumulator 與 currentValue 的值可能為兩種不同的狀況：若在呼叫 reduce() 時有提供 initialValue，則 accumulator 將會等於 initialValue，且 currentValue 會等於陣列中的第一個元素值；若沒有提供 initialValue，則 accumulator 會等於陣列的第一個元素值，且 currentValue 將會等於陣列的第二個元素值。
+
 第二次呼叫該 function 時， accumulate 則為第一次 funciton 的回傳值。
 
-若沒有給初始值，第一次呼叫 function 的 accumulate 則是第一個 array 的 eleemnt。
+若沒有給初始值，第一次呼叫 function 的 accumulate 則是第一個 array 的 element。
 
 若使用 [] 空陣列呼叫 reduce 而沒有給初始值，則會導致 TypeError 產生。
 

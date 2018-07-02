@@ -1,0 +1,5 @@
+8.8 Functional Programming
+
+JavaScript 可以將 function 像是 object 一樣處理，所以我們可以在 JavaScript 中使用 functional programming 的技巧。
+
+They are intended as a mind-expanding exploration of the power of JavaScript’s functions, not as a prescription for good programming style.
