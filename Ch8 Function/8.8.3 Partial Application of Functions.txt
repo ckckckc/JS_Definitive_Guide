@@ -56,3 +56,12 @@ var str = 'abc';
 console.log(str.first()); // a
 String.prototype.last = partial(String.prototype.substr, -1, 1);
 console.log(str.last());  // c
+
+not even odd 重新包裝：
+var not = partialLeft(compose /* 上節的 compose */, function(x) { return !x; });
+var even = function(x) { return x % 2 === 0; };
+var odd = not(even);
+var isNumber = not(isNaN);
+
+後面的例子用了更多 partialLeft  partial 來包裝 計算 平均值 及 標準差 的計算方式
+讓它更像 Lisp 程式碼。

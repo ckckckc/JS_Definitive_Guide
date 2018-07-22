@@ -1,3 +1,5 @@
+const { performance } = require('perf_hooks');
+
 var map = function(arr, callback, thisArg) {
   var currentArray = arr,
     resultArray = [];
@@ -101,11 +103,53 @@ console.log(str.first()); // a
 String.prototype.last = partial(String.prototype.substr, -1, 1);
 console.log(str.last());  // c
 
-not even odd 重新包裝：
+// not even odd 重新包裝：
 var not = partialLeft(compose /* 上節的 compose */, function(x) { return !x; });
 var even = function(x) { return x % 2 === 0; };
 var odd = not(even);
 var isNumber = not(isNaN);
 
-後面的例子用了更多 partialLeft  partial 來包裝 計算 平均值 及 標準差 的計算方式
-讓它更像 Lisp 程式碼。
+function memoize(func) {
+  var cache  = {};
+
+  return function() {
+    var key = arguments.length + Array.prototype.join.call(arguments, ',');
+
+    if (key in cache) {
+      console.log(cache)
+      return cache[key];
+    }
+    else{
+      return cache[key] = func.apply(this, arguments);
+    }
+  };
+}
+
+function gcd(a,b) {
+  var t;
+  if (a < b) t=b, b=a, a=t;
+  while(b != 0) t=b, b = a%b, a=t;
+  return a;
+}
+
+var gcdmemo = memoize(gcd);
+var t1 = performance.now();
+var result1 = gcdmemo(85, 187);
+gcdmemo(85, 187);
+var t2 = performance.now();
+
+
+var t3 = performance.now();
+var result2 = gcd(85, 187);
+var t4 = performance.now();
+
+// 第一次因為要記錄 cache 所以比較久
+console.log(t2 - t1, result1);
+console.log(t4 - t3, result2);
+
+var factorial = memoize(function(n) {
+  return (n <= 1) ? 1 : n * factorial(n-1);
+});
+
+console.log(factorial(5));
+console.log(factorial(8));
