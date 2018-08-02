@@ -1,0 +1,46 @@
+9.1 Classes and Prototypes
+
+In JavaScript, a class is a set of objects that inherit properties from the same prototype object.
+
+直接看範例：
+
+// 範例 6-1 inherit
+function inherit(p) {
+  if (p == null) throw TypeError();
+  if (Object.create)
+    return Object.create(p);
+  var t = typeof p;
+  if (t !== 'object' && t !== 'function') throw TypeError();
+  function f() {};
+  f.prototype = p;
+  return new f();
+}
+
+// factory function return new range object
+function range(from, to) {
+  var r = inherit(range.methods);
+  r.from = from;
+  r.to = to;
+  return r;
+}
+
+// This prototype object defines methods inherited by all range objects.
+range.methods = {
+  includes: function(x) { return this.from <= x && x <= this.to; },
+  foreach: function(f) {
+    for(var x = Math.ceil(this.from); x <= this.to; x++) f(x); 
+  },
+  toString: function(){ 
+    return "(" + this.from + "..." + this.to + ")"; 
+  }
+};
+
+值得注意的地方：
+  range factory function 用來 create new range object。
+
+  用 range function 儲存 methods property，用來定義此類別的 prototype，除了方便沒特別之處，而且也不是慣用做法。
+
+  range.methods 中的 methods 會共享給每個 range 物件。
+
+  每個 range object 都各自擁有 from 跟 to 這兩個 property，為了可以 ref 到這些 properties，
+  個別物件以 this keyword 可以參考到各自的特性。
