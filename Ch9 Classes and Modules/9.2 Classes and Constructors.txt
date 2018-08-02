@@ -1,0 +1,37 @@
+9.2 Classes and Constructors
+
+上一節中定義 class 的方式並不是常見的方式，因為他沒用 constructor，constructor 是用來初始化新創物件的 function。
+
+constructor 的關鍵特色：constructor ㄉㄜ prototype 會被當作新物件的 prototype，這代表所有使用相同 constructor 創造的物件都會自承自同樣的 prototype object，因此是同一個 class。
+
+將上一節的 factory function 用 constructor 的方式改寫：
+
+function Range(from, to) {
+  this.from = from;
+  this.to = to;
+}
+
+// 所有的 Range object 都會繼承這個物件
+// prototype 的命名是必須的
+Range.prototype = {
+  includes: function(x) { return this.from <= x && x <= this.to; },
+  foreach: function(f) {
+    for(var x = Math.ceil(this.from); x <= this.to; x++) f(x); 
+  },
+  toString: function(){ 
+    return "(" + this.from + "..." + this.to + ")"; 
+  }
+};
+
+注意的是：
+  Range 為 constructor，使用大寫開頭，提醒這是使用 new keyword invoke，而非直接 invoke 的一般 function。
+
+  因為 Range() constructor 是用 new 來 invoke，他不需要呼叫 inherit() 或使用其他方法創建新物件，新的物件在 constructor 在呼叫前就自動創建好了，而且當作 this 的值。
+
+  constructor 會自動創建一個新的物件，把建構式當作這個物件的方法來 invoke，並回傳這個新的 object。
+
+  與上節範例相比， prototype 的命名在這節是必須的，在上一節是可以隨意挑選的 (methods)
+
+
+待確認:
+  上面的 Range.prototype 在書中說是新創物件的 prototype，但是我自己 console.log 新創物件的 prototype 卻是 undefined ，我強烈懷疑不能直接定義 prototype ，待確認。
