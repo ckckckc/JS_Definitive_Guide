@@ -1,0 +1,41 @@
+9.2.2 The constructor Property
+
+在 Range.prototype 的範例中，我們直接定義了 methods 在 Range.prototype 的 properties，雖然使用 {} 定義 methods 很方便，但其實不需要直接定義 Range.prototype。
+
+任何 function 都可以做為 constructor，constructor invocation 需要 prototype property，在 function 被定義之時， prototype 這個 property 已經定義了，它的值是一個 object，擁有一個不可列舉的 property: constructor，constructor 的值就是該 function object。
+
+例如：
+// 或 var Test = function() {};
+function Test() {
+  
+}
+
+Test === Test.prototype.constructor
+
+因此每個創建出來的物件都會繼承 constructor 這個 property，而且可以 refer 至該 constructor。
+
+9.2 節的 Range class 用自己寫的 prototype overwrites 預先定義的 Range.prototype，而且覆寫的 prototype 沒有 constructor 這個預設類別，所以由 Range 創造的物件，並沒有 constructor 這個 property。
+
+但是我們可以明確的加入 constructor 這個 property 至 9.2 Range.prototype 之中：
+Range.prototype = {
+  // 明確的定義 constructor
+  constructor: Range,
+  includes: function(x) { return this.from <= x && x <= this.to; },
+  foreach: function(f) {
+    for(var x = Math.ceil(this.from); x <= this.to; x++) f(x); 
+  },
+  toString: function(){ 
+    return "(" + this.from + "..." + this.to + ")"; 
+  }
+};
+
+如果不自己定義 prototype 這個物件的話，還有一個常用的方法，就是使用預定義的 prototype object，然後逐一加入 method，例如：
+
+Range.prototype.includes = function(x) { return this.from <= x && x <= this.to; };
+Range.prototype.foreach = function(f) {
+  for(var x = Math.ceil(this.from); x <= this.to; x++) f(x); 
+};
+Range.prototype.toString = function(){ 
+    return "(" + this.from + "..." + this.to + ")"; 
+  }
+};

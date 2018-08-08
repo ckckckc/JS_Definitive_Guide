@@ -1,0 +1,9 @@
+9.2.1 Constructors and Class Identity
+
+兩個物件只有在他們繼承自同一個 prototype 物件時，才是屬於同一類別得兩個實體(instances)。
+
+兩個不同的 constructor 可以指向相同的 prototype object，這樣的話兩種 constructor 都可以用來創建同一個類別的實體。
+
+r instanceof Range // 如果 r 繼承自 Range.prototype 就會回傳 true
+
+instanceof 並不會檢查 r 是否由 Range 這個 constructor 所初始化，他檢查的是 r 是否繼承自 Range.prototype。
