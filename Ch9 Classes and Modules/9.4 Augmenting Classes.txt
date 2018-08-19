@@ -1,0 +1,44 @@
+9.4 Augmenting Classes
+
+JavaScript 的 prototype-based 繼承的機制是動態的：
+  一個物件會繼承 prototype 的 properties，既使 prototype 在物件以間創建後，這個繼承機制依舊存在著。
+
+  意即我們能動態擴增 JavaScript Class，藉由加入 prototype new methods，如此簡單。
+
+  即便是 JavaScript build-in 的 Classes 也是如此 'open'：我們同樣能對 numbers strings arrays functions 做這些事。
+
+這節的範例：
+
+times:
+
+var n = 3;
+
+Number.prototype.times = function(f, context) {
+  var n = Number(this);
+  for (var i = 0 ; i < n ; i++) {
+    f.call(context, i);
+  }
+};
+
+// 使用剛才定義的 times
+n.times(function(n) {
+  console.log(n + ' hello');
+});
+
+Bonus 1: trim function 的 Reg 可以把前後空白給去掉：/^\s+|\s+$/g
+  String.prototype.trim = String.prototype.trim || function(){
+    if (!this) return this;
+    return this.replace(/^\s+|\s+$/g, "");
+  };
+
+Bonus 2: Return a function's name.
+         function object 有 name property 就回傳該 property。
+         若沒有則用正規表達式擷取 function.toString 的 function /name/() {}
+         回傳擷取出來的 name。
+Function.prototype.getName = function() {
+  return this.name || this.toString().match(/function\s*([^(]*)\(/)[1]; 
+};
+
+不建議做法：
+  直接在 Object.protoype 中加入 property 讓所有 instance 能使用 property，因為這會讓這些加入的方法被 for/in loop 給列出，他是可列舉 property，若要安全的加入 property 在 9.8.1 會使用 Object.defineProperty() 安全的擴增 Object.prototype。
+

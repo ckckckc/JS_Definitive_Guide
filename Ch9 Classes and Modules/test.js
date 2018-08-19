@@ -117,8 +117,8 @@ Complex.prototype.equals = function(that) {
  * generally use the this keyword: they operate only on their arguments. 
  */
 
-Class fields (例如 常數) 還有 Class method 會定義在 Constructor 的 properties。
-Class methods 之中並不會使用 this keyword：他們著重作用在傳入的參數之上。
+// Class fields (例如 常數) 還有 Class method 會定義在 Constructor 的 properties。
+// Class methods 之中並不會使用 this keyword：他們著重作用在傳入的參數之上。
 Complex.ZERO = new Complex(0,0);
 Complex.ONE = new Complex(1,0);
 Complex.I = new Complex(0,1);
@@ -138,3 +138,49 @@ Complex.parse = function(s) {
  */
 Complex._format = /^\{([^,]+),([^}]+)\}$/;
 
+var c = new Complex(2, 3);
+// TypeError: c.newMethod is not a function
+// c.newMethod();
+Complex.prototype.newMethod = function() {
+  console.log('new method added...');
+};
+c.newMethod();
+
+
+
+// Augmenting Classes
+
+var a = {};
+
+a.kkk = 1234
+
+for (var key in a) {
+  console.log('key:', key);
+}
+
+console.log('---------');
+
+
+Object.prototype.aaaaa = function() {};
+
+var a = {};
+
+a.kkk = 1234
+
+for (var key in a) {
+  console.log('key:', key);
+}
+
+Number.prototype.times = function(f, context) {
+  console.log('this', this);
+  var n = Number(this);
+  for (var i = 0 ; i < n ; i++) {
+    f.call(context, i);
+  }
+};
+
+var n = 3;
+
+n.times(function(n) {
+  console.log(n + ' hello');
+});
