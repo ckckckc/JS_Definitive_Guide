@@ -1,0 +1,127 @@
+9.3 Java-Style Classes in JavaScript
+
+強型別的 object-oriented 語言的四種 class member：
+
+  Instance fields
+    各別 instance 擁有的 properties 或 variables。
+
+  Instance methods
+    所有相同 class 的 instance 共享的 methods，經由個別 instance invoked。
+
+  Class fields
+    由 Class 持有的 properties 或 vairables。
+
+  Class methods
+    與 Class 關聯的 methods。
+
+JavaScript 的 class 定義中，有三個相關的 Obejct：
+  Constructor Object
+    Constructor function(Object) 定義了 class 的名稱。
+
+    加在 constructor object 的 property 如同 class field/method。
+
+  Prototype Object
+    Prototype 的 prototies 將會讓所有同樣 class 的 instance 給繼承，若 prototype 的 prototies 為 function，就如同定義了 instance methods。
+
+  Instance Object
+    一個 class 的 instance 擁有自己的 properties，不會和其他 instance 共享。非 function 的 properties 如同 Instance fields。
+
+在 JavaScript 定義 class 的三個步驟：
+  一：撰寫 constructor function，定義新物件的 instance properties。
+  First, write a constructor function that sets instance properties on new objects. 
+
+  二：在 constructor 的 prototype object 上定義 instance methods。
+  Second, define instance methods on the prototype object of the constructor. 
+
+  三：在 constructor 上直接定義 class fields/properties。
+  Third, define class fields and class properties on the constructor itself.
+
+定義 class 的範例(9-3)：
+  定義一個處理複數的 Complex Class
+
+  Constructor:
+    /**
+     * 這個 constructor function 定義了他產生的物件的 instance fields 的 r 跟 i。
+     * 這些 instance 擁有自己的狀態： 實部 r 跟 虛部 i。
+     */
+
+    function Complex(real, imaginary) {
+      if (isNaN(real) || isNaN(imaginary))
+        throw new TypeError();
+
+      this.r = real;
+      this.i = imaginary;
+    }
+
+  Prototype properties:
+    /**
+     * class instance 的 methods 以 function 型態定義在 prototype object 的 properties。
+     * 所有 instances 都會繼承這些 methods，而且這些 methods 會分享給每個 instances。
+     * JavaScript instances methods 之中，必須使用 this keyword 
+     * 來 access 該 instance fields。
+     */
+
+    Complex.prototype.add = function(that) {
+      return new Complex(this.r + that.r, this.i + that.i);
+    };
+
+    Complex.prototype.mul = function(that) {
+      return new Complex(
+        this.r * that.r - this.i * that.i, 
+        this.r * that.i + this.i * that.r
+      );
+    };
+
+    Complex.prototype.mag = function() {
+      return Math.sqrt(this.r * this.r + this.i * this.i); 
+    };
+
+    Complex.prototype.neg = function() {
+      return new Complex(-this.r, -this.i); 
+    };
+
+    Complex.prototype.toString = function() {
+      return '{' + this.r + ',' + this.i + '}'; 
+    };
+
+    Complex.prototype.equals = function(that) {
+      return that != null &&                          // must be defined and non-null
+             that.constructor === Complex   &&        // and an instance of Complex 
+             this.r === that.r && this.i === that.i;  // and have the same values.
+    };
+
+
+    Class fields/methods:
+      Class fields (例如 常數) 還有 Class method 會定義在 Constructor 的 properties。
+      Class methods 之中並不會使用 this keyword：他們著重作用在傳入的參數之上。
+      Complex.ZERO = new Complex(0,0);
+      Complex.ONE = new Complex(1,0);
+      Complex.I = new Complex(0,1);
+
+      Complex.parse = function(s) {
+        try {
+          var m = Complex._format.exec(s);
+          return new Complex(parseFloat(m[1]), parseFloat(m[2]));
+        } catch (err) {
+          throw new TypeError('Can\'t parse :' + s + ' as a complex number.');
+        }
+      };
+
+      底線暗指他是內部使用的斯有變數，
+      不應該作為該 class 的 public API
+      Complex._format = /^\{([^,]+),([^}]+)\}$/;
+
+JavaScript 與 Java 的差別：
+  JavaScript 的 function 是 value。
+
+  JavaScript 的 method 及 fields 沒有硬性的區分，如果 property 是 funtion 就是 method，否則該 property 就是 field。
+
+  Java field 宣告為 final 表示常數，Java 允許 fields 跟 methods 可以宣告為 private，表示他們是 class 的 private implementation 而且不會暴露給使用該 class 的使用者。
+
+  JavaScript 只能用一些打字上的暗示表示，表示該 property 不該被更改(大寫)。或是不該被類別之外使用(底線開頭)。
+
+後面會討論到兩個主題：
+  使用 closure 的區域變數來模擬私有變數。(9.6.6)
+
+  ECMAScript 5 中可以有常數 property。(9.8.2)
+
