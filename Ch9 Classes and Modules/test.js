@@ -45,6 +45,9 @@ var r = new Range(1, 3);
 console.log(r.toString())
 console.log(r.prototype)
 
+var x = range(1, 5);
+console.log('range.methods.isPrototypeOf(x)', range.methods.isPrototypeOf(x))
+
 function MyConstructor() {
 
 }
@@ -172,7 +175,6 @@ for (var key in a) {
 }
 
 Number.prototype.times = function(f, context) {
-  console.log('this', this);
   var n = Number(this);
   for (var i = 0 ; i < n ; i++) {
     f.call(context, i);

@@ -1,0 +1,24 @@
+9.5.1 The instanceof operator
+
+要懂這句話才能更懂 instanceof
+Constructors act as the public identity of classes, but prototypes are the fundamental identity.
+
+o instanceof c 
+
+  會在 o 繼承自 c.prototype 時為 true。
+
+  這個繼承關係不需要直接的。
+
+instanceof 用的是 constructor function，這個 operator 真正測定的是 object 繼承自哪個 object，而非哪個 constructor 所創造的。
+
+isPrototypeOf():
+  如果想要測試 object 的 prototype chain 是否有某個指定的 prototype object，而且不想直接使用 constructor function 達到目的，可以選擇使用 isPrototypeOf() method。
+
+  range.methods.isPrototypeOf(r)   // range.methods is the prototype object.
+
+If you want to test the prototype chain of an object for a specific prototype object and do not want to use the constructor function as an intermediary, you can use the isPrototypeOf() method.
+
+instanceof operator 跟 isPrototypeOf() method 有兩個缺點：
+  他們無法直接得知給定物件的 class 屬性，只能比較我們給定的 class 是否為該物件的 class。
+
+  在 client-side (browser) 環境之下，若開了多的 window 或是 frame 時，每個 window / frame 都是個別的 execution context，每個都有自己的 global object / set of constructor functions，兩個 arrays 由不同的 frame 各自的 prototype object 創建出來，各別的 array 並不為跨 frame 的 Array instance。(其實我不知道什麼時候會 ref 到跨 window / frame 的 object)

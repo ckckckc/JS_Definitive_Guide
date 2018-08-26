@@ -1,0 +1,28 @@
+9.5 Classes and Types
+
+JavaScript 定義的幾個 types:
+  null, undefined, boolean, number, string, function, and object，
+  使用 typeof operator 可以讓我們分辨這些型別。
+
+若要判別 class 型別可以使用 6.8.2 的 classOf() 得到 class attribute，加以判別該物件為何 class。
+
+6.8.2: classOf():
+
+function classOf(obj) {
+  if (obj === null) return "Null";
+  if (obj === undefined) return undefined;
+  return Object.prototype.toString.call(obj).slice(8, -1);
+}
+
+然而我們要判別自己定義的 class 時，使用 classOf 得到的 class attribute 將都會是 "Object"，所以這時 classOf 將幫不上忙。
+
+接下來幾個子節將會介紹使用三個用來判斷任意物件的方式：
+  instanceof operator
+
+  constructor property
+
+  the name of the constructor function
+
+不過沒有一個技巧是完美的。
+
+最後的子節使用 duck-typing 來總結，他用程式設計的哲理，專注在一個物件能做的事（有哪些 methods），而非專注在 class 為何。
