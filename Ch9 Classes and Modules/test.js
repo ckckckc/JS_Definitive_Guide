@@ -4,7 +4,7 @@ function inherit(p) {
     return Object.create(p);
   var t = typeof p;
   if (t !== 'object' && t !== 'function') throw TypeError();
-  function f() {};
+  function f() {}
   f.prototype = p;
   return new f();
 }
@@ -186,3 +186,25 @@ var n = 3;
 n.times(function(n) {
   console.log(n + ' hello');
 });
+
+
+function typeAndValue(x) {
+  if (x == null) return '';
+
+  switch(x.constructor) {
+    case Number: 
+      return 'Number: ' + x;
+    case String:
+      return 'String: ' + x;
+    case Date:
+      return 'Date: ' + x;
+    case RegExp:
+      return 'Regexp: ' + x;
+    case Complex:
+      return 'Complex: ' + x;
+  }
+}
+
+var d = new Complex(4, 5);
+console.log('typeAndValue(d)', typeAndValue(d));
+console.log('typeAndValue(new Number)', typeAndValue(new Number));

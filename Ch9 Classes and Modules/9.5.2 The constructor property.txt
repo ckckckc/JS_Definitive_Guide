@@ -1,0 +1,33 @@
+9.5.2 The constructor property
+
+既然 constructor function 是 class 的公開樣貌，直接比較 constructor 值是相當直截了當的方式：
+
+function typeAndValue(x) {
+  if (x == null) return '';
+
+  switch(x.constructor) {
+    case Number: 
+      return 'Number: ' + x;
+    case String:
+      return 'String: ' + x;
+    case Date:
+      return 'Date: ' + x;
+    case RegExp:
+      return 'Regexp: ' + x;
+    case Complex:
+      return 'Complex: ' + x;
+  }
+}
+
+var d = new Complex(4, 5);
+
+console.log('typeAndValue(d)', typeAndValue(d));  // Complex: {4,5}
+console.log('typeAndValue(new Number)', typeAndValue(new Number)); // Number: 0
+
+上面 typeAndValue function 之中， case 後面緊接的是 constructor function，如果 switch 之中使用的是 typeof 或是 取得物件的 class attribute 的話， case 接的會是字串。
+
+constructor 和 instanceof 共同的缺點：
+  無法在跨 frame 或 window 的情境。
+
+constructor 方法的自有缺點：
+  JavaScript 並不要求每個 object 都有 constructor property：也就是說，這個約定是根據每個 function 創建時，所產生的預設 prototype object。但是這個 prototype object 容易忽略 constructor property(可能是有意或無意)，像是這張開頭的範例 9-1 或 範例 9-2 就會讓產生的 instance 沒有 constructor property。

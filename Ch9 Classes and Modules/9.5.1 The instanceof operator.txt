@@ -22,3 +22,4 @@ instanceof operator 跟 isPrototypeOf() method 有兩個缺點：
   他們無法直接得知給定物件的 class 屬性，只能比較我們給定的 class 是否為該物件的 class。
 
   在 client-side (browser) 環境之下，若開了多的 window 或是 frame 時，每個 window / frame 都是個別的 execution context，每個都有自己的 global object / set of constructor functions，兩個 arrays 由不同的 frame 各自的 prototype object 創建出來，各別的 array 並不為跨 frame 的 Array instance。(其實我不知道什麼時候會 ref 到跨 window / frame 的 object)
+
