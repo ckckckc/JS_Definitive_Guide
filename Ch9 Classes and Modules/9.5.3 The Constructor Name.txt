@@ -1,0 +1,65 @@
+9.5.3 The Constructor Name
+
+使用 instanceof operator 或是 constructor property 判斷 object 的 class 還有個問題：
+  如果有多種執行情境，那麼就有一堆重複邏輯的判斷，但是每個 constructor 都是不同的獨立 object。
+
+使用 constructor name 可以克服前兩個方式的一問題：
+  不同 window / frame 的 constructor 彼此不同，但是 constructor name 是相同的字串。
+
+這邊定義拿取 constructor name 的 type function:
+他用到了 範例 6-4 的 classof() 還有 9.4 節的 Function.getName() method
+
+function type(o) {
+  var t, c, n;  // object type, class attribute, constructor name
+
+  // 特別例子 null:
+  if (o === null) {
+    return 'null';
+  }
+
+  // 另一個特別例子： NaN 是唯一不等於自己的值
+  if (o !== o) {
+    return 'nan';
+  }
+
+  // 使用 typeof 判斷 typeof 值 不為 'object' 的 primitive type
+  // 且同時也判斷了 'functions'
+  if ((t = typeof o) !== 'object') {
+    return t;
+  }
+
+  // 篩選 class 不為 'Object' 的 object
+  // 這將會把大多原生物件篩選出來
+  if ((c = classOf(o)) !== 'Object') {
+    return c;
+  }
+
+  // 如果有 constructor name 的話，回傳它
+  if (o.constructor && typeof o.constructor === 'function' &&
+    (n = o.constructor.getName())
+  ) {
+    return n;
+  }
+
+  // 沒辦法再篩選更明確，所以回傳 'Object'
+  return 'Object';
+}
+
+function classOf(o){
+  return Object.prototype.toString.call(o).slice(8, -1);
+}
+
+Function.prototype.getName = function() {
+  if ('name' in this) {
+    return this.name;
+  }
+  return this.name = this.toString().match(/function\s*([^(]*)\(/)[1];
+};
+
+
+當然這個 constructor name 方法也是有缺陷的，不是所有的 function 都有名稱：
+  var Complex = function(x, y) { this.r - x; this.i = y  };
+
+  var Range = function(f, t) { this.from = r; this.to = t; };
+
+這兩個 constructor function 使用 getName 就會回傳空字串
