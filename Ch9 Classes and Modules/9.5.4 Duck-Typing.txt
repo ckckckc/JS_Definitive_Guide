@@ -1,0 +1,52 @@
+9.5.4 Duck-Typing
+
+When I see a bird that walks like a duck and swims like a duck and quacks like a duck, I call that bird a duck.
+
+-James Whitcomb Riley
+
+先用 array-like 類比 duck-typing 的概念:
+  許多情況下，我們在操作 Array 時，我們不需要知道他是否是真的 Array class 的 instance，只要知道他有一個 nonnegative integer length property 即可。
+  這個 length property 可以說是 Array 如何 "走路"，任何物件會這樣 "走路" 的話，就可以當作是一種 Array。
+
+  但是真正的 Array 的 length property 具有特殊的行為：如果有新的 element 加入，這個 length property 就會自動更新，而當 length 被設定為較小的值時，陣列就會自動被截短。如此的行為可以說是 Array 的 "游泳" 及 "鳴叫" 方式。
+
+  如果你要寫的 code 它需要會 "游泳" 及 "鳴叫"，那你就不能只用一個只會 "走路" 的 Array。
+
+在 JavaScript 中擬似 duck-typing 的方式有兩種：
+  放任（laissez-faire）：假設 input object 實做了必要的 method，不檢查有無需要的 method，直接執行程式，若方法不存在時，就會產生錯誤。
+
+  檢查 input object：檢查 input object 是否有實作該實作的 method name，而非檢查 object 的 class。如此一來，我們可以更早找出錯誤的 input object，而且可以得到更豐富的錯誤資訊。詳見下面的 quacks() function。
+
+  function quacks(o) {
+    for (var i = 1, len = arguments.length; i < len ; i++) {
+      var arg = arguments[i];
+
+      switch (typeof arg) {
+        case 'string':
+          if (typeof o[arg] !== 'function') return false;
+          continue;
+        case 'function':
+          arg = arg.prototype;
+        case 'object':
+          for (var m in arg) {
+            if (typeof arg[m] !== 'function') continue;
+
+            if (typeof o[m] !== 'function') return false;
+          }
+      }
+    }
+
+    return true;
+  }
+
+  quacks() function 會檢查 input object 是否有指定的 object || function || string 所要檢查的 method，input object 都持有要檢查的 method，則 quacks() function return true;
+
+    關於 quacks() function 的缺點：
+      這個 function 只有檢查是否有指定的 method 名稱，並沒有檢查對應的 method 會做什麼事，或輸入的 參數的型態及個數甚至回傳值等等。
+
+      如果使用 duck-typing 定義 API，而非定義強型別的 API，這樣的 API 會比較有彈性，但也是把正確地使用 API 的責任交給使用者。
+
+      這個 quacks() function 無法用在 內建 classes 之上，例如 quacks(someObject, Array)。因為 Array 的 methods 是 nonenumerable，所以 quacks() function 的 for/in loop 無法將他們列舉出來檢查，但可以使用 ECMAScript 5 的 Object.getOwnPropertyNames() function 解決
+
+    自己用 Object.getOwnPropertyNames() 讓內建 classes 也能檢查:
+      /src/lib/quacks.js

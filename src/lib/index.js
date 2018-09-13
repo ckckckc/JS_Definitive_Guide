@@ -5,6 +5,7 @@ var isFalsy = require('./isFalsy.js');
 var isNaN = require('./isNaN.js');
 var isFunction = require('./isFunction.js');
 var findAllIndex = require('./findAllIndex.js');
+var quacks = require('./quacks.js');
 
 module.exports = {
   classOf,
@@ -13,5 +14,6 @@ module.exports = {
   isFalsy,
   isNaN,
   isFunction,
-  findAllIndex
+  findAllIndex,
+  quacks
 };

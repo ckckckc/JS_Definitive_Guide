@@ -7,6 +7,7 @@ var inherit = lib.inherit;
 var isFalsy = lib.isFalsy;
 var foreach = lib.foreach;
 var isFunction = lib.isFunction;
+var quacks = lib.quacks;
 
 console.log(classOf(1234))
 
@@ -53,3 +54,7 @@ boundShowSum(3);
 
 console.log('isFunction showSum', isFunction(showSum));
 console.log('isFunction arr', isFunction(arr));
+
+console.log(quacks(123, Array));
+console.log(quacks({}, Array));
+console.log(quacks([1, 3, 4], Array));

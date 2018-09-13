@@ -208,3 +208,128 @@ function typeAndValue(x) {
 var d = new Complex(4, 5);
 console.log('typeAndValue(d)', typeAndValue(d));
 console.log('typeAndValue(new Number)', typeAndValue(new Number));
+
+function type(o) {
+  var t, c, n;  // object type, class attribute, constructor name
+
+  // 特別例子 null:
+  if (o === null) {
+    return 'null';
+  }
+
+  // 另一個特別例子： NaN 是唯一不等於自己的值
+  if (o !== o) {
+    return 'nan';
+  }
+
+  // 使用 typeof 判斷 typeof 值 不為 'object' 的 primitive type
+  // 且同時也判斷了 'functions'
+  if ((t = typeof o) !== 'object') {
+    return t;
+  }
+
+  // 篩選 class 不為 'Object' 的 object
+  // 這將會把大多原生物件篩選出來
+  if ((c = classOf(o)) !== 'Object') {
+    return c;
+  }
+
+  // 如果有 constructor name 的話，回傳它
+  if (o.constructor && typeof o.constructor === 'function' &&
+    (n = o.constructor.getName())
+  ) {
+    return n;
+  }
+
+  // 沒辦法再篩選更明確，所以回傳 'Object'
+  return 'Object';
+}
+
+function classOf(o){
+  return Object.prototype.toString.call(o).slice(8, -1);
+}
+
+Function.prototype.getName = function() {
+  if ('name' in this) {
+    return this.name;
+  }
+  return this.name = this.toString().match(/function\s*([^(]*)\(/)[1];
+};
+
+
+function quacks(o) {
+  for (var i = 1, len = arguments.length; i < len ; i++) {
+    var arg = arguments[i];
+
+    switch (typeof arg) {
+      case 'string':
+        if (typeof o[arg] !== 'function') return false;
+        continue;
+      case 'function':
+        arg = arg.prototype;
+      case 'object':
+        for (var m in arg) {
+          if (typeof arg[m] !== 'function') continue;
+
+          if (typeof o[m] !== 'function') return false;
+        }
+    }
+  }
+
+  return true;
+}
+
+console.log('quacks: ', quacks({}, Complex));
+console.log('quacks: ', quacks(d, Complex));
+
+
+function myQuacks(inputObject) {
+  var isObjectHavingAllMethods = function(sourceObj, targetObject) {
+
+    if (Object.getOwnPropertyNames) {
+      var predictMethods = Object.getOwnPropertyNames(targetObject);
+
+      for (var i = 0, len = predictMethods.length ; i < len ; i++) {
+        var predictMethod = predictMethods[i];
+
+        if (typeof targetObject[predictMethod] !== 'function') continue;
+
+        if (typeof sourceObj[predictMethod] !== 'function') return false;
+      }
+    }
+    else {
+      for (var method in targetObject) {
+        if (typeof targetObject[method] !== 'function') continue;
+
+        if (typeof sourceObj[method] !== 'function') return false;
+      }
+    }
+
+    return true;
+  };
+
+  for (var i = 1, len = arguments.length; i < len ; i++) {
+    var argument = arguments[i];
+
+    switch (typeof argument) {
+      case 'string':
+        if (typeof inputObject[argument] !== 'function') return false;
+        continue;
+      case 'function':
+        if (isObjectHavingAllMethods(inputObject, argument.prototype)) {
+          continue;
+        }
+        return false;
+      case 'object':
+        if (isObjectHavingAllMethods(inputObject, argument)) {
+          continue;
+        }
+        return false;
+    }
+  }
+
+  return true;
+}
+
+console.log('myQuacks: ', myQuacks({}, Complex));
+console.log('myQuacks: ', myQuacks(d, Complex));
