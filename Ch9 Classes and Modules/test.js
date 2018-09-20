@@ -333,3 +333,78 @@ function myQuacks(inputObject) {
 
 console.log('myQuacks: ', myQuacks({}, Complex));
 console.log('myQuacks: ', myQuacks(d, Complex));
+
+
+function Set() {
+  this.values = {};
+  this.n = 0;
+  this.add.apply(this, arguments);
+}
+
+Set.prototype.add = function() {
+  for (var i = 0, len = arguments.length ; i < len ; i++) {
+    var val = arguments[i];
+    var str = Set._v2s(val);
+    if (!this.values.hasOwnProperty(str)) {
+      this.values[str] = val;
+      this.n++;
+    }
+  }
+  return this;
+};
+
+Set.prototype.remove = function() {
+  for (var i = 0, len = arguments.length ; i < len ; i++) {
+    var str = Set._v2s(arguments[i]);
+    if (this.values.hasOwnProperty(str)) {
+      delete this.values[str];
+      this.n--;
+    }
+  }
+  return this;
+};
+
+Set.prototype.contains = function(value) {
+  return this.values.hasOwnProperty(Set._v2s(value));
+};
+
+Set.prototype.size = function() {
+  return this.n;
+};
+
+Set.prototype.foreach = function(f, context) {
+  for (var s in this.values) {
+    // 忽略繼承而來的 properties
+    if (this.values.hasOwnProperty(s)) {
+      f.call(context, this.values[s]);
+    }
+  }
+};
+
+Set._v2s = function(val) {
+  switch(val) {
+    case undefined: return 'u';
+    case null: return 'n';
+    case true: return 't';
+    case false: return 'f';
+    default: switch(typeof val) {
+      case 'number': return '#' + val;      // prefix # for number
+      case 'string': return '"' + val;      // prefix " for string
+      default: return '@' + objectId(val);  // prefix @ for object and function
+    }
+  }
+
+  // 這個 objectId 有個副作用
+  // 它偷加 |**objectid**|: {number} property 到 o 裡
+  // 萬一 o 已經剛好有 property name 為 |**objectid**| 時
+  // Set._v2s 可能會回傳不唯一的值
+  function objectId(o){
+    var prop = '|**objectid**|';
+    if (!o.hasOwnProperty(prop)) {
+      o[prop] = Set._v2s.next++;
+    }
+    return o[prop];
+  }
+};
+
+Set._v2s.next = 100;

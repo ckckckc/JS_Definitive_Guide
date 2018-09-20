@@ -1,0 +1,8 @@
+9.6 Object-Oriented Techniques in JavaScript
+
+回顧 JavaScript class 的基礎架構，目前已經介紹了：
+  prototype 的重要性，與 constructor function 的關係
+
+  instanceof operator 如何運作
+
+這節轉向介紹 JavaScript classes programming 的技巧，以兩個較為複雜的範例開始，也作為接下來討論的起點。
