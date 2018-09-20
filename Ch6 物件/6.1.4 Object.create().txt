@@ -1,7 +1,7 @@
 6.1.4 Object.create()
 
 Object.create() 是靜態 (static) 函式，
-不是在個別物件上 invoked的 方法，
+不是在個別物件上 invoked 的 方法，
 要使用他，
 只需要把想要作為 prototype 的物件轉給他就行了：
 

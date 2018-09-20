@@ -1,0 +1,68 @@
+9.6.2 Example: Enumerated Types
+
+這節要理解：
+  什麼是 enumerated type。
+
+  factory function 會在每次 invocation 時產生並回傳新的 class。
+
+  JavaScript 版的 enum 具有相當的彈性。
+
+  樸克牌範例有點深度 enumeration.js Card.js Deck.js
+    開一副新牌
+    洗牌
+    發 13 張牌
+    將 13 張牌排序
+
+
+enumerated type: 定義時具有有限個數的集合。
+
+範例 enumeration function 是個 factory function enumeration: each invocation creates and returns a new class.
+
+function enumeration(namesToValues) {
+  // This is the dummy constructor function that will be the return value.
+  var Enumeration = function() {
+    throw 'Can\'t Instantiate Enumerations';
+  };
+
+  Enumeration.values = [];
+
+  Enumeration.foreach = function(loopHandler, context) {
+    for (var i = 0, len = this.values.length ; i < len ; i++) {
+      loopHandler.call(context, this.values[i]);
+    }
+  };
+
+  Enumeration.prototype.toString = function() {
+    console.log('toString');
+    return this.name;
+  };
+
+  Enumeration.prototype.valueOf = function() {
+    console.log('valueOf');
+    return this.value;
+  };
+
+  Enumeration.prototype.toJSON = function() {
+    return this.name;
+  };
+
+  for (var name in namesToValues) {
+    var entity = inherit(Enumeration.prototype);
+    entity.name = name;
+    entity.value = namesToValues[name];
+    Enumeration[name] = entity;
+    Enumeration.values.push(entity);
+  }
+
+  return Enumeration;
+}
+
+// Create a new Coin class with four values: Coin.Penny, Coin.Nickel, etc.
+var Coin = enumeration({Penny: 1, Nickel: 5, Dime: 10, Quarter: 25});
+var c = Coin.Dime;
+console.log(c instanceof Coin);
+console.log(c.constructor === Coin);
+console.log(Coin.Quarter + 3*Coin.Nickel);
+console.log(Coin.Dime == 10);
+console.log(Coin.Dime > Coin.Nickel);
+console.log(String(Coin.Dime) + ':' + Coin.Dime);
