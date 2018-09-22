@@ -333,3 +333,19 @@ function myQuacks(inputObject) {
 
 console.log('myQuacks: ', myQuacks({}, Complex));
 console.log('myQuacks: ', myQuacks(d, Complex));
+
+function myConstructor2(a) {
+  this.a = a;
+}
+
+myConstructor2.prototype.toJSON = function() {
+  return 123;
+};
+
+console.log(JSON.stringify(new myConstructor2(2)));
+
+function myConstructor3(a) {
+  this.a = a;
+}
+
+console.log(JSON.stringify(new myConstructor3(2)));

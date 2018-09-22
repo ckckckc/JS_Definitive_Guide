@@ -1,0 +1,17 @@
+9.6.3 Standard Conversion Methods
+
+物件轉換型別時有幾個重要方法，這節要明白自定義的 Class 實作型別轉換方法的細節。
+
+你不需要為每個你寫的 Class 實作這些 methods，但這些 methods 是重要的，如果你沒有為你的 Class 實作它們，那應該是你刻意選擇不實作，而非疏忽忘記。
+
+
+// TODO
+toString():
+
+toLocaleString():
+
+valueOf():
+
+toJSON();
+
+extend Set.prototype:
