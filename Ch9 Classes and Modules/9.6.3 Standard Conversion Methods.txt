@@ -2,16 +2,40 @@
 
 物件轉換型別時有幾個重要方法，這節要明白自定義的 Class 實作型別轉換方法的細節。
 
-你不需要為每個你寫的 Class 實作這些 methods，但這些 methods 是重要的，如果你沒有為你的 Class 實作它們，那應該是你刻意選擇不實作，而非疏忽忘記。
+在實作自定義的 Class 時，你不需要為每個你寫的 Class 實作這些 methods，但這些 methods 是重要的，如果你沒有為你的 Class 實作它們，那應該是你刻意選擇不實作，而非疏忽忘記。
 
-
-// TODO
 toString():
+  這節最重要的方法，他的目的是回傳代表物件的字串。 toString() method 應該要回傳一個人類可讀的字串，並且合適的給使用你的程式的人看。debugging 時可以看懂也是個很有用的使用情境。
 
-toLocaleString():
+  被引用的時機，預期為字串的地方：
+    property name
+
+    使用 + operator 作為字串連接
+
+  如果沒有實作 toString() 方法，自己創造的 class 將會繼承 Object.prototype 的實作，回傳一個無用的字串 "[object Object]"。
+
+和 toString() 關係緊密的 toLocaleString():
+  它應該依據所在的區域的慣例把物件轉成字串。
+
+  預設的 Object.prototype.toLocaleString() 方法只會呼叫它們的 toString() method。
+
+  有些內建的型別有有用的 toLocaleString() method，他們會根據所在的位置回傳使用慣例的字串。
+
+  如果你已經實做了 toString() method，你也應該定義 toLocaleString() method，這會在某物件被呼叫 toLocaleString() method 時，對該物件呼叫 toLocaleString() method 並進行適當的轉換。這節會在之前定義過的 Set Class 示範實做 toLocaleString() method。
 
 valueOf():
+  它的功用是轉換 object 成為 primitive value。
 
+  他會在 object 作為 數值的使用情境(numeric context)時自動被呼叫：
+    算術運算子(除了 +) 
+
+    關係運算(relational operators)
+
+  多數的物件沒有合理的 數值表示方式(reasonable primitive representation)，所以沒有定義這個方法。
+
+  9.6.2 的 enumerate type 有很好的 valueOf() 示範情境。
+
+// TODO
 toJSON();
 
 extend Set.prototype:
