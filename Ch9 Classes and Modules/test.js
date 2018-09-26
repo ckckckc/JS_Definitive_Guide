@@ -349,3 +349,48 @@ function myConstructor3(a) {
 }
 
 console.log(JSON.stringify(new myConstructor3(2)));
+
+function extend(o, p) {
+  for (var prop in p) {
+    o[prop] = p[prop];
+  }
+  return o;
+}
+
+extend(Set.prototype, {
+  toString: function() {
+    var s = '{', i = 0;
+    this.foreach(function(value){
+      s += ((i++ > 0) ? ', ' : '') + value;
+    });
+    return s + '}';
+  },
+  // Like toString, but call toLocaleString on all values
+  toLocaleString: function() {
+    var s = '{', i = 0;
+
+    this.foreach(function(value){
+      if (i++ > 0) {
+        s += ', ';
+      }
+      // null & undefined
+      if (value == null) {
+        s += value;
+      }
+      // all others
+      else {
+        s += value.toLocaleString();
+      }
+    });
+    return s + '}';
+  },
+  toArray: function() {
+    var array = [];
+    this.foreach(function(value) {
+      array.push(value);
+    });
+    return array;
+  }
+});
+
+Set.prototype.toJSON = Set.prototype.toArray;

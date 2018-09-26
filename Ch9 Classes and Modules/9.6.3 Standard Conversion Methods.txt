@@ -35,7 +35,63 @@ valueOf():
 
   9.6.2 的 enumerate type 有很好的 valueOf() 示範情境。
 
-// TODO
 toJSON();
+  在 JSON.stringify() 的時候會自動被呼叫。
 
-extend Set.prototype:
+  JSON 格式是用來處理資料的序列化，例如 JavaScript primitive values, arrays, plain objects。但 JSON 看不懂 classes，當對 object 序列化的時候，它會忽略該 object 的 prototype 還有 constructor。
+  
+  如果使用 JSON.stringify() 在之前的 Range 或 Complex 物件，他會回傳字串如：{"from":1, "to":3} 或 {"r":1, "i":-1}。如果接者把這些字串以 JSON.parse() 轉換回來，你會得到 Range 或 Complex 該有的 properties 物件，但是他們不會繼承 Range 或 Complex 的 methods。
+
+  如果想要自定義自己所寫的 Class 的物件的序列化方式，可以自己定義 toJSON() method：
+    如果一個物件具有 toJSON() method， JSON.stringify() method 不會直接序列化該物件，而是呼叫該物件的 toJSON() method，然後序列化該 method 的 return value。
+
+  集合 Set 最接近 JSON 的類比是 Array，接者定義 9.6.1 的 Set class 的 toJSON() method，將 Set object 轉化為陣列。
+
+增強 Set 的型別轉換部分，使用 6.5 的 extend 加入 methods:
+
+function extend(o, p) {
+  for (var prop in p) {
+    o[prop] = p[prop];
+  }
+  return o;
+}
+
+extend(Set.prototype, {
+  toString: function() {
+    var s = '{', i = 0;
+    this.foreach(function(value){
+      s += ((i++ > 0) ? ', ' : '') + value;
+    });
+    return s + '}';
+  },
+  // Like toString, but call toLocaleString on all values
+  toLocaleString: function() {
+    var s = '{', i = 0;
+
+    this.foreach(function(value){
+      if (i++ > 0) {
+        s += ', ';
+      }
+      // null & undefined
+      if (value == null) {
+        s += value;
+      }
+      // all others
+      else {
+        s += value.toLocaleString();
+      }
+    });
+    return s + '}';
+  },
+  // Convert a set to an array of values
+  toArray: function() {
+    var array = [];
+    this.foreach(function(value) {
+      array.push(value);
+    });
+    return array;
+  }
+});
+
+/ Treat sets like arrays for the purposes of JSON stringification.
+Set.prototype.toJSON = Set.prototype.toArray;

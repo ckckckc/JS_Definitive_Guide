@@ -4,6 +4,50 @@ function Set() {
   this.add.apply(this, arguments);
 }
 
+Set.prototype.toString = function() {
+  var s = '{', i = 0;
+
+  this.foreach(function(value){
+    s += ((i++ > 0) ? ', ' : '') + value;
+  });
+
+  return s + '}';
+};
+
+Set.prototype.toLocaleString = function() {
+  var s = '{', i = 0;
+
+  this.foreach(function(value){
+    if (i++ > 0) {
+      s += ', ';
+    }
+    // null & undefined
+    if (value == null) {
+      s += value;
+    }
+    // all others
+    else {
+      s += value.toLocaleString();
+    }
+  });
+
+  return s + '}';
+};
+
+// Convert a set to an array of values
+Set.prototype.toArray = function() {
+  var array = [];
+
+  this.foreach(function(value) {
+    array.push(value);
+  });
+
+  return array;
+};
+
+// Treat sets like arrays for the purposes of JSON stringification.
+Set.prototype.toJSON = Set.prototype.toArray;
+
 Set.prototype.add = function() {
   for (var i = 0, len = arguments.length ; i < len ; i++) {
     var val = arguments[i];
