@@ -88,6 +88,29 @@ Set.prototype.foreach = function(f, context) {
   }
 };
 
+Set.prototype.equals = function(that) {
+  if (this === that) return true;
+
+  if (!(that instanceof Set)) return false;
+
+  if (this.size() != that.size()) return false;
+
+  try {
+    this.foreach(function(value) {
+      if (!that.contains(value)) {
+        throw false;
+      }
+      return true;
+    });
+  } catch (x) {
+    if (x === false) {
+      return false;
+    }
+
+    throw x;
+  }
+};
+
 Set._v2s = function(val) {
   switch(val) {
     case undefined: return 'u';

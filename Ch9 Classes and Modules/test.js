@@ -394,3 +394,34 @@ extend(Set.prototype, {
 });
 
 Set.prototype.toJSON = Set.prototype.toArray;
+
+Range.prototype.constructor = Range;
+
+Range.prototype.equals = function(that) {
+  if (that == null) return false;
+  if (that.constructor !== Range) return false;
+
+  return this.from == that.from && this.to == that.to;
+};
+
+
+var t, k;
+(function() {
+  function Test(a) {
+    this.a = a;
+  }
+
+  Test.prototype.equals = function(that) {
+    if (that.constructor !== this.constructor) return false;
+    return this.a === that.a;
+  };
+
+  t = new Test(1);
+  k = new Test(1);
+})();
+
+(function() {
+  
+})();
+
+console.log(t.equals(k));

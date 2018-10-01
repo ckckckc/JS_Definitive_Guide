@@ -1,0 +1,115 @@
+9.6.4 Comparison Methods
+
+本節重點：將自己定義的 Class 寫出能比較相等 ( equals() method)，使用 (< > operator)比較大小順序的 method ( compareTo() method)。
+
+比較相等
+  一般物件比較是否相等是藉由 reference，而非檢查兩個物件是否有相同的 prperty names and values。
+
+  定義一個 equals() method，接受單一 argument 如果 argument 和 invoked 該 method 的 object 相等則回傳 true 。而 "相等" 的意義由你自定義的 class 來定義。
+
+  簡單的通則比較 class 相等：
+    比較 constructor property 來確保兩個物件是相同 type，接者比較兩個 instance 的 properties。
+
+  範例：為 9.2 的 Range Class 定義 equals() method
+    
+    Range.prototype.constructor = Range;
+
+    Range.prototype.equals = function(that) {
+      if (that == null) return false;
+      if (that.constructor !== Range) return false;
+
+      return this.from == that.from && this.to == that.to;
+    };
+
+  範例：為 9.6.1 Set Class 定義 equals() method()：
+    Set.prototype.equals = function(that) {
+      if (this === that) return true;
+
+      if (!(that instanceof Set)) return false;
+
+      if (this.size() != that.size()) return false;
+
+      try {
+        this.foreach(function(value) {
+          if (!that.contains(value)) {
+            throw false;
+          }
+          return true;
+        });
+      } catch (x) {
+        if (x === false) {
+          return false;
+        }
+
+        throw x;
+      }
+    };
+
+
+比較大小順序
+  有時候可以根據某些規則來比較兩個 instance 的 "順序" 或 "大小"。
+
+  如果把 JavaScript 的 relation operators (像是 < 或 <=)用在物件上， JavaScript 會先呼叫物件的 valueOf() method，如果這個方法回傳 primitive value，就比較這些值。
+
+  依照 Java 的慣例以 compareTo 的命名來定義比較大小的 method 名稱。
+
+  compareTo method 接受單一 argument，比較 argument 和 invoked 該 method 的 object：
+    如果 this object 小於 argument， return 小於 0 的值。
+
+    如果 this object 大於 argument， return 大於 0 的值。
+
+    如果相等，回傳 0 。
+
+  這些回傳值的慣例，讓你可以用運算式取代以下的關系運算子及相等運算子：
+
+  將這些         取代為這些
+  a < b         a.compareTo(b) < 0
+  a <= b        a.compareTo(b) <= 0
+  a > b         a.compareTo(b) > 0
+  a >= b        a.compareTo(b) >= 0
+  a == b        a.compareTo(b) == 0
+  a != b        a.compareTo(b) != 0
+
+  這個回傳值的慣例與 Array.sort 裡的 function 回傳值相同。
+
+  定義 compareTo() method 和 equals() method 時，最好能有一至定義，例如不一致的定義 Range.prototype.compateTo() method ：
+  
+  Range.prototype.compateTo = function(that) {
+    return this.from - that.from;
+  };
+
+  若 from 相等，則兩個 instance 就相等，但是這和 equals 的定義並不一致，因此做了必要的更改：
+
+  // 比較的邏輯先從較低的邊界開始
+  // 若相同，則比較較高的邊界
+  // 只有在 this.equals(that) 時才會會傳 0
+  Range.prototype.compareTo = function(that) {
+    // 加強：若不能相比，則 throw Error
+    if (!(that instanceof Range)) {
+      throw new Error('Can\'t compare a Range with ' + that);
+    }
+    var diff = this.from - that.from;
+    if (diff == 0) {
+      diff = this.to - that.to;
+    }
+    return diff;
+  }
+
+  為自定義的 Class 定義了 compareTo() method 的理由之一為：若該 Class 的 instances 所構成的 Array 能夠排序：
+
+    ranges.sort(function(a, b) {
+      return a.compareTo(b);
+    });
+
+  由於 sorting 的重要程度，足以讓你再定義一個(已經定義了 instance method 的 compareTo() method) class method 來做兩個 instance 的比較，這兩個比較 method 可藉由已經定義的一個輕鬆的定義另一個：
+
+    Range.byLowerBound = function(a, b) {
+      return a.compareTo(b);
+    };
+
+  如此一來就能更輕鬆的排序了：
+
+    ranges.sort(Range.byLowerBound);
+
+  當然，定義一個 Class 時，可能不只有一種排序方式，例如 Card.js (9.6.2) 定義了兩種排序方式：依照花色，依照 rank。
+
