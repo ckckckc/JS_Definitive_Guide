@@ -1,2 +1,16 @@
 9.6.5 Borrowing Methods
 
+JavaScript 的 method 並無特別之處：他僅僅是 function 指定給 object 的 property，然後經由該 object 呼叫他，若是在某個 object 上呼叫他。
+
+There is nothing special about methods in JavaScript: they are simply functions as- signed to object properties and invoked “through” or “on” an object.
+
+一個 function 可以被多個 Class 使用，如果從物件導向語言的觀點來看 JavaScript，這種把一個類別的方法當作另一個類別的方法來用的行為，可視為一種多重繼承(multiple inheritance) 的形式，但 JavaScript 並非物件導向語言，原作者使用非正式語言 borrowing (借用) 來形容這種 method reuse。
+
+先前 Set 的例子：
+Set.prototype.toJSON = Set.prototype.toArray;
+
+定義通用的 generic method，包含 toString() equals() method，供適合簡單的類別使用，如之前定義得 Range Complex Card，使用方式如：
+
+Range.prototype.equals = gereric.equals;
+
+範例 Code 可以參考 ./generic.js
