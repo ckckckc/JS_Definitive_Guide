@@ -1,0 +1,36 @@
+9.6.6 Private State
+
+在物件導向的程式設計的一環中，能將物件的狀態封裝 (encapsulate) 或是隱藏 (hide) 起來在物件中，只有透過 instance method 才能存取該狀態，不允許重要的狀態變數被直接存取，如 Java 能將 instance fields 宣告為 "private"，只有該 class 的 instance method 能存取，無法被 class 之外直接看見。
+
+JavaScript 能藉由 closuer 近似此 "private" 的目的：
+  在 consturctor invocation 產生新物件時，將變數 (variables) 或參數 (arguments) 捕捉在 constructor invocatin 的 closure 之中。
+  我們可以在 constructor 中定義 function， function 可以取得 constructor 的 argumets 還有變數，接者將這些 function assign 給新創物件的 property。
+
+使用 Range Class 作為範例：
+function Range(from, to) {
+  // Don't store the endpoints as properties of this object. Instead 
+  // define accessor functions that return the endpoint values.
+  // These values are stored in the closure.
+  this.from = function() { return from; };
+  this.to = function() { return to; };
+}
+
+// The methods on the prototype can't see the endpoints directly: they have
+// to invoke the accessor methods just like everyone else.
+Range.prototype = {
+  constructor: Range,
+  includes: function(x) { return this.from() <= x && x <= this.to(); },
+  foreach: function(f) {
+    for(var x = Math.ceil(this.from()); x <= this.to(); x++) f(x); 
+  },
+  toString: function(){ 
+    return '(' + this.from() + '...' + this.to() + ')'; 
+  }
+};
+
+這個新的 Range Class 定義了查用端點的方法，但是沒有提供特性或方法來設定這些端點，讓這種類別的 instance 具有某種不可變性 (immutability)：在端點被創建之後，端點就不會被改變。
+然而這些端點還是可寫的 writable，除非使用 9.8.3 ECMAScript5 的功能，所以 Range 物件並不是真的不可變的(immutable)：
+  var r = new Range();
+  r.form = function() { return 0; };
+
+這種封裝技巧的缺點：相較於相同非封裝過的 class，它們較慢，較肥大。
