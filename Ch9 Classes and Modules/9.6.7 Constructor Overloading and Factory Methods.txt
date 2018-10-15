@@ -1,0 +1,51 @@
+9.6.7 Constructor Overloading and Factory Methods
+
+這節介紹 JavaScript 版本的建構子多載 (Constructor Overloading) 和 工廠方法 (Factory method)。
+
+Constructor Overloading:
+  讓物件有多種方式初始化。
+
+  例子：Set Class，當我們只傳入單一參數，一個 Array 作為初始化的參數時，我們想要將 Array 的 element 加入 Set 而非 Array 自身的情況。
+
+  function Set() {
+    this.values = {};
+    this.n = 0;
+
+    if (arguments.length == 1 && isArrayLike(arguments[0])) {
+      this.add.apply(this, arguments[0]);
+    }
+    else if (arguments.length > 0) {
+      this.add.apply(this, arguments);
+    }
+  }
+
+  在 constructor 判斷傳入的 argument 並執行不同的初始化方式，進而達到 overloading 的目的。
+
+  然而上面的範例有個致命的遺憾，我們無法將單一 Array 作為 Set 的成員，若要除此，則需要先創一個空集合，然後明確的呼叫 add method。
+
+Factory Method:
+  一個回傳某個 Class instance 的 method。
+
+  Factory method 可以讓你給定任何想要的 function 名稱，不同名稱可以執行不同類型的初始化。
+
+  例子：9.3 Complex Class，若我們想要初始化的 Complex 物件為極座標 (polar coordinates) 所定義的，而非只能使用實部 + 虛部的方式來初始化物件，這個範例使用 factory method 可以傳入極座標參數，回傳 Complex object。
+
+  Complex.polar = function(r, theta) {
+    return new Complex(r * Math.cos(theta), r * Math.sin(theta));
+  };
+
+在 JavaScript 中，是有可能使用多個 constructor function 共享同一個 prototype object 的。
+如果這個做的話，任何藉由其中一個 consturctor 產生的 object，將會是同一個類型。
+這個做並不是一個推薦的方式，但還是有個例子：
+
+  function SetFromArray(array) {
+    Set.apply(this, a);
+  }
+
+  SetFromArray.prototype = Set.prototype;
+
+  var s = new SetFromArray([1, 2, 3]);
+
+  s instanceof Set // true
+
+使用 ECMAScript 5 中的 bind() method (8.7.4 節) 也可以創建這種輔助 constructor。
