@@ -1,22 +1,13 @@
-var classOf = require('./classOf.js');
-var enumeration = require('./enumeration.js');
-var findAllIndex = require('./findAllIndex.js');
-var foreach = require('./foreach.js');
-var inherit = require('./inherit.js');
-var isFalsy = require('./isFalsy.js');
-var isFunction = require('./isFunction.js');
-var isNaN = require('./isNaN.js');
-var quacks = require('./quacks.js');
-
-
 module.exports = {
-  classOf,
-  enumeration,
-  findAllIndex,
-  foreach,
-  inherit,
-  isFalsy,
-  isFunction,
-  isNaN,
-  quacks,
+  Set: require('./Set.js'),
+  SingletonSet: require('./SingletonSet.js'),
+  classOf: require('./classOf.js'),
+  enumeration: require('./enumeration.js'),
+  findAllIndex: require('./findAllIndex.js'),
+  foreach: require('./foreach.js'),
+  inherit: require('./inherit.js'),
+  isFalsy: require('./isFalsy.js'),
+  isFunction: require('./isFunction.js'),
+  isNaN: require('./isNaN.js'),
+  quacks: require('./quacks.js'),
 };

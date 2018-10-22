@@ -1,0 +1,90 @@
+9.7.1 Defining a Subclass
+
+JavaScript object 從他們 class 的 prototype object 繼承 properties(通常是 method)。
+如果 O class B 的 instance，而 class B 是 class A 的 subclass，則 O 必定也繼承 A 的 properties。
+
+為了達到 class B 繼承 class A 的目的，我們要讓 B 的 prototype 繼承 A 的 prototype，我們使用 inherit function (CH6 6.1.4 p.119 )：
+
+B.prototype = inherit(A.prototype); // Subclass inherits from superclass
+                                    // Object.create(A.prototype);
+B.prototype.consturctor = B;        // Override the inherited constructor prop.
+
+這兩行是 JavaScript 產生 subclass 的關鍵，如果沒有這兩行， prototype object 只會是繼承自 Object.prototype 的一般物件，也就是說所有創造出來的 class 都會是 Object 的 subclass，如同其他 class 一樣。
+
+將上面兩行加入 9.3 節的 defnieClass(constructor, methods, statics) function，我們可以將它轉換為 defineSubClass() function，並接者定義 Function.prototype.extend()：
+
+function defineSubClass(superClass, constructor, methods, statics) {
+  constructor.prototype = inherit(superClass.prototype);
+  constructor.prototype.constructor = constructor;
+
+  if (methods) {
+    extend(constructor.prototype, methods);
+  }
+
+  if (statics) {
+    extend(constructor, statics);
+  }
+
+  return constructor;
+}
+
+Function.prototype.extend = function(constructor, methods, statics) {
+  return defineSubClass(this, constructor, methods, statics);
+};
+
+手動實作繼承，以 SingletonSet class 繼承 Set 為範例：
+function SingletonSet(member) {
+  this.member = member;
+}
+
+SingletonSet.prototype = inherit(Set.prototype);
+
+extend(SingletonSet.prototype, {
+  constructor: SingletonSet,
+  add: function() {
+    throw 'read-only set';
+  },
+  remove: function() {
+    throw 'read-only set';
+  },
+  size: function() {
+    return 1;
+  },
+  foreach: function(f, context) {
+    f.call(context, this.member);
+  },
+  constain: function(x) {
+    return x === this.member;
+  },
+  // 比起 Set.prototype.equals 更有效率的版本
+  equals: function(that) {
+    return that instanceof Set && that.size() === 1 && that.contains(this.member);
+  }
+});
+
+這個 SingletonSet 並沒有借用 Set 的靜態方法，他是動態的繼承 Set class methods，如果我們為 Set.prototype 加入新的 method，他會立刻讓所有 Set 和 SingletonSet instance 可以使用，當然這個 method name 並沒有定義在 SingletonSet。
+
+註： inherit function:
+function inherit(p) {
+  if (p == null) throw TypeError();
+  if (Object.create)
+    return Object.create(p);
+  var t = typeof p;
+  if (t !== 'object' && t !== 'function') throw TypeError();
+  function f() {}
+  f.prototype = p;
+  return new f();
+}
+
+function extend(sourceObj) {
+  for (var i = 1, len = arguments.length ;  i < len ; i++) {
+    var targetObj = arguments[i];
+
+    for (var property in targetObj) {
+      sourceObj[property] = targetObj[property];
+    }
+  }
+
+  return sourceObj;
+}
+
