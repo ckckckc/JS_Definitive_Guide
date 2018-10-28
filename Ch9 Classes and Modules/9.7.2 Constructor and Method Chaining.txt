@@ -1,0 +1,91 @@
+9.7.2 Constructor and Method Chaining
+
+這節重點：
+  子類別呼叫父類別的 constructor / methods，以達到修改/擴充，而非完全取代父類別的 constructor / methods 的目的。
+  factory function 產生 subclass，重要範例：A class factory and method chaining。
+  包裝 superclass 變數的藝術。
+
+修改 / 擴充父類別 contructor / methods:
+  子類別呼叫或鏈串 (chain to)至父類別的 constructor / methods。
+
+  範例 NoNullSet: 不允許 null / undefined member 的 Set。
+  function NonNullSet() {
+    // 當作一般的函式來呼叫父類別的 constructor，以初始化調用這個建構式產生的 this 物件。
+    Set.apply(this, arguments);
+  }
+
+  NonNullSet.prototype = inherit(Set.prototype);
+  NonNullSet.prototype.constructor = NonNullSet;
+
+  NonNullSet.prototype.add = function() {
+    for (var i = 0, len = arguments.length ; i < len ; i++ ) {
+      if (arguments[i] == null) {
+        throw new Error('Cant\'t add null or undefined to NonNullSet');
+      }
+    }
+
+    // 鏈串至父類別執行實際的新增動作
+    return Set.prototype.add.apply(this, arguments);
+  };
+
+factory function 產生 subclass
+  這邊要示範的 factory function 接受兩個 argument: 要衍生子類別的類別 及 要過濾 add() method 的 filter function。
+
+  重要範例 filteredSetSubclass()：A class factory and method chaining。
+
+  var StringSet = filteredSetSubclass(Set, 
+                                      function(x) { return typeof x === 'string'; });
+  var MySet = filteredSetSubclass(NonNullSet, 
+                                  function(x) { return typeof x === 'function'; });
+
+  function filteredSetSubclass(superclass, filter) {
+    var constructor = function() {
+      superclass.apply(this, arguments);
+    };
+    constructor.prototype = inherit(superclass.prototype);
+
+    constructor.prototype.constructor = constructor;
+
+    constructor.prototype.add = function() {
+      for (var i = 0, len = arguments.length ; i < len ; i ++) {
+        var value = arguments[i];
+
+        if (!filter(value)) {
+          throw('value ' + value + ' rejected by filter');
+        }
+      }
+
+      return superclass.prototype.add.apply(this, arguments);
+    };
+
+    return constructor;
+  }
+
+  這個範例的重點在於：不用把實際的 super class 名稱寫死，因此可以傳入 Set 或 NonNullSet 作為第一個參數。
+
+包裝 superclass 變數的藝術：
+  不用上面的工廠模式，改用一個 wrapper function 達到類似目的，這必須配合 Function.prototype.extend() method() (9.7.1 由 defineSubClass 衍伸的 method)
+
+  將 NonNullSet class 使用這種包裝的藝術：
+    var NonNullSet = (function() {
+      var superclass = Set;
+      return superclass.extend(
+        // subclass constructor
+        function() {
+          superclass.apply(this, arguments);
+        },
+        // subclass methods
+        {
+          add: function() {
+            for (var i = 0, len = arguments.length ; i < len ; i ++) {
+              if (arguments[i] == null) {
+                throw new Error('Cant\'t add null or undefined');
+              }
+            }
+            return superclass.prototype.add.apply(this, arguments);
+          },
+        }
+      );
+    })();
+
+動態創造出 class 的 class factory 源自 JavaScript 的動態語言本質，而且 Class factories 是實用且強大的特性，這是 Java C++ 無法模擬的。

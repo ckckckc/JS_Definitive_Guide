@@ -1,7 +1,7 @@
 9.7.1 Defining a Subclass
 
 JavaScript object 從他們 class 的 prototype object 繼承 properties(通常是 method)。
-如果 O class B 的 instance，而 class B 是 class A 的 subclass，則 O 必定也繼承 A 的 properties。
+如果 O 為 class B 的 instance，而 class B 是 class A 的 subclass，則 O 必定也繼承 A 的 properties。
 
 為了達到 class B 繼承 class A 的目的，我們要讓 B 的 prototype 繼承 A 的 prototype，我們使用 inherit function (CH6 6.1.4 p.119 )：
 
