@@ -4,10 +4,8 @@ var defineSubClass = require('./defineSubClass.js');
 var FilteredSet = defineSubClass(
   Set, 
   function FilteredSet(set, filter) {
-
     this.set = set;
     this.filter = filter;
-    // Set.apply(this);
   },
   {
     add: function() {
@@ -21,11 +19,9 @@ var FilteredSet = defineSubClass(
         }
       }
 
-      // 將 add() method 轉傳給 this.set.add()
       this.set.add.apply(this.set, arguments);
       return this;
     },
-    // 需要把剩下的 methods 轉傳給 this.set，因為這個 subclass 的 instance fields 只有 set 跟 filter
     remove: function() {
       this.set.remove.apply(this.set, arguments);
       return this;

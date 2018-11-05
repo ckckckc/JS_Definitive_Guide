@@ -98,8 +98,6 @@ Set.prototype.add = function() {
 Set.prototype.remove = function() {
   for (var i = 0, len = arguments.length ; i < len ; i++) {
     var str = Set._v2s(arguments[i]);
-    console.log('this', this)
-    console.log('this.values', this.values)
     if (this.values.hasOwnProperty(str)) {
       delete this.values[str];
       this.n--;
