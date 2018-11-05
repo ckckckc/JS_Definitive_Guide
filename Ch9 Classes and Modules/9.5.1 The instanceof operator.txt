@@ -9,7 +9,7 @@ o instanceof c
 
   這個繼承關係不需要直接的。
 
-instanceof 用的是 constructor function，這個 operator 真正測定的是 object 繼承自哪個 object，而非哪個 constructor 所創造的。
+instanceof 後面的參數用的是 constructor function，這個 operator 真正測定的是 object 繼承自哪個 object，而非哪個 constructor 所創造的。
 
 isPrototypeOf():
   如果想要測試 object 的 prototype chain 是否有某個指定的 prototype object，而且不想直接使用 constructor function 達到目的，可以選擇使用 isPrototypeOf() method。

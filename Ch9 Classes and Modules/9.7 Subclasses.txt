@@ -1,0 +1,9 @@
+9.7 Subclasses
+
+If a method of B overrides a method of A, the overriding method in B may sometimes want to invoke the overridden method in A: this is called method chaining. 
+
+Similarly, the subclass constructor B() may sometimes need to invoke the superclass constructor A(). This is called constructor chaining. 
+
+Subclasses can themselves have subclasses, and when working with hierar- chies of classes, it can sometimes be useful to define abstract classes. An abstract class is one that defines one or more methods without an implementation. The implemen- tation of these abstract methods is left to the concrete subclasses of the abstract class.
+
+

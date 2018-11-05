@@ -22,7 +22,7 @@ range.methods = {
     for(var x = Math.ceil(this.from); x <= this.to; x++) f(x); 
   },
   toString: function(){ 
-    return "(" + this.from + "..." + this.to + ")"; 
+    return '(' + this.from + '...' + this.to + ')'; 
   }
 };
 

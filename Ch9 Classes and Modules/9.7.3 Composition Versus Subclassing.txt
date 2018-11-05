@@ -1,0 +1,54 @@
+9.7.3 Composition Versus Subclassing
+
+這節的精神是 Design Pattern 中的：favor composition over inheritance，多看點 Pattern 背後的意義再看這節比較有感覺。
+
+有別於繼承父類別以達到過濾加入 Set 成員的子類別，無論子類別是直接覆蓋父類別或是另外經由傳入的 filter function 執行後呼叫父類別的 add method，每一種都需要創建一個新的 subclass。
+
+使用 Composition 方式能更彈性的達到相同目的，同樣是過濾加入 Set member， Composition 的方式為創造單一子類別，使用新的 set 實作方式：包覆 (wraps) 傳入的 set object，將每個 method request 轉傳給該 set object。
+
+該子類別能創造 instance 時，在 constructor 傳入不同的 Set Class 的 instance 及不同的 filter function，創建任意 Set 類別的各種 filter member 規則的 instance。
+
+範例：
+var FilteredSet = Set.extend(
+  function FilteredSet(set, filter) {
+    this.set = set;
+    this.filter = filter;
+  },
+  {
+    add: function() {
+      if (this.filter) {
+        for (var i = 0, len = arguments.length ; i < len ; i ++) {
+          var value = arguments[i];
+
+          if (!this.filter(value)) {
+            throw new Error('FilteredSet: value ' + value + ' rejected by filter');
+          }
+        }
+      }
+
+      // 將 add() method 轉傳給 this.set.add()
+      this.set.add.apply(this.set, arguments);
+      return this;
+    },
+    // 需要把剩下的 methods 轉傳給 this.set，因為這個 subclass 的 instance fields 只有 set 跟 filter
+    remove: function() {
+      this.set.remove.apply(this.set, arguments);
+      return this;
+    },
+    contains: function(value) {
+      return this.set.contains(value);
+    },
+    size: function() {
+      return this.set.size();
+    },
+    foreach: function(f, c) {
+      this.set.foreach(f, c);
+    }
+  }
+);
+
+使用合成(Composition)創建 NonNullSet
+var s = new FilteredSet(new Set(), function(x){return x !== null;});
+
+甚至能進一步篩選已經篩選過的 Set
+var t = new FilteredSet(s, function(x) { return !(x instanceof Set);})
