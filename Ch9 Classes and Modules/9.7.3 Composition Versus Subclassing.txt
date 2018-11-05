@@ -6,7 +6,7 @@
 
 使用 Composition 方式能更彈性的達到相同目的，同樣是過濾加入 Set member， Composition 的方式為創造單一子類別，使用新的 set 實作方式：包覆 (wraps) 傳入的 set object，將每個 method request 轉傳給該 set object。
 
-該子類別能創造 instance 時，在 constructor 傳入不同的 Set Class 的 instance 及不同的 filter function，創建任意 Set 類別的各種 filter member 規則的 instance。
+該子類別能創造 instance 時，在 constructor 傳入不同的 Set Class 的 instance 及不同的 filter function，達到任意 Set instance 加入 member 時的限制的目的。
 
 範例：
 var FilteredSet = Set.extend(
