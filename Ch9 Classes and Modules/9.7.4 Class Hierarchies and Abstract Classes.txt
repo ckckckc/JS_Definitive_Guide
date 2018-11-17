@@ -1,0 +1,30 @@
+9.7.4 Class Hierarchies and Abstract Classes
+
+這節將前面的 Set Class SingletonSet Class FilteredSet Class 以 class 關係的角度進一部探討，接續選用合成而非繼承的理念，不多衍伸子類別，接者說明這些 Set 應該是如何的關係，將這些關係實作出來。此外，以 JavaScript 實作出 Abstract Class 也是這節重點。
+
+SingleSet 他和 Set 的實作方式完全不同，不應該是父類別與子類別關係，SingletonSet 應該是 Set 的 sibling 而非 descendant。
+
+在傳統 OO 語言及 JavaScript 中的解決方式是從 implementation 中分離出 interface。
+
+JavaScript 實作 Abstract 的方式：
+// 讓 constructor 在 new 的時候 throw Error
+function AbstractSomeClass() {
+  throw new Error('Can\'t instantiate abstrace classes');
+} 
+
+// 讓 abstractor method 沒被覆寫而呼叫的時候 throw Error
+AbstractSomeClass.prototype.abstractMethod = function() {
+  throw new Error('abstract method');
+};
+
+這節將 Set 拆成多個 Abstractor Class 的結構：
+  AbstractSet
+    NotSet
+
+    AbstractEnumerableSet
+      SingletonSet
+
+      AbstractWritableSet
+        ArraySet
+
+可以看範例各個 Abstract 中保留哪些 abstractmethod 給 subclass 實作。

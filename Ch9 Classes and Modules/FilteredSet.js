@@ -3,7 +3,7 @@ var defineSubClass = require('./defineSubClass.js');
 
 var FilteredSet = defineSubClass(
   Set, 
-  function FilteredSet(set, filter) {
+  function(set, filter) {
     this.set = set;
     this.filter = filter;
   },

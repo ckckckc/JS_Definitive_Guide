@@ -425,3 +425,12 @@ var t, k;
 })();
 
 console.log(t.equals(k));
+
+var AbstractSet = require('./AbstractSet.js');
+var ArraySet = require('./ArraySet.js');
+var AbstractWritableSet = require('./AbstractWritableSet.js');
+
+var arraySet = new ArraySet(1, 2, 3);
+console.log('arraySet instanceof ArraySet', arraySet instanceof ArraySet);
+console.log('arraySet instanceof AbstractWritableSet', arraySet instanceof AbstractWritableSet);
+console.log('arraySet instanceof AbstractSet', arraySet instanceof AbstractSet);
