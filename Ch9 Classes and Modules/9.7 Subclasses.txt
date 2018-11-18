@@ -1,2 +1,13 @@
 9.7 Subclasses
 
+這節講到 OO 中的 
+  繼承
+  覆寫
+  abstract Class
+在 JavaScript 中實作的方式。
+
+還有如何在 subclass invoke parent class 的 constructor(constructor chaining)，此外，還介紹了一些技巧及概念：
+  Class Factory
+  Favor composition over inheritance
+
+先看過 OO 語言中所代表的意思，再回頭看 JavaScript 如何時做的比較懂背後的精神，不容易的一節，需要多花時間，但很值得深入。
