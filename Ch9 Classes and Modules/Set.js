@@ -21,6 +21,8 @@ Set._v2s = function(val) {
       case 'number': return '#' + val;      // prefix # for number
       case 'string': return '"' + val;      // prefix " for string
       default: return '@' + objectId(val);  // prefix @ for object and function
+      // 如果加入 9.8.1 的 Object.prototype.objectId 可以寫成
+      // defalut: return '@' + val.objectId
     }
   }
 

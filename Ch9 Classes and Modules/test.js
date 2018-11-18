@@ -434,3 +434,39 @@ var arraySet = new ArraySet(1, 2, 3);
 console.log('arraySet instanceof ArraySet', arraySet instanceof ArraySet);
 console.log('arraySet instanceof AbstractWritableSet', arraySet instanceof AbstractWritableSet);
 console.log('arraySet instanceof AbstractSet', arraySet instanceof AbstractSet);
+
+(function() {
+  var idprop = '|**objectId**|';
+  var nextid = 1;
+
+  function idGetter() {
+    if (!(idprop in this)) {
+      if (!Object.isExtensible(this)) {
+        throw new Error('Can\'t define id for nonextensible objects');
+      }
+
+      Object.defineProperty(this, idprop, {
+        value: nextid++,
+        writable: false,
+        enumerable: false,
+        configurable: false
+      });
+    }
+    return this[idprop];
+  }
+
+  Object.defineProperty(Object.prototype, 'objectId', {
+    get: idGetter,
+    enumerable: false,
+    configurable: false
+  });
+})();
+
+var obj = {};
+var obj2 = {};
+var obj3 = function() {};
+console.log(obj)
+console.log(obj.objectId)
+console.log(obj2.objectId)
+console.log(obj3.objectId)
+console.log(obj.objectId)

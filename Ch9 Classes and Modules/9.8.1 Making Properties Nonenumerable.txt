@@ -1,0 +1,37 @@
+9.8.1 Making Properties Nonenumerable
+
+在之前的 Set class 中在 object 加入 set instance 時，定義了一個 |**objectId**| property，但是直接為該 object 加入 property 有兩個問題：
+  這個用來辨識是否加入過 Set 的 property 會讓加入的 object 在 for/in loop 中被列舉出來
+
+  不一定傳入的物件可以擴充，讓 Set 加入 property
+
+與其直接加 property，不如使用 ECMAScript 5 中的 Object.defineProperty() 來達到此目的，
+這節的範例是在 Object.prototype 中定義一個 objectId property，讓所有 object 都有該 property 都有這個 property，呼叫它可以定義一個不重複的 object property: |**objectId**|: {indexId} 在該 object 之中。
+
+(function() {
+  var idprop = '|**objectId**|';
+  var nextid = 1;
+
+  function idGetter() {
+    if (!(idprop in this)) {
+      if (!Object.isExtensible(this)) {
+        throw new Error('Can\'t define id for nonextensible objects');
+      }
+
+      Object.defineProperty(this, idprop, {
+        value: nextid++,
+        writable: false,      // read-only
+        enumerable: false,    // 不會被列舉
+        configurable: false   // 不能被刪除
+      });
+    }
+    return this[idprop];
+  }
+
+  Object.defineProperty(Object.prototype, 'objectId', {
+    get: idGetter,        // 這個 property 被讀取就會呼叫 getter function
+    enumerable: false,    // 不會被列舉
+    configurable: false   // 不能被刪除
+    // 沒有 setter，所以是 read-only
+  });
+})();

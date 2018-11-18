@@ -1,0 +1,5 @@
+9.8 Classes in ECMAScript 5
+
+ECMAScript 5 新增了指定 property attributes (getters, setters, enumerability, writability, and configurability) 與限制物件擴中的方法，在 6.6 6.7 6.8.3 中有提過。
+
+將這些應用在 class 定義之上，可以讓我們創造出來的 class 更加穩健。
