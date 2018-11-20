@@ -2,7 +2,7 @@
 
 上一節中定義 class 的方式並不是常見的方式，因為他沒用 constructor，constructor 是用來初始化新創物件的 function。
 
-constructor 的關鍵特色：constructor ㄉㄜ prototype 會被當作新物件的 prototype，這代表所有使用相同 constructor 創造的物件都會自承自同樣的 prototype object，因此是同一個 class。
+constructor 的關鍵特色：constructor 的 prototype 會被當作新物件的 prototype，這代表所有使用相同 constructor 創造的物件都會自承自同樣的 prototype object，因此是同一個 class 成員。
 
 將上一節的 factory function 用 constructor 的方式改寫：
 
@@ -36,4 +36,4 @@ Range.prototype = {
 待確認:
   上面的 Range.prototype 在書中說是新創物件的 prototype，但是我自己 console.log 新創物件的 prototype 卻是 undefined ，我強烈懷疑不能直接定義 prototype ，待確認。
 9.2.2 有解答：
-  因為 Range.prototype 是個覆蓋預設 prototype 的自定義物件，預設的 prototype 物件有 constructor 這過 property，該值應該如同預設的 prototype 指向 Range。
+  因為 Range.prototype 是個覆蓋預設 prototype 的自定義物件，預設的 prototype 物件有 constructor 這過 property，該值應該如同預設的 prototype 指向 Range，而關於是新創物件的 prototype 並不是新創物件有一個 prototype property，prototype 這個 property 只在該 class constructor 底下存在。
