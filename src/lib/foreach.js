@@ -5,6 +5,6 @@ function foreach(a,f,t) {
     else throw e;
   }
 }
-foreach.break = new Error("StopIteration");
+foreach.break = new Error('StopIteration');
 
 module.exports = foreach;

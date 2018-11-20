@@ -470,3 +470,67 @@ console.log(obj.objectId)
 console.log(obj2.objectId)
 console.log(obj3.objectId)
 console.log(obj.objectId)
+
+function Test() {
+  console.log('this', this)
+  console.log('this.method()', this.method())
+  console.log('this.constructor', this.constructor)
+  console.log('this.constructor === Test', this.constructor === Test)
+  console.log('this instanceof Test: ', this instanceof Test);
+}
+
+Test.prototype.method = function() {
+  console.log('method invoked');
+};
+
+new Test();
+
+function FrozenRange(from, to) {
+  var props = {
+    from: {
+      value: from,
+      enumerable: true,
+      writable: false,
+      configurable: false
+    },
+    to: {
+      value: to,
+      enumerable: true,
+      writable: false,
+      configurable: false
+    },
+  };
+
+  if (this instanceof FrozenRange) {
+    Object.defineProperties(this, props);
+  }
+  else {
+    return Object.create(FrozenRange.prototype, props);
+  }
+}
+
+Object.defineProperties(FrozenRange.prototype, {
+  includes: {
+    value: function(x) { return this.from <= x && x <= this.to; }
+  },
+  foreach:  {
+    value: function(f) {
+      for (var x = Math.cell(this.from); x <= this.to; x++)
+        f(x);
+    }
+  },
+  toString: {
+    value: function() {
+      return '(' + this.from + '...' + this.to + ')';
+    }
+  }
+});
+
+var fr = new FrozenRange(1, 10);
+fr.from = 2;
+console.log('fr.from:', fr.from)
+for (var property in fr) {
+  console.log('properties in FrozenRange instance:', property);
+}
+
+console.log('FrozenRange method includes', fr.includes);

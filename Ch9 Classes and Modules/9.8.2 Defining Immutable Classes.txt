@@ -1,0 +1,130 @@
+9.8.2 Defining Immutable Classes
+
+這節旨在說明如和定義一個 Class，該 Class create 出來的 instance 的 property 為不可變(immutable)，方法為不可列舉(inumerable)。
+
+下面的程式碼為沒包裝過的 Innutable Class，以之前用過的 Range Class 為例子。其中還用了一個技巧：若這個 Range function 為 function invoke，則為一個 factory function，若使用 new 當作 constructor invoke 也會產生新物件：
+
+  function FrozenRange(from, to) {
+    // read-only 的 from to properteis
+    var props = {
+      from: {
+        value: from,
+        enumerable: true,
+        writable: false,
+        configurable: false
+      },
+      to: {
+        value: to,
+        enumerable: true,
+        writable: false,
+        configurable: false
+      },
+    };
+
+    if (this instanceof FrozenRange) {
+      // 如果是 constructor invoke 則定義 properties
+      Object.defineProperties(this, props);
+    }
+    else {
+      // 否則當作 factory function 用 props create 並且回傳一個 new FrozenRange Object
+      return Object.create(FrozenRange.prototype, props);
+    }
+  }
+
+  // 因為我們沒有指定 enumerable writable configurable 所以他們都是預設值 false
+  Object.defineProperties(FrozenRange.prototype, {
+    includes: {
+      value: function(x) { return this.from <= x && x <= this.to; }
+    },
+    foreach:  {
+      value: function(f) {
+        for (var x = Math.cell(this.from); x <= this.to; x++)
+          f(x);
+      }
+    },
+    toString: {
+      value: function() {
+        return '(' + this.from + '...' + this.to + ')';
+      }
+    }
+  });
+
+上面範例的 descriptor 讓程式碼便的複雜不易閱讀，所以下面定義了兩個 function 處理 descriptor，一個負責不可寫且不可配置 一個負責不可列舉：
+
+  function freezeProps(o) {
+    var props = arguments.length === 1
+              ? Object.getOwnPropertyNames(o)
+              : Array.prototype.slice.call(arguments, 1);
+
+    props.forEach(function(prop) {
+      // 忽略 unconfigurable 的 property
+      if (
+        o.hasOwnProperty(prop) &&
+        !Object.getOwnPropetuDescriptor(o, prop).configurable
+      ){
+        return;
+      }
+
+      Object.defineProperty(o, prop, {
+        // writable false! configurable false!
+        writable: false,
+        configurable: false
+      });
+    });
+
+    return o;
+  }
+
+  function hideProps(o) {
+    var props = arguments.length === 1
+              ? Object.getOwnPropertyNames(o)
+              : Array.prototype.slice.call(arguments, 1);
+
+    props.forEach(function(prop) {
+      if (
+        o.hasOwnProperty(prop) &&
+        !Object.getOwnPropetuDescriptor(o, prop).configurable
+      ){
+        return;
+      }
+
+      Object.defineProperty(o, prop, {
+        // enumerable false!
+        enumerable: false,
+      });
+    });
+
+    return o;
+  }
+
+  Object.defineProperty() 跟 Object.defineProperties() 可以用來 create 新的 property，也可以修改現有的 property：
+    descriptor 若沒寫有預設值，任何忽略的 descriptor property 為 false。
+
+    若作為修改現有 property 的 descriptor，忽略的 descriptor property 值保持原值不動。
+
+
+因此我們可以利用上面定義的 function，重新寫 FrozenRange Class 的 ECMAScript 5 精簡版：
+
+function FrozenRange(from, to) {
+  this.from = from;
+  this.to = to;
+  freezeProps(this);
+}
+
+FrozenRange.prototype = hideProps({
+  constructor: FrozenRange,
+  includes: {
+    value: function(x) { return this.from <= x && x <= this.to; }
+  },
+  foreach:  {
+    value: function(f) {
+      for (var x = Math.cell(this.from); x <= this.to; x++)
+        f(x);
+    }
+  },
+  toString: {
+    value: function() {
+      return '(' + this.from + '...' + this.to + ')';
+    }
+  }
+});
