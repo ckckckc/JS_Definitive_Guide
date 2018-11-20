@@ -1,10 +1,13 @@
-var hideProps = require('./hideProps.js');
+9.8.3 Encapsulating Object State
+
+在 9.6.6 節中，提到如何使用 constructor 的 variables 或 arguments 作為的 private state，然而這個技巧的缺點是在 ECMAScript 3 accessor 能被取代，在 ECMAScript 5 中，我們可以更穩健的封裝我們的 getter setter 變數狀態，讓這些 accessor 不會被取代，下面範例示範如何達到如此目的：
 
 function FrozenRange(from, to) {
   if (from > to) {
     throw new Error('Range: from must be <= to');
   }
   
+  // 定義這些 accesor 可以確保 from <= to
   function getFrom() {
     return from;
   }
@@ -31,6 +34,7 @@ function FrozenRange(from, to) {
     }
   }
 
+  // Create enumerable nonconfigurable 使用 accessor 的 properties
   Object.defineProperties(this, {
     from: {
       get: getFrom,
@@ -47,6 +51,8 @@ function FrozenRange(from, to) {
   });
 }
 
+// 剩下的 methods 和上節一樣，使用 hideProps 讓 instance methods 不可列舉
+// 這些 instance methods 讀取 from 跟 to 如同一般的 properties 一樣
 FrozenRange.prototype = hideProps({
   constructor: FrozenRange,
   includes: {

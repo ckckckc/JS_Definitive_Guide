@@ -483,7 +483,13 @@ Test.prototype.method = function() {
   console.log('method invoked');
 };
 
-new Test();
+var t = new Test();
+
+for (var property in t) {
+  console.log('property:', property)
+}
+
+console.log('t.constructor:', t.constructor)
 
 function FrozenRange(from, to) {
   var props = {
@@ -534,3 +540,4 @@ for (var property in fr) {
 }
 
 console.log('FrozenRange method includes', fr.includes);
+
