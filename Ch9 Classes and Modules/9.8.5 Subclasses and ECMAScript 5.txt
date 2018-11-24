@@ -1,0 +1,13 @@
+9.8.5 Subclasses and ECMAScript 5
+
+使用 ECMAScript 5 的 Object.create 創建 prototype property：
+  這個 prototype 繼承父類別的 prototype，並定義新創物件的 properties。
+
+  這個做法的難處在於處理難以理解的 property descriptors。
+
+下面範例有幾個值得注意的地方：
+  他在 constructor 中傳入 null 給 Object.create 來創建 set
+
+  set 因為沒有 prototype (null 沒有 prototype)，所以我們用 in operator 來處理 contains method 而不用 hasOwnProperty() method
+
+function
