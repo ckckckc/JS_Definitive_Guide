@@ -1,3 +1,32 @@
+(function() {
+  var idprop = '|**objectId**|';
+  var nextid = 1;
+
+  function idGetter() {
+    if (!(idprop in this)) {
+      if (!Object.isExtensible(this)) {
+        throw new Error('Can\'t define id for nonextensible objects');
+      }
+
+      Object.defineProperty(this, idprop, {
+        value: nextid++,
+        writable: false,      // read-only
+        enumerable: false,    // 不會被列舉
+        configurable: false   // 不能被刪除
+      });
+    }
+    return this[idprop];
+  }
+
+  Object.defineProperty(Object.prototype, 'objectId', {
+    get: idGetter,        // 這個 property 被讀取就會呼叫 getter function
+    enumerable: false,    // 不會被列舉
+    configurable: false   // 不能被刪除
+    // 沒有 setter，所以是 read-only
+  });
+})();
+
+
 function inherit(p) {
   // inherit() returns a newly created object that inherits properties from the 
   // prototype object p. It uses the ECMAScript 5 function Object.create() if 
@@ -55,8 +84,12 @@ function enumeration(namesToValues) {
     Enumeration.values.push(entity);
   }
 
+  Object.freeze(Enumeration.values);
+  Object.freeze(Enumeration);
   return Enumeration;
 }
+
+
 
 // Create a new Coin class with four values: Coin.Penny, Coin.Nickel, etc.
 var Coin = enumeration({Penny: 1, Nickel: 5, Dime: 10, Quarter: 25});
@@ -67,5 +100,7 @@ console.log(Coin.Quarter + 3*Coin.Nickel);
 console.log(Coin.Dime == 10);
 console.log(Coin.Dime > Coin.Nickel);
 console.log(String(Coin.Dime) + ':' + Coin.Dime);
+// Throw Error
+// console.log('Coin.objectId', Coin.objectId);
 
 module.exports = enumeration;

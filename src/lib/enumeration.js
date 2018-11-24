@@ -55,6 +55,9 @@ function enumeration(namesToValues) {
     Enumeration.values.push(entity);
   }
 
+  Object.freeze(Enumeration.values);
+  Object.freeze(Enumeration);
+
   return Enumeration;
 }
 

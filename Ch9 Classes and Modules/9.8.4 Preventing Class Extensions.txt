@@ -1,0 +1,47 @@
+9.8.4 Preventing Class Extensions
+
+這節的重點在於防止 Class 被動態擴充/修改 Class.[properties] Class.prototype.[methods]，及討論適用的情境。
+
+使用 ECMAScript 5 中的 Object.preventExtensions() Object.seal() Object.freeze() 都能夠使 object 無法被擴充(細節看 6.8.3)，將這些 Object methods 應用在 Class 不被擴充可以這麼做(以 Object 為例)：
+
+  Object.seal(Object.prototype)
+
+如果要防止 monkey-patch :
+  // demo monkey-patch skill
+  var originalSortMethod = Array.prottoype.sort;
+
+  Array.prototype.sort = function() {
+    var start = new Date();
+    originalSortMethod.apply(this, arguments);
+    var end = new Date();
+    console.log('Array sort took ' + (end - start) + ' milliseconds.');
+  };
+
+  可以這麼做:
+    Object.seal(Array.prototype)    // nonconfigurable but writable
+    Object.freeze(Array.prototype)  // 物件的的 property 都變成 nonconfigurable and 
+    read-only
+    freezeProps(Array.prototype)    // 9.8.2 writable: false, configurable: false
+
+如果要覆寫 read-only 父類別的 method 需要使用: Object.defineProperty Object.defineProperties Object.craete
+  Object.defineProperty(SubClass.prototype, 'readOnlyMethod', {
+    // descriptor
+  })
+
+  SubClass.prototype = Object.create(ReadSuperClass.prototype, 'readOnlyMethod', {
+    readOnlyMethod: { // descriptor }
+  })
+
+  這讓子類別無法輕易地覆寫 read-only 類別
+
+適合 Class.prototype 變成不給擴充的時機：
+  9.6.2 enumeration() function：
+    Object.freeze(Enumeration.values);
+    Object.freeze(Enumeration);
+
+  但是要注意我們用過一個技巧： 9.8.1 定義 Object.prorotype.objectId，如果我們執行 freeze 則會有 Error:
+  var Coin = enumeration({Penny: 1, Nickel: 5, Dime: 10, Quarter: 25});
+  var c = Coin.Dime;
+  // Throw Error
+  // console.log(Coin.objectId);
+  解法是在 Object.freeze 之前先讀取 enumerate 的 objectId，儲存 |**objectId**| property 之後再 freeze。

@@ -435,32 +435,32 @@ console.log('arraySet instanceof ArraySet', arraySet instanceof ArraySet);
 console.log('arraySet instanceof AbstractWritableSet', arraySet instanceof AbstractWritableSet);
 console.log('arraySet instanceof AbstractSet', arraySet instanceof AbstractSet);
 
-(function() {
-  var idprop = '|**objectId**|';
-  var nextid = 1;
+// (function() {
+//   var idprop = '|**objectId**|';
+//   var nextid = 1;
 
-  function idGetter() {
-    if (!(idprop in this)) {
-      if (!Object.isExtensible(this)) {
-        throw new Error('Can\'t define id for nonextensible objects');
-      }
+//   function idGetter() {
+//     if (!(idprop in this)) {
+//       if (!Object.isExtensible(this)) {
+//         throw new Error('Can\'t define id for nonextensible objects');
+//       }
 
-      Object.defineProperty(this, idprop, {
-        value: nextid++,
-        writable: false,
-        enumerable: false,
-        configurable: false
-      });
-    }
-    return this[idprop];
-  }
+//       Object.defineProperty(this, idprop, {
+//         value: nextid++,
+//         writable: false,
+//         enumerable: false,
+//         configurable: false
+//       });
+//     }
+//     return this[idprop];
+//   }
 
-  Object.defineProperty(Object.prototype, 'objectId', {
-    get: idGetter,
-    enumerable: false,
-    configurable: false
-  });
-})();
+//   Object.defineProperty(Object.prototype, 'objectId', {
+//     get: idGetter,
+//     enumerable: false,
+//     configurable: false
+//   });
+// })();
 
 var obj = {};
 var obj2 = {};
@@ -541,3 +541,114 @@ for (var property in fr) {
 
 console.log('FrozenRange method includes', fr.includes);
 
+function TestExtension(aa) {
+  this.aa = aa;
+}
+
+TestExtension.prototype.foo = function() {
+  return 'bar';
+};
+
+var bb = new TestExtension(1234);
+
+console.log('before preventExtensions');
+console.log('bb', bb);
+console.log('bb.foo', bb.foo);
+
+// prevent instance extension
+// Object.preventExtensions(bb);
+// prevent class extension
+// Object.preventExtensions(bb.constructor.prototype);
+
+console.log('after preventExtensions');
+
+TestExtension.prototype.bar = function() {
+  return 'foo';
+};
+
+bb.bbb = 'bbb';
+
+console.log('bb', bb);
+console.log('bb.bbb', bb.bbb);
+console.log('bb.bar', bb.bar);
+
+// var o = {
+//   p: {
+//     foo: 'bar'
+//   }
+// };
+// Object.freeze(o.p);
+
+// o.p = 2;
+
+// console.log('o', o)
+
+function ReadOnlyClass() {
+}
+
+ReadOnlyClass.prototype.readOnlyMethod = function() {
+  return 'read only method';
+};
+
+Object.freeze(ReadOnlyClass.prototype);
+
+function ReadOnlySubClass() {}
+
+ReadOnlySubClass.prototype = Object.create(ReadOnlyClass.prototype);
+ReadOnlySubClass.prototype.constructor = ReadOnlySubClass;
+
+ReadOnlySubClass.prototype.readOnlyMethod = function() {
+  return 'read only subClass method';
+};
+
+ReadOnlySubClass.prototype.readOnlySubClassMethod = function() {
+  return 'read only subClass method';
+};
+
+// Object.defineProperty(ReadOnlySubClass.prototype, 'readOnlyMethod', {
+// value: function() {
+//   return 'overriden read class method by Object.defineProperty';
+// }
+// });
+
+ReadOnlySubClass.prototype = Object.create(ReadOnlyClass.prototype, {
+  readOnlyMethod: {
+    value: function() {
+      return 'overriden read class method by Object.create';
+    }
+  }
+});
+
+var roi = new ReadOnlySubClass();
+
+console.log(roi.readOnlyMethod());
+
+(function() {
+  var idprop = '|**objectId**|';
+  var nextid = 1;
+
+  function idGetter() {
+    if (!(idprop in this)) {
+      if (!Object.isExtensible(this)) {
+        throw new Error('Can\'t define id for nonextensible objects');
+      }
+
+      Object.defineProperty(this, idprop, {
+        value: nextid++,
+        writable: false,      // read-only
+        enumerable: false,    // 不會被列舉
+        configurable: false   // 不能被刪除
+      });
+    }
+    return this[idprop];
+  }
+
+  Object.defineProperty(Object.prototype, 'objectId', {
+    get: idGetter,        // 這個 property 被讀取就會呼叫 getter function
+    enumerable: false,    // 不會被列舉
+    configurable: false   // 不能被刪除
+    // 沒有 setter，所以是 read-only
+  });
+})();
+
+console.log('roi.objectId', roi.objectId)
