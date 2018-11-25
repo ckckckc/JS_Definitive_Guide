@@ -1,0 +1,15 @@
+9.9 Modules
+
+重要：這本書沒有 ES6 import / export 的 module 寫法介紹，是 ES5 版本的方式建立 mudule，頂多只提到 import / export 是保留關鍵字而已。
+
+通常一個模組是個單一 JavaScript code 檔案。一個模組檔案或許包含：
+  一個 class 定義
+  一組相關的 classes
+  a library of utility function
+  一個待執行的 script code
+  任何一小塊程式碼
+這些都可以是模組，只要他用模組化的方式撰寫。
+
+伺服器端的 JavaScript 使用 CommonJS 標準來定義模組化的方式(exports require)。
+
+模組化的目標是讓我們能夠組成大型程式，讓不同的程式碼能夠集合起來，就算撰寫 module 的作者沒全盤考慮到，也能讓所有的程式碼能夠正確執行。為了達到如此目的，不同的 module 必須避免更動 global 執行環境，如此讓之後的 module 都能在乾淨(pristine)若是接近乾淨的環境下執行。實務上來說，module 必須勁量避免使用 global 符號(window)，而每個 module 應該定義至多一個在全域物件上。
