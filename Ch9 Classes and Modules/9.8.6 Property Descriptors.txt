@@ -1,0 +1,75 @@
+// 9.8.6 Property Descriptors
+
+// 這節將 ECMAScript 5 property descriptors 的應用延伸並使用一個範例總結，它在 Object.prototype 新增一個 method: properties ，他回傳一個物件，該物件包含許多提供 property descriptors 的 method： hide freeze descriptors stString，其中 hide 能取代之前定義的 hideProps()，freeze 取代之前定義的 freezeProps()。
+
+// 這個範例還使用了下一節才會介紹的 modular coding technique。
+
+(function() {
+  function properties() {
+    var names;
+    if (arguments.length == 0)
+      names = Object.getOwnPropertyNames(this);
+    else if (arguments.length == 1 && Array.isArray(arguments[0]))
+      names = arguments[0];
+    else
+      names = Array.prototype.splice.call(arguments, 0);
+    return new Properties(this, names); 
+  }
+
+  // 這是這個 private scope 唯一對外輸出的值
+  Object.defineProperty(Object.prototype, 'properties', {
+    value: properties,
+    enumerable: false, writable: true, configurable: true
+  });
+
+  function Properties(o, names){
+    this.o = o;
+    this.names = names;
+  }
+
+  Properties.prototype.hide = function() {
+    var o = this.o, hidden = { enumerable: false };
+
+    this.names.forEach(function(n) {
+      if (o.hasOwnProperty(n)) Object.defineProperty(o, n, hidden);
+    });
+    return this; 
+  };
+
+  Properties.prototype.freeze = function() {
+    var o = this.o, frozen = { writable: false, configurable: false };
+    this.names.forEach(function(n) {
+      if (o.hasOwnProperty(n)) Object.defineProperty(o, n, frozen);
+    });
+    return this; 
+  };
+
+  Properties.prototype.descriptors = function() {
+    var o = this.o, desc = {};
+    this.names.forEach(function(n) {
+      if (!o.hasOwnProperty(n)) return;
+      desc[n] = Object.getOwnPropertyDescriptor(o,n); 
+    });
+    return desc; 
+  };
+  
+  Properties.prototype.toString = function() {
+    var o = this.o;
+    var lines = this.names.map(nameToString);
+    return '{\n ' + lines.join(',\n ') + '\n}';
+
+    function nameToString(n) {
+      var s = '', desc = Object.getOwnPropertyDescriptor(o, n);
+      if (!desc) return 'nonexistent ' + n + ': undefined';
+      if (!desc.configurable) s += 'permanent ';
+      if ((desc.get && !desc.set) || !desc.writable) s += 'readonly ';
+      if (!desc.enumerable) s += 'hidden ';
+      if (desc.get || desc.set) s += 'accessor ' + n;
+      else s += n + ': ' + (typeof desc.value === 'function' ? 'function'
+                                                             : desc.value);
+      return s; 
+    }
+  };
+
+  Properties.prototype.properties().hide();
+})();
