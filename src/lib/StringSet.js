@@ -24,7 +24,6 @@ StringSet.prototype = Object.create(AbstractWritableSet.prototype, {
   add: {
     value: function() {
       for (var i = 0, len = arguments.length ; i < len; i++ ) {
-        console.log('arguments[i]', arguments[i])
         if (!(arguments[i] in this.set)) {
           this.set[arguments[i]] = true;
           this.n++;
@@ -37,7 +36,7 @@ StringSet.prototype = Object.create(AbstractWritableSet.prototype, {
     value: function() {
       for (var i = 0, len = arguments.length; i < len ;i++ ) {
         if (arguments[i] in this.set) {
-          delete this.set(arguments[i]);
+          delete this.set[arguments[i]];
           this.n--;
         }
       }
@@ -46,9 +45,4 @@ StringSet.prototype = Object.create(AbstractWritableSet.prototype, {
   }
 });
 
-// var s = new StringSet(1, 2, 3);
-// s.foreach(function(v) {
-//   console.log(v);
-// })
-// console.log(s.contains(1))
 module.exports = StringSet;

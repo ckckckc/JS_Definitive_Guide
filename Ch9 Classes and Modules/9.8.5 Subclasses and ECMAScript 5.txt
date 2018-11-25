@@ -8,6 +8,4 @@
 下面範例有幾個值得注意的地方：
   他在 constructor 中傳入 null 給 Object.create 來創建 set
 
-  set 因為沒有 prototype (null 沒有 prototype)，所以我們用 in operator 來處理 contains method 而不用 hasOwnProperty() method
-
-function
+  set 因為沒有 prototype (null 沒有 prototype)，所以我們用 in operator 來處理 contains method 及 判別某 string 是否已經在 set member 之中而不用 hasOwnProperty() method。
