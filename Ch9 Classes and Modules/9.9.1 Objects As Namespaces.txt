@@ -1,0 +1,29 @@
+9.9.1 Objects As Namespaces
+
+這節的內容大部分是因為沒有 ES6 的 import/export 的 module 寫法，在 ES5 的環境之下盡量不污染全域命名空間的方式。
+
+先說到 ES6 都還沿用的慣例：
+  module 的檔案名稱應該要與命名空間相符，例如： set module 的檔案名稱應為 set.js。
+
+  若 module 在某個 namespsce 之下，則該 module 應該在某個 namespace 的目錄之下例如： collections.set 則為 collections/set.js
+
+  有時頂層 namespace 是使用創建 module 的人或組織，如此能避免命名衝突。
+
+
+在 ES5 的環境中：
+  每個 module 盡量至多輸出一個變數至全域物件，該變數型態為 object，將 module 的內容從成 object 的 property。
+
+  若一個 module 有好幾個類別，例如  abstract 與 concrete set class，可以全部包在
+
+    var sets = {};
+
+  之下。下面的 class 類別就會如此參照：
+
+    sets.SingletonSet
+
+  如果程式設計師知道會用到哪些 module 哪些使用的變數名稱，這時候不必硬性使用 namespace，例如頻繁地使用 Set Class 時：
+
+  var Set = sets.Set;
+  var s = new Set(1, 2, 3);
+
+  個別人士可以把網路 domain name 倒過來產生全球唯一的 namespace prefix，這樣就不太可能被別的 module 作者使用，例如： mydomain.com 可以使用 com.mydomain.collections.sets 來發布自己的 module。
