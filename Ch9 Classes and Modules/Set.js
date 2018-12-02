@@ -11,7 +11,7 @@ Set.fromArray = function(array) {
   return set;
 };
 
-Set._v2s = function(val) {
+function v2s(val) {
   switch(val) {
     case undefined: return 'u';
     case null: return 'n';
@@ -25,21 +25,21 @@ Set._v2s = function(val) {
       // defalut: return '@' + val.objectId
     }
   }
+}
 
-  // 這個 objectId 有個副作用
-  // 它偷加 |**objectid**|: {number} property 到 o 裡
-  // 萬一 o 已經剛好有 property name 為 |**objectid**| 時
-  // Set._v2s 可能會回傳不唯一的值
-  function objectId(o){
-    var prop = '|**objectid**|';
-    if (!o.hasOwnProperty(prop)) {
-      o[prop] = Set._v2s.next++;
-    }
-    return o[prop];
+// 這個 objectId 有個副作用
+// 它偷加 |**objectid**|: {number} property 到 o 裡
+// 萬一 o 已經剛好有 property name 為 |**objectid**| 時
+// v2s 可能會回傳不唯一的值
+function objectId(o){
+  var prop = '|**objectid**|';
+  if (!o.hasOwnProperty(prop)) {
+    o[prop] = nextId++;
   }
-};
+  return o[prop];
+}
 
-Set._v2s.next = 100;
+var nextId = 100;
 
 Set.prototype.toString = function() {
   var s = '{', i = 0;
@@ -88,7 +88,7 @@ Set.prototype.toJSON = Set.prototype.toArray;
 Set.prototype.add = function() {
   for (var i = 0, len = arguments.length ; i < len ; i++) {
     var val = arguments[i];
-    var str = Set._v2s(val);
+    var str = v2s(val);
     if (!this.values.hasOwnProperty(str)) {
       this.values[str] = val;
       this.n++;
@@ -99,7 +99,7 @@ Set.prototype.add = function() {
 
 Set.prototype.remove = function() {
   for (var i = 0, len = arguments.length ; i < len ; i++) {
-    var str = Set._v2s(arguments[i]);
+    var str = v2s(arguments[i]);
     if (this.values.hasOwnProperty(str)) {
       delete this.values[str];
       this.n--;
@@ -109,7 +109,7 @@ Set.prototype.remove = function() {
 };
 
 Set.prototype.contains = function(value) {
-  return this.values.hasOwnProperty(Set._v2s(value));
+  return this.values.hasOwnProperty(v2s(value));
 };
 
 Set.prototype.size = function() {

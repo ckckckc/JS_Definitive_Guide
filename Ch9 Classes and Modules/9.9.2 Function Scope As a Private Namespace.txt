@@ -1,0 +1,61 @@
+9.9.2 Function Scope As a Private Namespace
+
+這節在說明 ES5 環境下定義 module 的方式，在定義 module 的時候，若有不想暴露在 module 之外的 variable 可以使用 module function 將之成為 function 內的區域變數。
+  使用 module function scope 創作 module namespace， module function 可以取一個名字，例如 'namespace' 讓這個程式碼更好理解，並輸出 constructor：
+
+    var Set = (function invocation() {
+      function Set() {
+        this.values = {};
+        this.n = 0;
+        this.add.apply(this, arguments);
+      }
+
+      // v2s objectId newxtId 都是這個 invocation function 的 local variable
+      function v2s(val) {
+        /* */
+      }
+
+      function objectId(o){
+        /* */
+      }
+
+      nextId = 1;
+    })();
+
+  若 API 內有多個 module 惡以回傳一個 namespace object 例如：
+
+    var collections = collections || {};
+
+    collections.set = (function namespace(){
+      // ...
+
+      return {
+        AbstractSet: AbstractSet,
+        NotSet: NotSet,
+        // ...
+      };
+    })();
+
+  類似的技巧是把 module function 當作建構式以 new 呼叫他，以 this 輸出值:
+
+    var collections = collections || {};
+
+    collections.sets = (new function namespace() {
+      // ...
+
+      this.AbstractSet = AbstractSet;
+      this.NotSet = NotSet;
+    })();
+
+  假如已經定義了ㄧ個全域 global namespace object，在 module 之中可以直接在該全域物件直接設定 properties，不用回傳值。
+
+    var collections = collections || {};
+
+    collections.sets = {};
+
+    (function() {
+      collections.sets.AbstractSet = AbstractSet;
+      collections.sets.NotSet = NotSet;
+    })();
+
+事實上，使用 ES6 的 export / import 即可定義 module，這節讓我們學到在 ES5  定義 module 的方式。
