@@ -1,0 +1,8 @@
+Regular Expression 定義：
+A regular expression is an object that describes a pattern of characters. 
+
+JavaScript 使用  RegExp class 來表示 regular expressions， String 和 RegExp 都有定義 method 來執行 regular expressions 威力強大的 pattern-matching / search / replace 等操作。
+
+JavaScript 的 regular expression 語法是 Perl 5 的子集合
+
+這章從定義 Regular Expression 語法開始，接者描述 String / RegExp 使用 regular expressoins 的 methods。
